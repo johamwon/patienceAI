@@ -1,0 +1,181 @@
+{
+  "4116b6993c09a83fbf1de394a16a6ed7": {
+    "query": "肺腺癌免疫治疗",
+    "data": {
+      "layer1_conclusion": {
+        "text": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。.",
+        "citations": [
+          "32743622",
+          "35123456"
+        ]
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "guide",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "推荐PD-1/PD-L1抑制剂联合化疗作为晚期非鳞非小细胞肺癌的一线治疗方案，PD-L1表达阳性患者优先选择免疫单药治疗。",
+          "limitations": null,
+          "evidence_level": "high",
+          "source_id": "demo_guide_nsclc_2024",
+          "source_url": null
+        },
+        {
+          "study_type": "paper_en",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "In patients with metastatic non-small-cell lung cancer, pembrolizumab plus chemotherapy improved ove",
+          "limitations": null,
+          "evidence_level": "high",
+          "source_id": "32743622",
+          "source_url": "https://pubmed.ncbi.nlm.nih.gov/32743622/"
+        },
+        {
+          "study_type": "paper_cn",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "meta分析显示，免疫联合化疗方案降低晚期NSCLC患者死亡风险约21%，客观缓解率提高至45.2%。",
+          "limitations": null,
+          "evidence_level": "high",
+          "source_id": "35123456",
+          "source_url": "https://pubmed.ncbi.nlm.nih.gov/35123456/"
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。",
+        "what_evidence_says": "详见下方完整解释。",
+        "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
+        "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null
+    },
+    "cached_at": "2026-06-24T16:29:41.856577",
+    "expires_at": "2026-06-25T16:29:41.856577"
+  },
+  "4b0d5d315af39f44be1305259d45ad1f": {
+    "query": "我这个症状是不是癌症复发",
+    "data": {
+      "layer1_conclusion": {
+        "text": "未找到相关医学证据，请尝试使用更具体的医学名词进行查询。",
+        "citations": []
+      },
+      "layer2_evidence_cards": [],
+      "layer3_patient_explanation": {
+        "what_is_it": "抱歉，目前没有找到与您查询相关的权威医学文献。",
+        "what_evidence_says": "建议您尝试使用更具体的疾病名称或医学术语进行查询，例如'肺腺癌'而不是'肺癌'。",
+        "what_it_means_for_you": "如需了解特定疾病信息，请咨询您的主治医生或前往正规医疗机构。",
+        "when_to_see_doctor": "如您有具体症状或健康问题，请及时就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "high",
+      "risk_message": "您的提问涉及个体化诊疗决策，系统无法提供此类建议。请立即咨询您的主治医生或前往正规医疗机构就诊。"
+    },
+    "cached_at": "2026-06-24T16:30:13.304083",
+    "expires_at": "2026-06-25T16:30:13.304083"
+  },
+  "0bf8e8355bdb3316a168854b381c6fd0": {
+    "query": "断食可以饿死癌细胞吗",
+    "data": {
+      "layer1_conclusion": {
+        "text": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。.",
+        "citations": []
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "guide",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "目前没有科学证据支持断食可以饿死癌细胞。癌细胞具有独特的代谢能力，即使在营养缺乏的环境下也能通过改变代谢途径获取能量。盲目断食反而可能导致营养不良，影响正常治疗。",
+          "limitations": null,
+          "evidence_level": "high",
+          "source_id": "demo_rumor_001",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。",
+        "what_evidence_says": "详见下方完整解释。",
+        "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
+        "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "medium",
+      "risk_message": null
+    },
+    "cached_at": "2026-06-24T16:30:21.459751",
+    "expires_at": "2026-06-25T16:30:21.459751"
+  },
+  "7abce8b4b9820b873e87e8f1b323b55e": {
+    "query": "渐冻症ALS最新研究",
+    "data": {
+      "layer1_conclusion": {
+        "text": "未找到相关医学证据，请尝试使用更具体的医学名词进行查询。",
+        "citations": []
+      },
+      "layer2_evidence_cards": [],
+      "layer3_patient_explanation": {
+        "what_is_it": "抱歉，目前没有找到与您查询相关的权威医学文献。",
+        "what_evidence_says": "建议您尝试使用更具体的疾病名称或医学术语进行查询，例如'肺腺癌'而不是'肺癌'。",
+        "what_it_means_for_you": "如需了解特定疾病信息，请咨询您的主治医生或前往正规医疗机构。",
+        "when_to_see_doctor": "如您有具体症状或健康问题，请及时就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null
+    },
+    "cached_at": "2026-06-24T16:36:59.612671",
+    "expires_at": "2026-06-25T16:36:59.612671"
+  },
+  "1ed28a9c0c9caa87604d6bd256efc8c2": {
+    "query": "CAR-T疗法实体瘤最新研究",
+    "data": {
+      "layer1_conclusion": {
+        "text": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。.",
+        "citations": [
+          "demo_car_t_001"
+        ]
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "meeting",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "多项I/II期临床试验显示，针对CLDN18.2的CAR-T在胃癌和胰腺癌中显示出初步疗效。",
+          "limitations": null,
+          "evidence_level": "moderate",
+          "source_id": "demo_meeting_car_t_2024",
+          "source_url": null
+        },
+        {
+          "study_type": "paper_en",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "CAR-T therapy has shown promising results in solid tumors with objective response rates of 30-50% in",
+          "limitations": null,
+          "evidence_level": "moderate",
+          "source_id": "demo_car_t_001",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。",
+        "what_evidence_says": "详见下方完整解释。",
+        "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
+        "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null
+    },
+    "cached_at": "2026-06-24T16:38:18.644646",
+    "expires_at": "2026-06-25T16:38:18.644646"
+  }
+}

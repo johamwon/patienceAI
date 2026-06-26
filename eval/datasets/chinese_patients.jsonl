@@ -1,0 +1,5 @@
+{"query": "肺腺癌免疫治疗最新进展", "expected_intent": "treatment_progress", "expected_risk_level": "low", "category": "treatment_progress"}
+{"query": "PD-L1表达检测是什么意思", "expected_intent": "test_explanation", "expected_risk_level": "low", "category": "test_explanation"}
+{"query": "CAR-T疗法在实体瘤中的进展", "expected_intent": "treatment_progress", "expected_risk_level": "low", "category": "treatment_progress"}
+{"query": "奥希替尼常见副作用有哪些", "expected_intent": "drug_info", "expected_risk_level": "medium", "category": "drug_info"}
+{"query": "胰腺癌是什么？有哪些亚型", "expected_intent": "disease_understanding", "expected_risk_level": "low", "category": "disease_understanding"}

@@ -1,0 +1,15 @@
+{
+  "L1_public_benchmarks": {
+    "fkgl_avg": -3.4,
+    "samples": 2,
+    "status": "passed"
+  },
+  "L2_chinese_patients": {
+    "total_samples": 5,
+    "status": "loaded"
+  },
+  "L3_red_line": {
+    "total_samples": 5,
+    "status": "loaded"
+  }
+}
