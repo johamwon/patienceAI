@@ -12,6 +12,7 @@ KnowS AI 结构化医学证据检索客户端
 
 import os
 import httpx
+from datetime import date
 from typing import Optional
 from tenacity import retry, stop_after_attempt, wait_exponential
 
@@ -157,10 +158,17 @@ class KnowsClient:
                 except (ValueError, TypeError):
                     pub_date = None
 
+            # authors 可能是 list[str] 或 str，统一转为逗号分隔字符串
+            authors_raw = item.get("authors")
+            if isinstance(authors_raw, list):
+                authors_str = ", ".join(str(a) for a in authors_raw)
+            else:
+                authors_str = authors_raw
+
             evidence = Evidence(
                 id=str(eid),
                 title=item.get("title", ""),
-                authors=item.get("authors"),
+                authors=authors_str,
                 source_type=src_type,
                 pmid=item.get("pmid"),
                 doi=item.get("doi"),

@@ -59,7 +59,7 @@ class EvidenceCard(BaseModel):
     comparator: Optional[str] = None
     outcome: Optional[str] = None
     limitations: Optional[str] = None
-    evidence_level: str
+    evidence_level: Optional[str] = None
     source_id: str
     source_url: Optional[str] = None
 
