@@ -533,6 +533,34 @@ body {
   color: #B8960C;
 }
 
+/* Companion Banner（暖场白展示条）— 小光的一句陪伴话，温暖柔和（R3.1） */
+.companion-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFF7E0 100%);
+  border: 1px solid #F0E2B0;
+  border-left: 4px solid var(--accent-pink);
+  border-radius: var(--radius-soft);
+  box-shadow: var(--shadow-card);
+}
+
+.companion-banner-avatar {
+  font-size: 22px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.companion-banner-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header {
@@ -654,4 +682,351 @@ body {
   .evidence-card {
     padding: 12px;
   }
+}
+
+/* Visit Prep View */
+.visit-prep-view {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.visit-prep-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.visit-prep-header h2 {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  color: var(--primary-dark);
+}
+
+.visit-prep-print-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.visit-prep-print-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 155, 213, 0.4);
+}
+
+.visit-prep-note {
+  background: #FFF9E6;
+  border: 1px solid #FFE5A0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #B8960C;
+}
+
+.visit-prep-category {
+  margin-bottom: 20px;
+}
+
+.visit-prep-category h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.visit-prep-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.visit-prep-item {
+  background: #FAFBFD;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+}
+
+.visit-prep-item:hover {
+  box-shadow: var(--shadow-card);
+}
+
+.visit-prep-item label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.visit-prep-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--primary-dark);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.visit-prep-item-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.visit-prep-item.checked .visit-prep-item-text {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.visit-prep-positioning {
+  background: #F8FBFD;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .visit-prep-view {
+    padding: 0 12px;
+    margin: 16px auto;
+  }
+
+  .visit-prep-header h2 {
+    font-size: 1.05rem;
+  }
+
+  .visit-prep-print-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+
+  .visit-prep-item-text {
+    font-size: 14px;
+  }
+}
+
+/* 打印样式：隐藏勾选框与按钮，让清单适合打印 */
+@media print {
+  body {
+    background: #FFFFFF;
+  }
+
+  .mascot-container,
+  .header,
+  .search-form,
+  .disease-selector-toggle,
+  .disease-selector,
+  .demo-queries,
+  .demo-notice,
+  .visit-prep-print-btn {
+    display: none !important;
+  }
+
+  .visit-prep-view {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .visit-prep-layer {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .visit-prep-item {
+    border: 1px solid #CCCCCC;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .visit-prep-item input[type="checkbox"] {
+    /* 保留方框占位以便手写勾选，但隐藏交互控件外观 */
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1.5px solid #888888;
+    border-radius: 3px;
+    background: #FFFFFF;
+  }
+
+  .visit-prep-item.checked .visit-prep-item-text {
+    text-decoration: none;
+    color: var(--text-color);
+  }
+}
+
+/* Trial Card（临床试验卡片） */
+.trial-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-soft);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+}
+
+.trial-card:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+.trial-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.trial-card-tag {
+  background: var(--primary-color);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.trial-card-nct {
+  font-family: "SF Mono", Monaco, monospace;
+  font-size: 13px;
+  color: var(--primary-dark);
+  background: #F0F7FF;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.trial-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.trial-card-field {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.trial-card-field dt {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.trial-card-field dd {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.trial-card-note {
+  background: #FFF9E6;
+  border: 1px solid #FFE5A0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #B8960C;
+}
+
+@media (max-width: 768px) {
+  .trial-card {
+    padding: 14px;
+  }
+
+  .trial-card-field {
+    grid-template-columns: 72px 1fr;
+    gap: 8px;
+  }
+
+  .trial-card-field dt,
+  .trial-card-field dd {
+    font-size: 13px;
+  }
+}
+
+/* 研究进展（Research Progress） */
+.research-progress-item {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: var(--card-bg);
+}
+
+.research-progress-item:last-child {
+  margin-bottom: 0;
+}
+
+.research-progress-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.research-stage-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+
+/* 突破性 RCT：稳重色，传达可信度（R12.2） */
+.research-stage-badge.breakthrough {
+  background: var(--primary-dark);
+}
+
+/* 早期临床试验：提示色，提示尚未确立（R12.3/R12.4） */
+.research-stage-badge.early {
+  background: var(--warning-color);
+  color: #7A5C00;
+}
+
+/* 临床前/动物实验：更强提示色，强调不确定性（R12.3/R12.4） */
+.research-stage-badge.preclinical {
+  background: var(--error-color);
+}
+
+.research-evidence-level {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.research-progress-summary {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* 不确定性说明：醒目提示样式，避免患者误读为已确立疗效（R12.3/R12.4） */
+.research-uncertainty-note {
+  margin-top: 12px;
+  background: #FFF5F5;
+  border-left: 4px solid var(--error-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #B5524C;
 }

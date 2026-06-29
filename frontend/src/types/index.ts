@@ -21,6 +21,39 @@ export type SearchResponse = {
   total: number;
 };
 
+export type EmotionState = "panic" | "anxiety" | "despair" | "urgent" | "calm";
+
+export type TrialCard = {
+  nct_id: string;
+  recruitment_status: string;
+  phase: string;
+  eligibility: string;
+  location: string;
+  note: string;
+};
+
+export type ResearchProgress = {
+  summary: string;
+  research_stage: "breakthrough_rct" | "early_trial" | "preclinical";
+  evidence_level: string;
+  uncertainty_note?: string;
+  source_id?: string;
+};
+
+export type VisitPrepPack = {
+  questions_for_doctor: string[];
+  info_to_tell_doctor: string[];
+  tests_to_request: string[];
+  treatment_options_to_confirm: string[];
+  positioning_note: string;
+};
+
+export type VisitPrepResponse = {
+  visit_prep_pack: VisitPrepPack;
+  evidence_based: boolean;
+  note?: string;
+};
+
 export type ExplainResponse = {
   layer1_conclusion: { text: string; citations: string[] };
   layer2_evidence_cards: Array<{
@@ -43,4 +76,8 @@ export type ExplainResponse = {
   };
   risk_level: string;
   risk_message?: string;
+  companion_message?: string;
+  emotion_state: EmotionState | string;
+  trial_cards: TrialCard[];
+  research_progress: ResearchProgress[];
 };

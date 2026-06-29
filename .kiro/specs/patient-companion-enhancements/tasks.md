@@ -1,0 +1,110 @@
+# Implementation Plan
+
+本任务清单按设计文档的交付顺序组织：基础设施与数据模型 → 就医准备包 → 罕见病/重症研究进展 → 拟人化情绪陪伴 → 合规闸门贯穿集成。每个任务标注覆盖的需求编号。仅包含编码与测试任务。
+
+- [x] 1. 测试基础设施与依赖准备
+  - 在 `backend/requirements.txt` 中新增 `pytest==8.2.0`、`pytest-asyncio==0.23.7`、`hypothesis==6.103.0` 依赖（用于后端单元/属性/契约测试）。
+  - 在 `backend/` 下创建 `tests/` 目录与 `tests/__init__.py`，并新增 `tests/conftest.py`，配置 `sys.path` 使其可导入 `backend.app` 与 `agents` 包，提供共用的 `mock_llm_client` fixture（返回固定文本，模拟 `llm_client.chat`）。
+  - 新增 `backend/pytest.ini`（或在 conftest 中）配置 `asyncio_mode = auto`。
+  - _Requirements: R13.1_
+
+- [x] 2. 基础数据模型与 schema 扩展
+  - [x] 2.1 后端 Pydantic 模型新增
+    - 在 `backend/app/models/schemas.py` 中新增 `EmotionState` 枚举（panic/anxiety/despair/urgent/calm）、`TrialCard`、`ResearchProgress`、`VisitPrepPack`、`VisitPrepRequest`、`VisitPrepResponse` 模型，字段与默认值（`TrialCard.note`、`VisitPrepPack.positioning_note`、各字段默认"信息未提供"）按设计 Data Models 章节实现。
+    - 扩展 `ExplainRequest` 增加 `session_id: Optional[str] = None`；扩展 `ExplainResponse` 增加 `companion_message: Optional[str] = None`、`emotion_state: str = "calm"`、`trial_cards: list[TrialCard] = []`、`research_progress: list[ResearchProgress] = []`。
+    - _Requirements: R2.5, R3.1, R4.1, R6.1, R6.2, R6.3, R7.5, R11.3, R11.5, R12.1, R12.2, R12.3_
+  - [x] 2.2 前端 TypeScript 类型新增
+    - 在 `frontend/src/types/index.ts` 中新增 `EmotionState`、`TrialCard`、`ResearchProgress`、`VisitPrepPack` 类型，并为 `ExplainResponse` 增加 `companion_message?`、`emotion_state`、`trial_cards`、`research_progress` 字段。
+    - _Requirements: R5.1, R8.1, R11.3, R12.2_
+
+- [x] 3. 集中式人格与合规模块
+  - [x] 3.1 创建 Persona 与合规约束定义
+    - 新增 `agents/prompts/persona.py`，定义 `PERSONA_NAME`、`PERSONA_PROMPT`（小光人格）、`COMPLIANCE_CONSTRAINTS`（硬性约束，含"冲突时不确定性优先"），实现 `with_persona(task_prompt, include_compliance=True)` 拼接函数。
+    - 在同文件实现 `compliance_guard(text) -> tuple[str, list[str]]`：基于 `DIAGNOSIS_PATTERNS` 正则识别并安全替换诊断/处方/剂量语句，返回清洗后文本与命中项列表。
+    - _Requirements: R1.1, R1.2, R1.4, R13.1, R13.2, R13.3_
+  - [x] 3.2 compliance_guard 单元测试
+    - 新增 `backend/tests/test_compliance_guard.py`：验证诊断句（如"你患了X"）、剂量句（如"每日服用X mg"）被剥离/替换；验证正常医学陈述不被误伤；验证命中项列表正确返回。
+    - _Requirements: R13.1_
+
+- [x] 4. 就医准备包（Visit Prep Pack）
+  - [x] 4.1 实现就医准备包生成器
+    - 新增 `agents/core/visit_prep_generator.py`，实现 `async def generate_visit_prep(query, evidences, emotion, llm_client) -> dict`：调用 LLM（经 `with_persona` 注入人格+合规）生成四类条目；有证据时基于证据生成针对性问题，无证据时生成通用就医问题；每条经 `compliance_guard` 清洗剥离诊断/剂量；生成失败抛出异常供路由层转 5xx。
+    - _Requirements: R6.1, R6.2, R6.4, R7.2, R7.5, R7.6, R13.1_
+  - [x] 4.2 实现 visit-prep 路由
+    - 新增 `backend/app/api/visit_prep.py`，实现 `POST /visit-prep` 路由：先查缓存（键加 `visitprep::` 前缀避免与 explain 冲突），命中返回缓存；未命中则 `parse_query` + `detect_emotion` + `knows_client.search_multi`（无结果回退 demo/空），调用 `generate_visit_prep` 生成 `VisitPrepPack`，组装 `VisitPrepResponse`（`evidence_based` 标记是否找到证据），写入缓存后返回；生成异常返回 5xx 描述性错误。
+    - _Requirements: R7.1, R7.2, R7.3, R7.4, R7.5, R7.6_
+  - [x] 4.3 注册 visit-prep 路由
+    - 修改 `backend/app/main.py`，导入并 `include_router(visit_prep.router, prefix="/api/v1", tags=["visit-prep"])`。
+    - _Requirements: R7.1_
+  - [x] 4.4 visit-prep 缓存命中单元测试
+    - 新增 `backend/tests/test_visit_prep_cache.py`：使用 mock LLM 与 mock 检索，验证同一 query 第二次请求走缓存（生成器不再被调用）；验证 `visitprep::` 前缀与 explain 缓存键隔离不互相覆盖。
+    - _Requirements: R7.3, R7.4_
+  - [x] 4.5 前端 visit-prep API 调用
+    - 在 `frontend/src/api/index.ts` 新增 `getVisitPrep(query, sessionId?)` 调用 `/api/v1/visit-prep`。
+    - _Requirements: R7.1_
+  - [x] 4.6 前端就医准备包视图组件
+    - 新增 `frontend/src/components/VisitPrepView.tsx`：展示四类条目，每条带可勾选控件并维护勾选状态；提供导出/打印视图入口；展示 `positioning_note` 定位说明文本；当 `evidence_based=false` 时提示未找到针对性证据。
+    - _Requirements: R8.1, R8.2, R8.3, R8.4_
+  - [x] 4.7 前端集成就医准备包入口
+    - 修改 `frontend/src/components/ExplanationView.tsx` 与 `frontend/src/pages/SearchPage.tsx`，在解释结果视图内嵌入渲染 `VisitPrepView`（按 OQ2 决策：嵌入解释结果），并接入 `getVisitPrep` 触发逻辑。
+    - _Requirements: R8.5_
+
+- [x] 5. 罕见病/重症研究进展
+  - [x] 5.1 意图分类器增加罕见病/重症标记
+    - 修改 `backend/app/services/intent_classifier.py`：新增 `RARE_DISEASE_KEYWORDS`、`SEVERE_CONDITION_KEYWORDS` 词表，实现 `detect_rare_disease(query)`、`detect_severe_condition(query)`（匹配失败/不确定返回 False）；在 `parse_query` 返回值中新增 `rare_disease`、`severe_condition` 布尔字段，保持 `risk_level` 判定逻辑独立不变。
+    - _Requirements: R9.1, R9.2, R9.3, R9.4, R9.6_
+  - [x] 5.2 罕见病/重症检测单元测试
+    - 新增 `backend/tests/test_rare_severe_detection.py`：词表命中→True；无关查询→False；验证 `parse_query` 输出包含两个布尔字段且 `risk_level` 不受影响。
+    - _Requirements: R9.2, R9.3, R9.4, R9.6_
+  - [x] 5.3 检索路由升级
+    - 修改 `backend/app/api/search.py`：实现 `select_sources(parsed)`（rare/severe 为 true 时返回 `["trial","meeting","paper_en","guide"]`，保留指南交叉佐证；否则用现有 `INTENT_TO_SOURCES`）与 `sort_evidences(evidences, parsed)`（rare/severe 时按 `publish_date` 降序，否则保留现有顺序）；在 `search_evidence` 中接入二者；专门源无结果时回退默认源集合。
+    - _Requirements: R9.5, R10.1, R10.2, R10.3, R10.4_
+  - [x] 5.4 select_sources / sort_evidences 单元测试
+    - 新增 `backend/tests/test_search_router.py`：验证 rare/severe→源集合含 trial 且含 guide；验证按 publish_date 降序排序（最新在前）；验证非 rare/severe 时保持默认源；验证空结果回退默认源。
+    - _Requirements: R10.1, R10.2, R10.3, R10.4_
+  - [x] 5.5 研究阶段标注与 NCT 校验工具
+    - 新增 `backend/app/services/research_stage.py`：定义 `ResearchStage` 枚举，实现 `infer_research_stage(evidence)`（基于 source_type/evidence_level/标题关键词如 "phase I"、"小鼠"、"in vitro" 推断）；实现 `validate_nct(evidence)`（`NCT_PATTERN` 校验格式且与来源一致）；为早期/临床前阶段生成 `uncertainty_note`（"该结果尚未在患者身上证实有效"）。
+    - _Requirements: R11.2, R12.1, R12.3, R12.4, R12.5_
+  - [x] 5.6 infer_research_stage 与 validate_nct 单元测试
+    - 新增 `backend/tests/test_research_stage.py`：验证 "phase I"→early_trial、"小鼠/in vitro"→preclinical、RCT/high→breakthrough_rct；验证合法 NCT 通过、格式错误或与来源不一致拒绝；验证早期/临床前阶段附带 uncertainty_note。
+    - _Requirements: R11.2, R12.1, R12.3_
+  - [x] 5.7 前端临床试验卡片组件
+    - 新增 `frontend/src/components/TrialCard.tsx`：渲染 NCT 编号、招募状态、试验阶段、入排标准、地点；缺失字段显示"信息未提供"而不隐藏卡片；展示入组需临床医生评估的提示文本；不将"正在招募"表述为疗效/入组承诺。
+    - _Requirements: R11.1, R11.3, R11.4, R11.5, R11.6_
+  - [x] 5.8 前端研究进展与阶段标签展示
+    - 修改 `frontend/src/components/ExplanationView.tsx`：渲染 `research_progress`，将 `research_stage` 标签与 `evidence_level` 一并展示；早期/临床前阶段显式展示 `uncertainty_note`；渲染 `trial_cards`（接入 `TrialCard` 组件）。
+    - _Requirements: R12.1, R12.2, R12.3, R12.4_
+
+- [x] 6. 拟人化情绪陪伴
+  - [x] 6.1 情绪感知层
+    - 新增 `backend/app/services/emotion_detector.py`：定义 `EmotionState` 枚举与 `EMOTION_KEYWORDS` 词表，实现 `detect_emotion(query, llm_client=None) -> EmotionState`：高危情绪（URGENT/DESPAIR）规则先行；其余调用 LLM（`with_persona`，temperature=0，仅输出枚举）精判；LLM 不可用/失败回退规则结果；全不命中返回 CALM 默认。
+    - _Requirements: R2.1, R2.2, R2.3, R2.6_
+  - [x] 6.2 detect_emotion 回退单元测试
+    - 新增 `backend/tests/test_emotion_detector.py`：URGENT/DESPAIR 关键词必命中；`llm_client=None` 时走规则；空/无信号输入→CALM；LLM 抛异常时回退规则结果。
+    - _Requirements: R2.3, R2.6_
+  - [x] 6.3 轻量会话记忆
+    - 新增 `backend/app/services/session_memory.py`：定义 `SessionTurn` dataclass、抽象基类 `SessionStore`、内存实现 `InMemorySessionStore`（`dict[session_id -> deque(maxlen=N)]`，线程锁保护）；`SESSION_MAX_TURNS` 从环境变量读取默认 5；提供全局单例 `session_store`。
+    - _Requirements: R4.1, R4.2, R4.5, R4.6_
+  - [x] 6.4 InMemorySessionStore 属性测试
+    - 新增 `backend/tests/test_session_memory.py`：使用 hypothesis 生成任意追加序列，验证 `recent(n)` 长度 ≤ N、为最近 N 条且顺序正确；验证超过 N 轮丢弃最早记录。
+    - _Requirements: R4.2, R4.6_
+  - [x] 6.5 陪伴引擎
+    - 新增 `backend/app/services/companion_engine.py`：实现 `async def generate_companion_message(query, emotion, evidences, risk_level, risk_message, history, llm_client) -> str`：按 emotion 选择基调但始终先共情；证据含负面结论时先共情→照实陈述→给可执行出口；risk_level 为 high/prohibited 时必含就医引导；经 `compliance_guard` 清洗；LLM 失败回退按 emotion 预置的安全模板（high/prohibited 拼接就医提示）。
+    - _Requirements: R1.1, R1.3, R1.4, R1.5, R3.1, R3.2, R3.3, R3.4, R3.5, R3.6, R3.7_
+  - [x] 6.6 companion_engine 契约测试
+    - 新增 `backend/tests/test_companion_engine.py`：mock LLM 返回固定文本，验证负面证据时先共情后陈述并含出口；验证 high/prohibited 时输出含就医引导且不被替代风险提示；验证 LLM 失败回退安全模板；验证输出经 compliance_guard。
+    - _Requirements: R3.3, R3.7, R13.5_
+  - [x] 6.7 前端吉祥物情绪联动
+    - 修改 `frontend/src/components/Mascot.tsx`：接收 `emotion_state` prop，为 {panic, anxiety, despair, urgent, calm} 每个状态提供对应表情与气泡文案；状态缺失/无法识别时显示默认（calm）表情与气泡；气泡文案不含诊断结论或个体化治疗建议。
+    - _Requirements: R5.1, R5.2, R5.3, R5.4_
+  - [x] 6.8 前端暖场白展示条
+    - 新增 `frontend/src/components/CompanionBanner.tsx`：在回答开头展示 `companion_message` 暖场白；在 `ExplanationView.tsx` 中集成于结果顶部；在 `SearchPage.tsx` 中向 `Mascot` 传递 `emotion_state` 并管理/传递 `session_id`。
+    - _Requirements: R3.1, R5.1_
+
+- [x] 7. explain 编排与合规闸门贯穿集成
+  - [x] 7.1 explain 路由集成情绪/陪伴/会话/研究阶段
+    - 修改 `backend/app/api/explain.py`：接入 `detect_emotion`（结果写入响应 `emotion_state` 并追加到 `session_memory`，存在历史时提供给生成环节）；URGENT 情绪时强制将 `risk_level` 提升至至少 high 并注入就医提示；调用 `companion_engine` 生成 `companion_message`；对证据应用 `infer_research_stage`/`validate_nct` 生成 `research_progress` 与 `trial_cards`；接入 `parse_query` 新增的 rare/severe 字段驱动检索路由。
+    - _Requirements: R2.4, R2.5, R3.1, R4.1, R4.3, R4.4, R9.5, R11.1, R12.1, R12.2_
+  - [x] 7.2 出口合规闸集成
+    - 在 `backend/app/api/explain.py` 汇总响应前对所有患者可见文本（companion_message、三层输出、研究进展文案）统一过 `compliance_guard`；当 `risk_level in {high, prohibited}` 时强制保留 `risk_message`，确保不被 `companion_message` 替代（共情与风险提示同时呈现）。
+    - _Requirements: R1.4, R1.5, R13.1, R13.2, R13.3, R13.4, R13.5_

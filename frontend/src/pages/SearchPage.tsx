@@ -1,6 +1,6 @@
-import { useState, FormEvent } from "react";
-import { searchEvidence, explainEvidence } from "../api";
-import type { SearchResponse, ExplainResponse } from "../types";
+import { useState, useRef, FormEvent } from "react";
+import { searchEvidence, explainEvidence, getVisitPrep } from "../api";
+import type { SearchResponse, ExplainResponse, VisitPrepResponse } from "../types";
 import EvidenceList from "../components/EvidenceList";
 import ExplanationView from "../components/ExplanationView";
 import Mascot from "../components/Mascot";
@@ -55,6 +55,19 @@ export default function SearchPage() {
   const [isDemo, setIsDemo] = useState(false);
   const [showDiseaseSelector, setShowDiseaseSelector] = useState(false);
 
+  // 会话 id：组件首次挂载时生成一次，在整个页面会话内保持稳定，
+  // 让后端会话记忆（Session_Memory）能够跨多次查询累积（R4）。
+  const sessionIdRef = useRef<string>(
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `sess-${Date.now()}-${Math.random().toString(36).slice(2)}`
+  );
+
+  // 就医准备包状态（OQ2：嵌入解释结果，按需触发，不阻塞主流程）
+  const [visitPrep, setVisitPrep] = useState<VisitPrepResponse | null>(null);
+  const [visitPrepLoading, setVisitPrepLoading] = useState(false);
+  const [visitPrepError, setVisitPrepError] = useState<string | null>(null);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -63,6 +76,10 @@ export default function SearchPage() {
     setError(null);
     setSearchResult(null);
     setExplanation(null);
+    // 新一次搜索时重置就医准备包状态
+    setVisitPrep(null);
+    setVisitPrepError(null);
+    setVisitPrepLoading(false);
 
     try {
       const searchRes = await searchEvidence(query);
@@ -71,13 +88,29 @@ export default function SearchPage() {
 
       const explainRes = await explainEvidence(
         query,
-        searchRes.evidences.slice(0, 5).map((e) => e.id)
+        searchRes.evidences.slice(0, 5).map((e: { id: string }) => e.id),
+        sessionIdRef.current
       );
       setExplanation(explainRes);
     } catch (err: any) {
       setError(err.message || "发生错误，请重试");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGenerateVisitPrep = async () => {
+    if (!query.trim() || visitPrepLoading) return;
+    setVisitPrepLoading(true);
+    setVisitPrepError(null);
+    try {
+      // 复用当前 query 与稳定的会话 id，让后端会话记忆生效
+      const res = await getVisitPrep(query, sessionIdRef.current);
+      setVisitPrep(res);
+    } catch (err: any) {
+      setVisitPrepError(err.message || "就医准备包生成失败，请重试");
+    } finally {
+      setVisitPrepLoading(false);
     }
   };
 
@@ -100,8 +133,8 @@ export default function SearchPage() {
 
   return (
     <div className="search-page">
-      {/* Mascot */}
-      <Mascot />
+      {/* Mascot：拿到解释结果后联动情绪，未出结果时回退 calm（R5.1/R5.3） */}
+      <Mascot emotion={explanation?.emotion_state} />
 
       <header className="header">
         <h1>患癌知光</h1>
@@ -188,7 +221,14 @@ export default function SearchPage() {
       )}
 
       {explanation && (
-        <ExplanationView data={explanation} query={query} />
+        <ExplanationView
+          data={explanation}
+          query={query}
+          visitPrep={visitPrep}
+          visitPrepLoading={visitPrepLoading}
+          visitPrepError={visitPrepError}
+          onGenerateVisitPrep={handleGenerateVisitPrep}
+        />
       )}
 
       {searchResult && searchResult.evidences.length > 0 && !explanation && (

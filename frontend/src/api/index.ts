@@ -1,3 +1,5 @@
+import type { SearchResponse, ExplainResponse, VisitPrepResponse } from "../types";
+
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 export async function searchEvidence(query: string, maxResults = 20): Promise<SearchResponse> {
@@ -10,13 +12,23 @@ export async function searchEvidence(query: string, maxResults = 20): Promise<Se
   return res.json();
 }
 
-export async function explainEvidence(query: string, evidenceIds?: string[]): Promise<ExplainResponse> {
+export async function explainEvidence(query: string, evidenceIds?: string[], sessionId?: string): Promise<ExplainResponse> {
   const res = await fetch(`${API_BASE}/api/v1/explain`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, evidence_ids: evidenceIds }),
+    body: JSON.stringify({ query, evidence_ids: evidenceIds, session_id: sessionId }),
   });
   if (!res.ok) throw new Error(`解释失败: ${res.status}`);
+  return res.json();
+}
+
+export async function getVisitPrep(query: string, sessionId?: string): Promise<VisitPrepResponse> {
+  const res = await fetch(`${API_BASE}/api/v1/visit-prep`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, session_id: sessionId }),
+  });
+  if (!res.ok) throw new Error(`就医准备包生成失败: ${res.status}`);
   return res.json();
 }
 

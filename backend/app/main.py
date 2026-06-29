@@ -54,12 +54,13 @@ async def health():
 
 # ─── API Routes ─────────────────────────────────────────────────────────────
 
-from .api import search, explain, evaluate
+from .api import search, explain, evaluate, visit_prep
 from .services.cache_service import cache_service
 
 app.include_router(search.router, prefix="/api/v1", tags=["search"])
 app.include_router(explain.router, prefix="/api/v1", tags=["explain"])
 app.include_router(evaluate.router, prefix="/api/v1", tags=["evaluate"])
+app.include_router(visit_prep.router, prefix="/api/v1", tags=["visit-prep"])
 
 # ─── Cache Management ────────────────────────────────────────────────────────
 

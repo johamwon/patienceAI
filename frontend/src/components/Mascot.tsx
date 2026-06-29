@@ -1,6 +1,90 @@
 import React from "react";
+import type { EmotionState } from "../types";
 
-const Mascot: React.FC = () => {
+/**
+ * 情绪 → 表情/气泡配置（R5.2）
+ *
+ * 每个情绪状态提供：
+ *  - bubbleText: 气泡文案（仅情绪陪伴话术，不含诊断结论或个体化治疗建议，R5.4）
+ *  - mouthPath:  SVG 嘴型路径，用于辨识表情差异
+ *  - bodyStart/bodyEnd: 身体渐变色基调，区分整体情绪氛围
+ *  - cheekOpacity: 腮红可见度（关切/严肃情绪下淡化）
+ *  - browPath:    可选眉毛路径，用于强化关切/严肃表情（urgent/panic）
+ */
+type EmotionVisual = {
+  bubbleText: string;
+  mouthPath: string;
+  bodyStart: string;
+  bodyEnd: string;
+  cheekOpacity: number;
+  browPath?: string;
+};
+
+const EMOTION_CONFIG: Record<EmotionState, EmotionVisual> = {
+  // 平静求知（默认）：友好微笑
+  calm: {
+    bubbleText: "我在听呢~",
+    mouthPath: "M 85 95 Q 100 108 115 95",
+    bodyStart: "#E8F4FD",
+    bodyEnd: "#B3D9F7",
+    cheekOpacity: 1,
+  },
+  // 恐慌：关切表情 + 安抚
+  panic: {
+    bubbleText: "别怕，我陪着你~",
+    mouthPath: "M 88 100 Q 100 96 112 100",
+    bodyStart: "#FDEFE8",
+    bodyEnd: "#F7D4B3",
+    cheekOpacity: 0.7,
+    browPath: "M 74 62 Q 82 58 90 62 M 110 62 Q 118 58 126 62",
+  },
+  // 焦虑：温和表情 + 安定
+  anxiety: {
+    bubbleText: "我们慢慢来~",
+    mouthPath: "M 86 98 Q 100 104 114 98",
+    bodyStart: "#F2F0FB",
+    bodyEnd: "#D8CFF0",
+    cheekOpacity: 0.85,
+  },
+  // 绝望：温柔表情 + 托住
+  despair: {
+    bubbleText: "我一直在你身边~",
+    mouthPath: "M 87 99 Q 100 103 113 99",
+    bodyStart: "#EAF6F0",
+    bodyEnd: "#C2E6D5",
+    cheekOpacity: 0.9,
+  },
+  // 急症倾向：关切/严肃表情 + 强调安全/就医
+  urgent: {
+    bubbleText: "你的安全最重要",
+    mouthPath: "M 88 101 L 112 101",
+    bodyStart: "#FDEAEA",
+    bodyEnd: "#F5C2C2",
+    cheekOpacity: 0.5,
+    browPath: "M 74 60 Q 82 57 90 61 M 110 61 Q 118 57 126 60",
+  },
+};
+
+const DEFAULT_EMOTION: EmotionState = "calm";
+
+/**
+ * 将任意输入归一化为已知情绪状态；缺失或无法识别 → calm（R5.3）。
+ */
+function resolveEmotion(emotion?: EmotionState | string): EmotionVisual {
+  if (emotion && Object.prototype.hasOwnProperty.call(EMOTION_CONFIG, emotion)) {
+    return EMOTION_CONFIG[emotion as EmotionState];
+  }
+  return EMOTION_CONFIG[DEFAULT_EMOTION];
+}
+
+type MascotProps = {
+  /** 情绪状态，缺失或无法识别时回退为 calm（R5.1 / R5.3） */
+  emotion?: EmotionState | string;
+};
+
+const Mascot: React.FC<MascotProps> = ({ emotion }) => {
+  const visual = resolveEmotion(emotion);
+
   return (
     <div className="mascot-container">
       <svg
@@ -8,7 +92,7 @@ const Mascot: React.FC = () => {
         viewBox="0 0 200 200"
         width="120"
         height="120"
-        aria-label="患癌知光吉祥物：小光"
+        aria-label={`患癌知光吉祥物：小光（${visual.bubbleText}）`}
       >
         {/* 光环/光晕 - 代表希望和知识 */}
         <defs>
@@ -18,8 +102,8 @@ const Mascot: React.FC = () => {
             <stop offset="100%" stopColor="#FFD4A3" stopOpacity="0" />
           </radialGradient>
           <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#E8F4FD" />
-            <stop offset="100%" stopColor="#B3D9F7" />
+            <stop offset="0%" stopColor={visual.bodyStart} />
+            <stop offset="100%" stopColor={visual.bodyEnd} />
           </linearGradient>
           <linearGradient id="cheekGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FFB6C1" stopOpacity="0.6" />
@@ -40,6 +124,11 @@ const Mascot: React.FC = () => {
         <circle cx="100" cy="35" r="15" fill="#5B9BD5" />
         <rect x="95" y="25" width="10" height="15" rx="5" fill="#5B9BD5" />
 
+        {/* 眉毛 - 仅在关切/严肃情绪下显示，强化表情差异 */}
+        {visual.browPath && (
+          <path d={visual.browPath} stroke="#5B7B9B" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        )}
+
         {/* 眼睛 - 大大的可爱眼睛 */}
         <ellipse cx="82" cy="75" rx="8" ry="10" fill="#333" />
         <ellipse cx="118" cy="75" rx="8" ry="10" fill="#333" />
@@ -48,11 +137,11 @@ const Mascot: React.FC = () => {
         <circle cx="121" cy="72" r="3" fill="white" />
 
         {/* 腮红 */}
-        <ellipse cx="70" cy="88" rx="10" ry="6" fill="url(#cheekGradient)" />
-        <ellipse cx="130" cy="88" rx="10" ry="6" fill="url(#cheekGradient)" />
+        <ellipse cx="70" cy="88" rx="10" ry="6" fill="url(#cheekGradient)" opacity={visual.cheekOpacity} />
+        <ellipse cx="130" cy="88" rx="10" ry="6" fill="url(#cheekGradient)" opacity={visual.cheekOpacity} />
 
-        {/* 微笑 */}
-        <path d="M 85 95 Q 100 108 115 95" stroke="#FF6B9D" strokeWidth="3" fill="none" strokeLinecap="round" />
+        {/* 嘴型 - 随情绪状态变化 */}
+        <path d={visual.mouthPath} stroke="#FF6B9D" strokeWidth="3" fill="none" strokeLinecap="round" />
 
         {/* 听诊器 - 代表医疗 */}
         <path d="M 60 100 Q 50 120 55 135" stroke="#5B9BD5" strokeWidth="3" fill="none" strokeLinecap="round" />
@@ -70,11 +159,11 @@ const Mascot: React.FC = () => {
           />
         </g>
 
-        {/* 文字气泡 */}
+        {/* 文字气泡 - 随情绪状态变化 */}
         <g>
-          <rect x="55" y="155" width="90" height="22" rx="11" fill="white" stroke="#E0E0E0" strokeWidth="1" />
+          <rect x="40" y="155" width="120" height="22" rx="11" fill="white" stroke="#E0E0E0" strokeWidth="1" />
           <text x="100" y="169" textAnchor="middle" fontSize="10" fill="#666" fontFamily="Arial, sans-serif">
-            我在听呢~
+            {visual.bubbleText}
           </text>
         </g>
       </svg>

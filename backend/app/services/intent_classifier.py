@@ -55,6 +55,40 @@ PROHIBITED_KEYWORDS = [
     "直接告诉我答案", "确诊",
 ]
 
+# 罕见病关键词词表（窄切口打深井：聚焦少数代表病种 + 中英文别名）
+# 全部以小写存储，匹配时与 query_lower 做包含判断
+RARE_DISEASE_KEYWORDS = [
+    # SMA / 脊髓性肌萎缩
+    "sma", "脊髓性肌萎缩", "脊髓性肌萎缩症", "脊肌萎缩症",
+    # ALS / 渐冻症 / 肌萎缩侧索硬化
+    "als", "渐冻症", "渐冻人", "肌萎缩侧索硬化", "肌萎缩侧索硬化症", "运动神经元病",
+    # DMD / 杜氏肌营养不良
+    "dmd", "杜氏肌营养不良", "假肥大型肌营养不良", "进行性肌营养不良",
+    # 戈谢病
+    "戈谢病", "高雪氏病", "gaucher",
+    # 法布雷病
+    "法布雷病", "法布雷", "fabry",
+    # 血友病
+    "血友病", "hemophilia", "haemophilia",
+    # 其他代表性罕见病
+    "庞贝病", "pompe", "黏多糖贮积症", "粘多糖贮积症", "mps",
+    "苯丙酮尿症", "pku", "亨廷顿舞蹈症", "亨廷顿病", "huntington",
+    "肌萎缩", "罕见病",
+]
+
+# 重症关键词词表（高发重症癌种 + 重症分期/进展信号；中英文别名）
+SEVERE_CONDITION_KEYWORDS = [
+    # 高发重症癌种
+    "胶质母细胞瘤", "胶质瘤", "glioblastoma", "gbm",
+    "胰腺癌", "pancreatic cancer",
+    "白血病", "leukemia", "leukaemia",
+    "淋巴瘤", "lymphoma",
+    # 重症分期 / 进展 / 预后信号
+    "晚期", "末期", "终末期", "转移", "转移性", "扩散", "复发", "恶化",
+    "iv期", "ⅳ期", "iv 期", "4期", "四期", "iii期", "ⅲ期", "3期", "三期",
+    "恶性", "广泛转移", "多发转移",
+]
+
 # 意图关键词映射
 INTENT_KEYWORDS = {
     IntentType.DISEASE_UNDERSTANDING: ["是什么", "什么意思", "怎么回事", "定义", "简介", "概述"],
@@ -108,6 +142,40 @@ def assess_risk_level(query: str, intent: IntentType) -> RiskLevel:
     return RiskLevel.LOW
 
 
+def detect_rare_disease(query: str) -> bool:
+    """
+    判定查询是否涉及罕见病（R9.2）。
+
+    命中 RARE_DISEASE_KEYWORDS 任一词→True；
+    无匹配或输入异常/不确定→安全返回 False（R9.4），不抛异常。
+    大小写与中英混杂均可匹配。
+    """
+    if not query or not isinstance(query, str):
+        return False
+    try:
+        query_lower = query.lower()
+        return any(kw in query_lower for kw in RARE_DISEASE_KEYWORDS)
+    except Exception:
+        return False
+
+
+def detect_severe_condition(query: str) -> bool:
+    """
+    判定查询是否涉及重症（R9.3）。
+
+    命中 SEVERE_CONDITION_KEYWORDS 任一词→True；
+    无匹配或输入异常/不确定→安全返回 False（R9.4），不抛异常。
+    大小写与中英混杂均可匹配。
+    """
+    if not query or not isinstance(query, str):
+        return False
+    try:
+        query_lower = query.lower()
+        return any(kw in query_lower for kw in SEVERE_CONDITION_KEYWORDS)
+    except Exception:
+        return False
+
+
 def get_risk_message(risk_level: RiskLevel) -> str | None:
     """获取风险提示消息"""
     messages = {
@@ -130,11 +198,17 @@ def parse_query(query: str) -> dict:
             "risk_level": RiskLevel,
             "risk_message": str | None,
             "keywords": list[str],
+            "rare_disease": bool,
+            "severe_condition": bool,
         }
     """
     intent = classify_intent(query)
     risk_level = assess_risk_level(query, intent)
     risk_message = get_risk_message(risk_level)
+
+    # 罕见病/重症标记（独立于 risk_level 判定，互不影响 R9.6）
+    rare_disease = detect_rare_disease(query)
+    severe_condition = detect_severe_condition(query)
 
     # 提取关键词（简单实现：去除停用词后的词列表）
     stopwords = {"的", "了", "是", "在", "我", "有", "和", "就", "不", "人", "都", "一", "一个", "上", "也", "很", "到", "说", "要", "去", "你", "会", "着", "没有", "看", "好", "自己", "这", "那", "什么", "怎么", "吗", "啊", "呢", "吧"}
@@ -150,4 +224,6 @@ def parse_query(query: str) -> dict:
         "risk_level": risk_level.value,
         "risk_message": risk_message,
         "keywords": keywords,
+        "rare_disease": rare_disease,
+        "severe_condition": severe_condition,
     }
