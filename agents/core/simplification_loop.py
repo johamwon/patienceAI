@@ -396,13 +396,13 @@ Output ONLY valid JSON, no other text."""
         evidence_cards = []
         for ev in evidences[:5]:
             evidence_cards.append({
-                "study_type": ev.get("source_type", "unknown"),
+                "study_type": ev.get("source_type") or "unknown",
                 "sample_size": None,
                 "intervention": None,
                 "comparator": None,
                 "outcome": ev.get("abstract", "")[:100] if ev.get("abstract") else None,
                 "limitations": None,
-                "evidence_level": ev.get("evidence_level", "unknown"),
+                "evidence_level": ev.get("evidence_level") or "unknown",
                 "source_id": ev.get("pmid") or ev.get("doi") or ev.get("nct_id") or ev.get("id", ""),
                 "source_url": ev.get("url"),
             })
