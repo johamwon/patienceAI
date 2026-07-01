@@ -24,8 +24,8 @@ settings = Settings()
 # ─── App ────────────────────────────────────────────────────────────────────
 
 app = FastAPI(
-    title="患癌知光 API",
-    description="面向患者的疑难杂症科研动态检索与通俗化解释 Agent",
+    title="医语桥 API",
+    description="面向患者的循证医学检索与通俗化解释 Agent",
     version="0.1.0",
 )
 
@@ -42,7 +42,7 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {
-        "name": "患癌知光 API",
+        "name": "医语桥 API",
         "version": "0.1.0",
         "docs": "/docs",
         "health": "/health",

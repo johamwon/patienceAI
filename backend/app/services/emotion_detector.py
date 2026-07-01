@@ -126,7 +126,7 @@ def detect_emotion(query: str, llm_client=None) -> EmotionState:
         try:
             prompt = with_persona(_EMOTION_TASK_PROMPT.format(query=query))
             messages = [{"role": "user", "content": prompt}]
-            raw = llm_client.chat(messages, temperature=0.0)
+            raw = llm_client.chat(messages, temperature=0.0, max_tokens=16)
             llm_result = _parse_llm_emotion(raw)
             if llm_result is not None:
                 return llm_result

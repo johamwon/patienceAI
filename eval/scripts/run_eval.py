@@ -22,7 +22,7 @@ DATASETS_DIR = EVAL_DIR / "datasets"
 async def run_evaluation():
     """运行完整评测管线"""
     print("=" * 60)
-    print("患癌知光 — 离线评测管线")
+    print("医语桥 — 离线评测管线")
     print("=" * 60)
 
     results = {
