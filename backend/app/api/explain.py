@@ -14,6 +14,7 @@
 """
 
 from datetime import datetime
+import asyncio
 
 from fastapi import APIRouter, HTTPException
 from ..models.schemas import ExplainRequest, ExplainResponse, EmotionState, TrialCard
@@ -124,8 +125,14 @@ async def explain_evidence(req: ExplainRequest):
     from agents.demo_scenarios import get_demo_scenario
 
     try:
-        # 1. 情绪识别（R2.5）——同步轻量函数，直接调用
-        emotion = detect_emotion(req.query, llm_client)
+        # 1. 情绪识别（R2.5）与 查询重写（检索前置）——两者互不依赖，并发执行。
+        #    detect_emotion / rewrite_query 都是含 LLM 的同步函数，用 to_thread 包裹后
+        #    asyncio.gather 并发，省去一次串行 LLM 往返。两者都需在检索前完成
+        #    （emotion 用于急症联动/陪伴，rewrite 用于选源），故在此处一起算好。
+        emotion, rewrite_result = await asyncio.gather(
+            asyncio.to_thread(detect_emotion, req.query, llm_client),
+            asyncio.to_thread(rewrite_query, req.query),
+        )
 
         # 2. 会话记忆（R4）：有 session_id 才读写；append 本轮，再取最近 N 轮做 history
         history = []
@@ -175,8 +182,7 @@ async def explain_evidence(req: ExplainRequest):
         risk_level = parsed["risk_level"]
         risk_message = parsed.get("risk_message")
 
-        # 5. 查询重写：提取医学术语 + 英文翻译
-        rewrite_result = rewrite_query(req.query)
+        # 5. 查询重写结果（已在第 1 步与情绪识别并发算好）
         print(f"[QueryRewrite] CN: '{rewrite_result.medical_terms_cn}' | EN: '{rewrite_result.medical_terms_en}'")
 
         # 6. 检索路由（R9.5）：罕见病/重症优先前沿源；否则意图映射 + 重写建议融合
@@ -187,23 +193,15 @@ async def explain_evidence(req: ExplainRequest):
             rewrite_sources = rewrite_result.suggested_sources
             sources = list(dict.fromkeys(intent_sources + rewrite_sources))
 
-        # 7. 按源类型使用对应语言的优化查询检索
+        # 7. 按源类型使用对应语言的优化查询并行检索（每源不同 query）
         try:
-            all_evidences = []
-            seen_ids: set[str] = set()
-            for source in sources:
-                optimized_query = rewrite_result.get_query_for_source(source)
-                try:
-                    results = knows_client.search(source, optimized_query, max_results=10)
-                    for ev in results:
-                        dedup_key = ev.pmid or ev.doi or ev.nct_id or ev.id
-                        if dedup_key not in seen_ids:
-                            seen_ids.add(dedup_key)
-                            all_evidences.append(ev)
-                except Exception as e:
-                    print(f"[WARN] KnowS search failed for {source}: {e}")
-                    continue
-            evidences = all_evidences
+            source_query_pairs = [
+                (source, rewrite_result.get_query_for_source(source))
+                for source in sources
+            ]
+            evidences = knows_client.search_multi_queries(
+                source_query_pairs, max_results_per_source=10
+            )
         except Exception as e:
             print(f"[WARN] KnowS search failed: {e}")
             evidences = []
@@ -256,11 +254,17 @@ async def explain_evidence(req: ExplainRequest):
             # 不缓存空结果——下次重试时可能检索成功
             return _apply_compliance_gate(result)
 
-        # 12. 多智能体通俗化翻译
-        #     传入规整后的 evidence_dicts（真实 KnowS 返回的是 Evidence 对象，
-        #     SimplificationLoop 内部以 dict 接口处理，需统一为 dict）
+        # 12. 通俗化主体回答 与 陪伴暖场白 并发执行（互不依赖，最大并行收益）。
+        #     - SimplificationLoop.run 产出 simplified_text 供 composer（仍含 1-2 次 LLM）
+        #     - generate_companion_message 生成暖场白（1 次 LLM）
+        #     急症联动已在第 10 步完成，companion 拿到的是提升后的 risk_level/risk_message。
         loop = SimplificationLoop(llm_client=llm_client, max_iterations=2)
-        loop_result = await loop.run(evidence_dicts, req.query)
+        loop_result, companion_message = await asyncio.gather(
+            loop.run(evidence_dicts, req.query),
+            generate_companion_message(
+                req.query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
+            ),
+        )
 
         # 13. 研究进展标注（R11.1）
         research_progress = [to_research_progress(ev) for ev in evidence_dicts]
@@ -271,11 +275,6 @@ async def explain_evidence(req: ExplainRequest):
             source_type = (ev.get("source_type") or "").lower()
             if source_type == "trial" and validate_nct(ev):
                 trial_cards.append(_build_trial_card(ev))
-
-        # 15. 陪伴暖场白（R3.1）——用提升后的 risk_level/risk_message
-        companion_message = await generate_companion_message(
-            req.query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
-        )
 
         result = ExplainResponse(
             layer1_conclusion=loop_result["layer1_conclusion"],

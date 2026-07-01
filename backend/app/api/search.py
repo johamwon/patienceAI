@@ -115,25 +115,18 @@ def sort_evidences(evidences: list, parsed: dict) -> list:
 
 
 def _run_search(sources: list[str], rewrite_result, max_results: int) -> list[Evidence]:
-    """按源逐个检索并去重（每个源使用对应语言的优化查询）。"""
-    all_evidences: list[Evidence] = []
-    seen_ids: set[str] = set()
+    """按源并行检索并去重（每个源使用对应语言的优化查询）。
+
+    用 knows_client.search_multi_queries 并行发起多源检索，总耗时 ≈ 最慢的单源；
+    单源异常不影响其他源；结果按 sources 顺序稳定合并去重。
+    """
     max_per_source = max_results // max(len(sources), 1) + 1
-
-    for source in sources:
-        optimized_query = rewrite_result.get_query_for_source(source)
-        try:
-            results = knows_client.search(source, optimized_query, max_per_source)
-            for ev in results:
-                dedup_key = ev.pmid or ev.doi or ev.nct_id or ev.id
-                if dedup_key not in seen_ids:
-                    seen_ids.add(dedup_key)
-                    all_evidences.append(ev)
-        except Exception as e:
-            print(f"[WARN] KnowS search failed for {source}: {e}")
-            continue
-
-    return all_evidences
+    source_query_pairs = [
+        (source, rewrite_result.get_query_for_source(source)) for source in sources
+    ]
+    return knows_client.search_multi_queries(
+        source_query_pairs, max_results_per_source=max_per_source
+    )
 
 
 @router.post("/search", response_model=SearchResponse)
