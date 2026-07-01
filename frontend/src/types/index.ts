@@ -87,6 +87,7 @@ export type ExplainResponse = {
 
 export type Subscription = {
   id: string;
+  anon_user_id?: string;
   disease_keyword: string;
   status: string;
   created_at: string;
@@ -113,3 +114,5 @@ export type InAppMessage = {
   created_at: string;
   read: boolean;
 };
+
+export type RadarChannels = Record<"in_app" | "email" | "wechat", boolean>;

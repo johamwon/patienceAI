@@ -15,9 +15,10 @@
 
 from datetime import datetime
 import asyncio
+import json
 
 from fastapi import APIRouter, HTTPException
-from ..models.schemas import ExplainRequest, ExplainResponse, EmotionState, TrialCard
+from ..models.schemas import ExplainRequest, ExplainResponse, EmotionState, TrialCard, SubscriptionOffer
 from ..services.llm_client import llm_client
 from ..services.cache_service import cache_service, start_background_refresh
 from ..services.query_rewriter import rewrite_query
@@ -36,6 +37,33 @@ _URGENT_RISK_MESSAGE = (
     "您的描述提示可能存在紧急状况，本系统无法判断病情。请立即就医或拨打急救电话，"
     "由专业医生当面评估处理。"
 )
+
+
+def _build_subscription_offer(query: str) -> SubscriptionOffer | None:
+    """Build an opt-in research radar offer from the query topic.
+
+    This does not create a subscription. It only gives the frontend a disease
+    keyword and a patient-facing prompt; creation happens only after explicit
+    user action.
+    """
+    try:
+        from agents.core.visit_prep_generator import _extract_disease_topic
+
+        topic = _extract_disease_topic(query)
+    except Exception:
+        topic = query.strip()[:20]
+
+    if not topic or len(topic.strip()) < 2:
+        return None
+
+    text = (
+        f"要不要让小光帮你持续关注「{topic}」的最新研究？"
+        "如果以后有新的高质量指南、临床试验或重要研究，"
+        "我可以通过邮件提醒你，"
+        "并用能看懂的话解释研究阶段和不确定性。"
+    )
+    text = _clean(text)
+    return SubscriptionOffer(disease_keyword=topic.strip(), prompt_text=text)
 
 
 def _evidence_to_dict(ev) -> dict:
@@ -102,6 +130,32 @@ def _is_empty_evidence_cache(cached_data: dict) -> bool:
     return cards is not None and len(cards) == 0
 
 
+_PROMPT_LEAK_MARKERS = (
+    "Rewrite this for a high school reading level",
+    "[模拟响应]",
+    "请配置 LLM_API_KEY",
+    "请你以\"小光\"的身份",
+    "用户现在需要",
+    "患者的提问：",
+    "检索到的证据摘要：",
+    "写作要求：",
+    "Got it",
+    "let's tackle",
+    "original text is",
+    "First I need",
+    "Chinese expert consensus",
+)
+
+
+def _contains_prompt_leak(data) -> bool:
+    """Detect cached mock/prompt leakage and force regeneration."""
+    try:
+        text = json.dumps(data, ensure_ascii=False)
+    except TypeError:
+        text = str(data)
+    return any(marker in text for marker in _PROMPT_LEAK_MARKERS)
+
+
 @router.post("/explain", response_model=ExplainResponse)
 async def explain_evidence(req: ExplainRequest):
     """
@@ -149,8 +203,10 @@ async def explain_evidence(req: ExplainRequest):
 
         # 3. 尝试从缓存获取（跳过空证据缓存；命中时补齐情绪/陪伴等会话相关字段）
         cached_result = cache_service.get(req.query, max_results=5)
-        if cached_result is not None and _is_empty_evidence_cache(cached_result):
-            print(f"[Cache] 跳过空证据缓存，重新检索: {req.query[:30]}...")
+        if cached_result is not None and (
+            _is_empty_evidence_cache(cached_result) or _contains_prompt_leak(cached_result)
+        ):
+            print(f"[Cache] 跳过不可用缓存，重新检索: {req.query[:30]}...")
             cache_service.delete(req.query, max_results=5)
             cached_result = None
         if cached_result is not None:
@@ -173,6 +229,7 @@ async def explain_evidence(req: ExplainRequest):
             result.companion_message = await generate_companion_message(
                 req.query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
             )
+            result.subscription_offer = _build_subscription_offer(req.query)
             return _apply_compliance_gate(result)
 
         print(f"[Cache] 缓存未命中，开始生成: {req.query[:30]}...")
@@ -250,6 +307,7 @@ async def explain_evidence(req: ExplainRequest):
                 emotion_state=emotion.value,
                 trial_cards=[],
                 research_progress=[],
+                subscription_offer=_build_subscription_offer(req.query),
             )
             # 不缓存空结果——下次重试时可能检索成功
             return _apply_compliance_gate(result)
@@ -286,6 +344,7 @@ async def explain_evidence(req: ExplainRequest):
             emotion_state=emotion.value,
             trial_cards=trial_cards,
             research_progress=research_progress,
+            subscription_offer=_build_subscription_offer(req.query),
         )
 
         # 16. 写入缓存（仅缓存有证据的结果）
@@ -356,6 +415,10 @@ def _apply_compliance_gate(result: ExplainResponse) -> ExplainResponse:
         progress.summary = _clean(progress.summary)
         if progress.uncertainty_note:
             progress.uncertainty_note = _clean(progress.uncertainty_note)
+
+    # 4.5) 订阅邀约
+    if result.subscription_offer is not None:
+        result.subscription_offer.prompt_text = _clean(result.subscription_offer.prompt_text)
 
     # 5) 第二层证据卡片文本字段
     for card in result.layer2_evidence_cards or []:

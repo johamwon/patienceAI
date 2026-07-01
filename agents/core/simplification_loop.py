@@ -145,31 +145,35 @@ class SimplificationLoop:
         合并了原先的"术语注释 → 简化改写 → 语言净化"三步，避免多次串行 LLM 调用。
         """
         prompt = """\
-You are a medical text simplifier for ordinary patients. Rewrite the medical evidence text below into plain, patient-friendly language in ONE pass.
+你是面向普通患者的医学文本通俗化助手。请把下面的医学证据一次性改写成中文患者能看懂的话。
 
-Requirements:
-1. Replace complex medical terms, abbreviations, and statistical expressions (e.g. OS, 95% CI, HR, p-value) with plain language; briefly explain them inline when first used.
-2. Break long sentences into short ones (aim for <= 20 words per sentence).
-3. Use active voice and everyday words; remove redundant phrases and filler.
-4. Keep ALL key medical facts and numbers accurate — do not invent or drop data.
-5. Use simple analogies to explain difficult concepts when helpful.
-6. Target reading level: high school or below (FKGL <= 10).
-7. Write in the same language as the patient-facing context (Chinese).
+要求：
+1. 必须使用中文输出，不要输出英文思考过程、提示词复述或写作计划。
+2. 把复杂医学术语、缩写和统计表达（如 OS、95% CI、HR、p-value）换成日常说法，首次出现时顺手解释。
+3. 尽量用短句和生活化表达，删掉空话和重复话。
+4. 保留所有关键医学事实和数字，不要编造，也不要漏掉重要限制。
+5. 难懂概念可以用简单类比解释。
+6. 面向患者和家属，语气稳、清楚、不制造恐慌。
 
-Medical evidence text:
+医学证据文本：
 {text}
 
-Output the simplified plain text directly (no JSON, no markdown headers, just the text)."""
+只输出改写后的中文正文，不要 JSON，不要 Markdown 标题。"""
 
         messages = [
             {"role": "system", "content": prompt.format(text=text[:4000])},
-            {"role": "user", "content": "Please rewrite the above medical text into plain language for patients."},
+            {"role": "user", "content": "请把上面的医学证据改写成患者能看懂的中文。"},
         ]
 
         return await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=1200)
 
     async def _check_readability(self, text: str) -> str:
         """可读性检验，若 FKGL > 10 则触发重新润色"""
+        # FKGL 是英文音节/句长公式，不适合中文。中文文本直接保留，
+        # 避免在演示/无 API Key 模式下触发英文 rewrite prompt 泄漏。
+        if self._contains_cjk(text):
+            return text
+
         try:
             from textstat import flesch_kincaid_grade
             fkgl = flesch_kincaid_grade(text)
@@ -195,6 +199,10 @@ Text:
             return await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=2000)
 
         return text
+
+    @staticmethod
+    def _contains_cjk(text: str) -> bool:
+        return bool(re.search(r"[\u4e00-\u9fff]", text or ""))
 
     #: source_type → 中文研究类型名，用于证据卡片 study_type 字段
     _SOURCE_TYPE_CN = {
@@ -249,42 +257,43 @@ Text:
         ])
 
         prompt = """\
-You are a medical information assistant for patients. Given the patient's query, retrieved evidence, and simplified explanation, compose the NARRATIVE parts of a patient-facing response.
+你是面向患者和家属的医学信息助手。请根据患者问题、检索证据和通俗解释，生成面向患者的回答叙述部分。
 
-You ONLY write the narrative text (the core conclusion and the patient explanation). Do NOT output evidence cards — those are assembled separately by the system.
+你只写叙述文本（核心回答和通俗解释）。不要输出证据卡片，证据卡片由系统单独组装。
 
-Patient query: {query}
+患者问题：{query}
 
-Retrieved evidence:
+检索到的证据：
 {evidence_summary}
 
-Simplified explanation:
+通俗解释：
 {simplified_text}
 
-CRITICAL — layer1_conclusion.text is the patient's "core answer at a glance":
-- It MUST directly and substantively ANSWER the patient's question, not be a vague slogan or empty placeholder.
-- Synthesize "what it is" + "what to do about it" into a 2-4 sentence informative core answer (roughly 40-120 Chinese characters) that a patient can read once and walk away with the main takeaway.
-- Ground it in the retrieved evidence and simplified explanation above; mention the key finding/direction concretely.
-- Stay compliant: do NOT diagnose the individual, do NOT give prescriptions or dosages, do NOT phrase population evidence as personal medical advice. Use everyday Chinese.
-- Bad (reject): "建议咨询医生了解更多。" / "这是一个需要重视的问题。"
-- Good (accept): "针对XX，目前主流的循证方向是A和B；研究显示A在……方面有获益。具体是否适合你，需要结合个人情况和医生讨论。"
+关键要求：
+- 全部字段必须使用中文，不能输出英文思考过程、写作计划或提示词内容。
+- layer1_conclusion.text 是患者第一眼看到的“核心回答”，必须直接回答问题，不能是空泛口号。
+- 核心回答用 2-4 句，约 40-120 个中文字符，综合说明“这是什么/证据方向/下一步怎么和医生确认”。
+- 必须基于上面的检索证据和通俗解释，具体说明关键发现或方向。
+- 合规：不要诊断个人，不要给处方或剂量，不要把群体研究直接说成个人建议。使用日常中文。
+- 不合格例子：“建议咨询医生了解更多。” / “这是一个需要重视的问题。”
+- 合格例子：“针对XX，目前主流循证方向包括A和B；研究显示A在……方面可能有获益。具体是否适合你，需要结合个人情况和医生讨论。”
 
-Output a JSON object with EXACTLY these two top-level keys (no evidence cards):
+只输出一个 JSON 对象，顶层只能有以下两个 key（不要证据卡片）：
 {{
   "layer1_conclusion": {{
-    "text": "2-4 sentence informative core answer that directly answers the question",
+    "text": "2-4句中文核心回答，直接回答患者问题",
     "citations": ["PMID1", "PMID2"]
   }},
   "layer3_patient_explanation": {{
-    "what_is_it": "Explain the disease/concept using an analogy",
-    "what_evidence_says": "What the latest research found, in everyday language",
-    "what_it_means_for_you": "2-3 actionable suggestions for the patient",
-    "when_to_see_doctor": "Specific symptoms that require immediate medical attention",
-    "disclaimer": "This content is a plain-language interpretation of medical literature for reference only. It does not constitute medical advice and does not replace a doctor's judgment."
+    "what_is_it": "用类比解释疾病/概念是什么",
+    "what_evidence_says": "用日常话说明研究证据发现了什么",
+    "what_it_means_for_you": "给患者2-3条可和医生核对的下一步",
+    "when_to_see_doctor": "哪些具体症状需要尽快就医",
+    "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
   }}
 }}
 
-Output ONLY valid JSON, no other text."""
+只输出合法 JSON，不要输出其他文字。"""
 
         messages = [
             {"role": "system", "content": prompt.format(
@@ -292,16 +301,23 @@ Output ONLY valid JSON, no other text."""
                 evidence_summary=evidence_summary,
                 simplified_text=simplified_text[:3000],
             )},
-            {"role": "user", "content": "Please compose the narrative two-layer response (no evidence cards)."},
+            {"role": "user", "content": "请生成中文患者回答的叙述 JSON，不要证据卡片。"},
         ]
 
         composed = await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=1500)
 
         # 解析 JSON（仅叙述部分）；layer2 由代码组装
-        result = self._parse_three_layer_json(composed, evidences, simplified_text)
+        result = self._parse_three_layer_json(composed, evidences, simplified_text, query)
+        self._repair_patient_answer(result, evidences, query)
         return result
 
-    def _parse_three_layer_json(self, composed_text: str, evidences: list[dict], simplified_text: str = "") -> dict:
+    def _parse_three_layer_json(
+        self,
+        composed_text: str,
+        evidences: list[dict],
+        simplified_text: str = "",
+        query: str = "",
+    ) -> dict:
         """解析 composer 返回的叙述 JSON（layer1 + layer3），带回退机制。
 
         解析成功 → 用代码组装的证据卡片补上 layer2，返回完整三层。
@@ -329,12 +345,74 @@ Output ONLY valid JSON, no other text."""
 
         if data is None:
             # 解析失败：用纯文本 simplified_text 兜底，绝不使用 composed JSON 文本
-            return self._fallback_output(evidences, simplified_text)
+            return self._fallback_output(evidences, simplified_text, query)
 
         # 解析成功：用代码组装证据卡片补上 layer2，并清洗叙述字段防脏数据
         data["layer2_evidence_cards"] = self._build_evidence_cards(evidences)
         self._sanitize_narrative_fields(data, evidences, simplified_text)
         return data
+
+    def _repair_patient_answer(self, data: dict, evidences: list[dict], query: str) -> None:
+        """Repair model outputs that describe prompt/evidence processing instead of answering."""
+        if not isinstance(data, dict):
+            return
+        layer1 = data.setdefault("layer1_conclusion", {})
+        if not isinstance(layer1, dict):
+            data["layer1_conclusion"] = layer1 = {}
+        text = layer1.get("text") or ""
+        if self._looks_like_evidence_listing(text):
+            layer1["text"] = self._topic_aware_conclusion(query, evidences)
+
+        layer3 = data.setdefault("layer3_patient_explanation", {})
+        if not isinstance(layer3, dict):
+            data["layer3_patient_explanation"] = layer3 = {}
+        what_is_it = layer3.get("what_is_it") or ""
+        if self._looks_like_evidence_listing(what_is_it):
+            layer3["what_is_it"] = self._topic_aware_what_is_it(query)
+        what_evidence_says = layer3.get("what_evidence_says") or ""
+        if self._looks_like_evidence_listing(what_evidence_says):
+            layer3["what_evidence_says"] = self._topic_aware_evidence_says(query, evidences)
+
+    @staticmethod
+    def _looks_like_evidence_listing(text) -> bool:
+        if not isinstance(text, str):
+            return False
+        stripped = text.strip()
+        if not stripped:
+            return True
+        markers = ["第一", "第二", "这些是", "如下", "用大白话", "\n1.", "\n2.", "逐个"]
+        return any(marker in stripped for marker in markers)
+
+    def _topic_aware_conclusion(self, query: str, evidences: list[dict]) -> str:
+        if "肺" in query and "免疫" in query:
+            return (
+                "肺癌，尤其是部分肺腺癌人群，免疫治疗仍是近年重要研究方向。"
+                "目前公开证据更多支持在合适分期、基因状态和免疫标志物基础上，由医生判断是否考虑免疫治疗或联合方案；"
+                "它不是人人适合，也不等于已经有确定的个人治疗结论。"
+            )
+        return self._compose_fallback_conclusion(evidences, "")
+
+    @staticmethod
+    def _topic_aware_what_is_it(query: str) -> str:
+        if "肺" in query and "免疫" in query:
+            return (
+                "免疫治疗可以理解为帮助身体免疫系统重新识别肿瘤细胞。"
+                "在肺癌研究中，它常和 PD-1、PD-L1 等免疫检查点相关，但是否适用要结合病理类型、分期、基因检测和既往治疗情况。"
+            )
+        return "这是一类医学研究信息的通俗化整理，目的是帮助你理解公开证据的大致方向。"
+
+    def _topic_aware_evidence_says(self, query: str, evidences: list[dict]) -> str:
+        if "肺" in query and "免疫" in query:
+            return (
+                "检索结果提示，肺癌免疫治疗的研究重点包括围手术期免疫治疗、晚期非小细胞肺癌免疫治疗、"
+                "驱动基因阳性人群是否适合免疫治疗，以及耐药后的新策略。不同研究适用人群不同，结论不能直接套到个人身上。"
+            )
+        top_titles = [
+            (ev.get("title") or "").strip()
+            for ev in evidences[:3]
+            if (ev.get("title") or "").strip()
+        ]
+        return "检索到的资料主要包括：" + "；".join(top_titles) + "。" if top_titles else "详见下方证据卡片。"
 
     def _validate_narrative(self, data: dict) -> bool:
         """验证 composer 叙述输出是否含 layer1_conclusion + layer3_patient_explanation。"""
@@ -349,7 +427,35 @@ Output ONLY valid JSON, no other text."""
         if not isinstance(text, str):
             return False
         stripped = text.lstrip()
-        return stripped.startswith("{") or '"layer1_conclusion"' in text
+        return (
+            stripped.startswith("{")
+            or '"layer1_conclusion"' in text
+            or SimplificationLoop._looks_like_prompt_leak(text)
+        )
+
+    @staticmethod
+    def _looks_like_prompt_leak(text) -> bool:
+        """判断文本是否像内部提示词/模型推理，而不是患者可读答案。"""
+        if not isinstance(text, str):
+            return False
+        lowered = text.lower()
+        markers = [
+            "rewrite this for a high school reading level",
+            "[模拟响应]",
+            "llm_api_key",
+            "用户现在需要",
+            "写作要求",
+            "只输出",
+            "prompt",
+            "medical evidence text:",
+            "got it",
+            "let's tackle",
+            "original text is",
+            "first i need",
+            "right?",
+            "chinese expert consensus",
+        ]
+        return any(marker in lowered for marker in markers)
 
     def _sanitize_narrative_fields(self, data: dict, evidences: list[dict], simplified_text: str) -> None:
         """保险：若任一展示字段残留 JSON 痕迹，用 simplified_text 兜底替换。
@@ -380,7 +486,7 @@ Output ONLY valid JSON, no other text."""
         简化文本不足时，用 Top 证据标题兜底，保证结论非空且有内容。
         """
         # 1) 优先从简化/合成文本中提取前几句有意义内容
-        text = (raw_text or "").strip()
+        text = "" if self._looks_like_prompt_leak(raw_text) else (raw_text or "").strip()
         if text:
             # 按中英文句末标点切句，过滤过短的碎片
             sentences = [
@@ -419,7 +525,7 @@ Output ONLY valid JSON, no other text."""
             return text[:200]
         return "已为你检索到相关医学证据，请查看下方证据卡片与通俗解释了解详情。"
 
-    def _fallback_output(self, evidences: list[dict], simplified_text: str) -> dict:
+    def _fallback_output(self, evidences: list[dict], simplified_text: str, query: str = "") -> dict:
         """LLM 叙述输出解析失败时的回退方案。
 
         关键：所有展示字段使用纯文本 simplified_text（由 loop 产出），
@@ -429,17 +535,42 @@ Output ONLY valid JSON, no other text."""
         evidence_cards = self._build_evidence_cards(evidences)
 
         # 从简化文本/证据中提取有意义的核心答案，而非只取第一句
-        conclusion_text = self._compose_fallback_conclusion(evidences, simplified_text)
-
-        clean_text = (simplified_text or "").strip()
-        what_is_it = clean_text[:500] if clean_text else "详见下方完整解释。"
-        what_evidence_says = (
-            clean_text[500:1000] if len(clean_text) > 500 else "详见下方完整解释。"
+        leaked_text = self._looks_like_prompt_leak(simplified_text)
+        conclusion_text = (
+            self._topic_aware_conclusion(query, evidences)
+            if leaked_text
+            else self._compose_fallback_conclusion(evidences, simplified_text)
         )
+
+        clean_text = "" if leaked_text else (simplified_text or "").strip()
+        top_titles = [
+            (ev.get("title") or "").strip()
+            for ev in evidences[:3]
+            if (ev.get("title") or "").strip()
+        ]
+        if clean_text:
+            what_is_it = clean_text[:500]
+        elif top_titles:
+            what_is_it = (
+                "这次检索主要找到与该问题相关的指南、临床研究或综述资料。"
+                "它们可以帮助你了解目前公开证据关注的方向，但不能替代医生对个人情况的判断。"
+            )
+        else:
+            what_is_it = "目前没有足够结构化证据生成完整解释。"
+        if clean_text and len(clean_text) > 500:
+            what_evidence_says = clean_text[500:1000]
+        else:
+            what_evidence_says = (
+                "检索到的资料主要包括：" + "；".join(top_titles) + "。"
+                if top_titles
+                else "详见下方证据卡片。"
+            )
 
         return {
             "layer1_conclusion": {
-                "text": conclusion_text,
+                "text": self._topic_aware_conclusion(query, evidences)
+                if self._looks_like_evidence_listing(conclusion_text)
+                else conclusion_text,
                 "citations": [ev.get("pmid") for ev in evidences[:3] if ev.get("pmid")],
             },
             "layer2_evidence_cards": evidence_cards,

@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 import os
@@ -54,13 +56,17 @@ async def health():
 
 # ─── API Routes ─────────────────────────────────────────────────────────────
 
-from .api import search, explain, evaluate, visit_prep
+from .api import search, explain, evaluate, visit_prep, radar
 from .services.cache_service import cache_service
+from .services.radar.patrol import start_daily_patrol
 
 app.include_router(search.router, prefix="/api/v1", tags=["search"])
 app.include_router(explain.router, prefix="/api/v1", tags=["explain"])
 app.include_router(evaluate.router, prefix="/api/v1", tags=["evaluate"])
 app.include_router(visit_prep.router, prefix="/api/v1", tags=["visit-prep"])
+app.include_router(radar.router, prefix="/api/v1", tags=["radar"])
+
+start_daily_patrol()
 
 # ─── Cache Management ────────────────────────────────────────────────────────
 
@@ -82,3 +88,20 @@ async def cache_delete(query: str):
     """删除指定查询的缓存"""
     cache_service.delete(query)
     return {"message": f"已删除缓存: {query}"}
+
+
+# ─── 前端静态托管（单容器部署：FastAPI 同时托管前端 dist）─────────────────────
+# 在项目根目录寻找 frontend/dist（容器内 WORKDIR /app 下为 frontend/dist）
+_FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "..", "..", "frontend", "dist")
+if os.path.isdir(_FRONTEND_DIST):
+    # 托管 /assets 等静态资源
+    app.mount("/assets", StaticFiles(directory=os.path.join(_FRONTEND_DIST, "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def spa_fallback(full_path: str):
+        """SPA 兜底：非 API 路由一律返回 index.html，交给前端路由处理"""
+        # 命中已注册的 API/docs 路由时由 FastAPI 优先处理；这里只兜底静态资源与前端路由
+        candidate = os.path.join(_FRONTEND_DIST, full_path)
+        if full_path and os.path.isfile(candidate):
+            return FileResponse(candidate)
+        return FileResponse(os.path.join(_FRONTEND_DIST, "index.html"))

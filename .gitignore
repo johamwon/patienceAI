@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 venv/
 .env
+.modelscope_token
 node_modules/
 dist/
 build/

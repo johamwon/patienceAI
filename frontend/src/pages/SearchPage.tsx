@@ -6,45 +6,61 @@ import ExplanationView from "../components/ExplanationView";
 import Mascot from "../components/Mascot";
 
 const DEMO_QUERIES = [
-  "肺腺癌免疫治疗最新进展",
-  "CAR-T疗法实体瘤最新研究",
-  "PD-L1表达检测是什么意思",
-  "断食可以饿死癌细胞吗",
-  "奥希替尼和吉非替尼哪个更好",
+  "PD-L1阳性到底代表什么？",
+  "报告里写的EGFR突变是什么意思？",
+  "免疫治疗和化疗有什么区别？",
+  "肿瘤标志物升高是不是复发了？",
+  "临床试验适合什么样的人参加？",
 ];
 
 const DISEASE_CATEGORIES = [
   {
-    category: "肺癌",
+    category: "报告看不懂",
     icon: "🫁",
-    queries: ["肺腺癌免疫治疗", "小细胞肺癌最新疗法", "EGFR突变靶向治疗"],
+    queries: ["PD-L1表达检测是什么意思", "EGFR突变阳性是什么意思", "Ki-67高说明什么"],
   },
   {
-    category: "消化道肿瘤",
+    category: "治疗怎么选",
     icon: "🏥",
-    queries: ["胰腺癌治疗新进展", "胃癌靶向治疗", "结直肠癌免疫治疗"],
+    queries: ["免疫治疗和靶向治疗有什么区别", "化疗后还要不要免疫治疗", "临床试验值得了解吗"],
   },
   {
-    category: "血液肿瘤",
+    category: "新药和新研究",
     icon: "🩸",
-    queries: ["CAR-T疗法淋巴瘤", "多发性骨髓瘤新药", "白血病靶向治疗"],
+    queries: ["CAR-T疗法适合实体瘤吗", "ADC药物是什么意思", "最新指南更新怎么看"],
   },
   {
-    category: "罕见病",
+    category: "复查和复发担心",
     icon: "🧬",
-    queries: ["SMA基因疗法", "渐冻症ALS最新研究", "血友病基因治疗"],
+    queries: ["肿瘤标志物升高一定是复发吗", "影像报告说结节增大怎么办", "复查前要准备哪些资料"],
   },
   {
-    category: "神经系统肿瘤",
+    category: "副作用处理",
     icon: "🧠",
-    queries: ["胶质母细胞瘤新疗法", "脑膜瘤治疗方案"],
+    queries: ["免疫治疗皮疹需要注意什么", "化疗后白细胞低怎么办", "靶向药腹泻什么时候就医"],
   },
   {
-    category: "乳腺癌",
+    category: "网上信息求证",
     icon: "🎀",
-    queries: ["HER2阳性靶向治疗", "三阴性乳腺癌免疫治疗"],
+    queries: ["断食可以饿死癌细胞吗", "保健品能不能抗癌", "某某新疗法真的有效吗"],
   },
 ];
+
+function getOrCreateAnonUserId(): string {
+  const key = "yiyuqiao_radar_anon_user_id";
+  try {
+    const existing = localStorage.getItem(key);
+    if (existing) return existing;
+    const next =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `anon-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    localStorage.setItem(key, next);
+    return next;
+  } catch {
+    return `anon-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+}
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -62,6 +78,8 @@ export default function SearchPage() {
       ? crypto.randomUUID()
       : `sess-${Date.now()}-${Math.random().toString(36).slice(2)}`
   );
+
+  const anonUserIdRef = useRef<string>(getOrCreateAnonUserId());
 
   // 就医准备包状态（OQ2：嵌入解释结果，按需触发，不阻塞主流程）
   const [visitPrep, setVisitPrep] = useState<VisitPrepResponse | null>(null);
@@ -151,7 +169,7 @@ export default function SearchPage() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="请输入您想了解的疾病、药物或治疗方案"
+            placeholder="输入你看不懂的报告、检查指标、药名或治疗问题"
             className="search-input"
             disabled={loading}
           />
@@ -167,7 +185,7 @@ export default function SearchPage() {
           className="toggle-btn"
           onClick={() => setShowDiseaseSelector(!showDiseaseSelector)}
         >
-          {showDiseaseSelector ? "收起疾病列表" : "🔍 从疑难杂症列表中选择"}
+          {showDiseaseSelector ? "收起问题分类" : "按常见困惑选一个问题"}
         </button>
       </div>
 
@@ -196,7 +214,7 @@ export default function SearchPage() {
 
       {/* Demo Queries */}
       <div className="demo-queries">
-        <span className="demo-label">试试这些演示：</span>
+        <span className="demo-label">你可以这样问：</span>
         {DEMO_QUERIES.map((q) => (
           <button
             key={q}
@@ -231,6 +249,7 @@ export default function SearchPage() {
           visitPrep={visitPrep}
           visitPrepLoading={visitPrepLoading}
           visitPrepError={visitPrepError}
+          anonUserId={anonUserIdRef.current}
         />
       )}
 
