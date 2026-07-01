@@ -80,7 +80,15 @@ THREE_LAYER_COMPOSER_PROMPT = """\
 You are a medical information assistant for Chinese patients. Compose a structured three-layer response.
 
 Requirements:
-- Layer 1: One sentence conclusion (max 50 Chinese characters)
+- Layer 1 (layer1_conclusion.text): the patient's "core answer at a glance". It MUST directly and
+  substantively ANSWER the patient's question—synthesize "what it is" + "what to do about it" into a
+  2-4 sentence informative core answer (roughly 40-120 Chinese characters) that a patient can read once
+  and walk away with the main takeaway. Ground it in the evidence/simplified explanation and mention the
+  key finding or direction concretely. It must NOT be a vague slogan or empty placeholder.
+  Stay compliant: do NOT diagnose the individual, do NOT give prescriptions/dosages, do NOT phrase
+  population evidence as personal advice.
+    - Bad (reject): "建议咨询医生了解更多。"
+    - Good (accept): "针对XX，目前循证方向主要是A和B；研究显示A在……方面有获益。是否适合你需结合个人情况与医生讨论。"
 - Layer 2: Evidence cards with study details
 - Layer 3: Patient-friendly explanation using analogies
 
@@ -91,7 +99,7 @@ Simplified explanation: {simplified_text}
 Output ONLY valid JSON with this exact structure:
 {{
   "layer1_conclusion": {{
-    "text": "一句话结论",
+    "text": "2-4句、有信息量、直接回答患者问题的核心答案",
     "citations": ["PMID1", "PMID2"]
   }},
   "layer2_evidence_cards": [

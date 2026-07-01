@@ -5,6 +5,7 @@ LLM 调用封装
 """
 
 import os
+import re
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential
 from typing import Optional
@@ -93,7 +94,38 @@ class LLMClient:
         if not choices:
             raise ValueError("LLM returned empty choices")
 
-        return choices[0]["message"]["content"]
+        message = choices[0].get("message", {}) or {}
+        content = message.get("content") or ""
+        # 兼容推理类模型：content 为空时回退 reasoning_content
+        if not content.strip():
+            content = message.get("reasoning_content") or ""
+
+        return self._sanitize_content(content)
+
+    @staticmethod
+    def _sanitize_content(text: str) -> str:
+        """清理模型输出的包裹标记，便于后续 JSON / 文本解析。
+
+        - 剥离 StepFun 等模型常见的 \\boxed{...} 包裹。
+        - 剥离 markdown 代码块围栏（```json ... ``` / ``` ... ```）。
+        """
+        if not text:
+            return text
+        s = text.strip()
+
+        # 去除 ```json / ``` 代码块围栏
+        if s.startswith("```"):
+            s = re.sub(r"^```[a-zA-Z]*\s*", "", s)
+            if s.endswith("```"):
+                s = s[: -3]
+            s = s.strip()
+
+        # 去除 \boxed{ ... } 包裹（取最外层大括号内的内容）
+        boxed = re.search(r"\\boxed\{(.*)\}", s, re.DOTALL)
+        if boxed:
+            s = boxed.group(1).strip()
+
+        return s
 
     def _mock_response(self, messages: list[dict], model: str) -> str:
         """Demo 模式：无 API Key 时返回模拟响应"""

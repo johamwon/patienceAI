@@ -12,6 +12,7 @@ KnowS AI 结构化医学证据检索客户端
 
 import os
 import httpx
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from typing import Optional
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -95,7 +96,7 @@ class KnowsClient:
         max_results_per_source: int = 10,
     ) -> list[Evidence]:
         """
-        并行调用多个端点，去重后返回
+        并行调用多个端点，去重后返回（所有源使用同一 query）
 
         Args:
             query: 检索查询
@@ -103,24 +104,69 @@ class KnowsClient:
             max_results_per_source: 每个源最多返回条数
 
         Returns:
-            去重后的 Evidence 列表
+            去重后的 Evidence 列表（保持 sources 的顺序，避免结果抖动）
         """
-        all_evidence: list[Evidence] = []
-        seen_ids: set[str] = set()
+        # 所有源共用同一 query，转为 (source, query) 列表复用并行实现
+        valid_sources = [s for s in sources if s in ENDPOINTS]
+        source_query_pairs = [(s, query) for s in valid_sources]
+        return self.search_multi_queries(source_query_pairs, max_results_per_source)
 
-        for source in sources:
-            if source not in ENDPOINTS:
-                continue
+    def search_multi_queries(
+        self,
+        source_query_pairs: list[tuple[str, str]],
+        max_results_per_source: int = 10,
+    ) -> list[Evidence]:
+        """
+        并行调用多个端点（每个源可用不同的优化 query），去重后返回。
+
+        与 search_multi 的区别：允许「每源不同 query」（explain/search 里按源取不同
+        语言的优化 query 的场景）。内部用 ThreadPoolExecutor 并发发起 self.search，
+        httpx.Client 线程安全可共享连接池；单源异常不影响其他源（记录 warning 继续）。
+        总耗时 ≈ 最慢的单源，而非所有源之和。
+
+        Args:
+            source_query_pairs: (source, query) 列表，按调用方期望的优先级顺序排列
+            max_results_per_source: 每个源最多返回条数
+
+        Returns:
+            去重后的 Evidence 列表（结果按入参顺序稳定合并，去重保留首次出现）
+        """
+        # 过滤未知源，保留入参顺序
+        pairs = [(s, q) for (s, q) in source_query_pairs if s in ENDPOINTS]
+        if not pairs:
+            return []
+
+        # 并行执行：每个源在独立线程内调用 self.search（含 tenacity 重试）
+        results_by_index: list[Optional[list[Evidence]]] = [None] * len(pairs)
+        max_workers = min(len(pairs), 6)
+
+        def _do_search(index: int, source: str, q: str):
             try:
-                results = self.search(source, query, max_results_per_source)
-                for ev in results:
-                    dedup_key = self._dedup_key(ev)
-                    if dedup_key and dedup_key not in seen_ids:
-                        seen_ids.add(dedup_key)
-                        all_evidence.append(ev)
+                return index, self.search(source, q, max_results_per_source)
             except Exception as e:
                 print(f"[WARN] KnowS search failed for {source}: {e}")
+                return index, None
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(_do_search, i, source, q)
+                for i, (source, q) in enumerate(pairs)
+            ]
+            for future in futures:
+                index, results = future.result()
+                results_by_index[index] = results
+
+        # 按入参顺序合并 + 去重（顺序稳定，避免并行后结果抖动）
+        all_evidence: list[Evidence] = []
+        seen_ids: set[str] = set()
+        for results in results_by_index:
+            if not results:
                 continue
+            for ev in results:
+                dedup_key = self._dedup_key(ev)
+                if dedup_key and dedup_key not in seen_ids:
+                    seen_ids.add(dedup_key)
+                    all_evidence.append(ev)
 
         return all_evidence
 

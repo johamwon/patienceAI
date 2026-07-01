@@ -122,148 +122,51 @@ class SimplificationLoop:
 
     async def _run_simplification_loop(self, medical_text: str, query: str) -> str:
         """
-        运行五位一体 Simplification Loop
+        运行通俗化改写（性能优化版：单次 LLM 调用 + 必要时一次可读性重写）。
 
-        简化版流程（MVP 阶段合并部分步骤以减少 LLM 调用次数）：
-        1. Layperson + Medical Expert → 术语注释（一次 LLM 调用）
-        2. Simplifier → 通俗化改写（一次 LLM 调用）
-        3. Language Clarifier + Redundancy Checker → 精简净化（一次 LLM 调用）
-        4. 可读性检验 + 必要时重写
+        历史上这里是"五位一体"多轮循环（术语注释→简化→净化，最多 6 次 LLM 调用），
+        但后续 composer 还会重组叙述，多轮迭代对最终质量提升有限却显著拖慢响应。
+        现在合并为"一次通俗化改写"：用单个提示词让模型直接把医学证据文本通俗化
+        （替换术语、短句、主动语态、保留数字事实、目标高中以下可读性）。
+
+        LLM 调用次数：1 次通俗化改写 + 最多 1 次可读性重写（仅当 FKGL 明显超标）。
+        对外行为不变：返回纯文本 simplified_text 供 composer 使用。
         """
-        current_text = medical_text
-        prev_text = ""
+        # ── Step 1: 一次性通俗化改写（合并原术语注释 + 简化 + 净化三步）──────────
+        simplified = await self._call_popularize_agent(medical_text)
 
-        for iteration in range(self.max_iterations):
-            # ── Step 1+2: Layperson + Medical Expert (combined) ─────────────────
-            annotations = await self._call_combined_layperson_expert(current_text)
-
-            # ── Step 3: Simplifier ────────────────────────────────────────────
-            simplified = await self._call_simplifier_agent(current_text, annotations)
-
-            # ── Step 4+5: Language Clarifier + Redundancy Checker (combined) ───
-            polished = await self._call_combined_clarifier_checker(simplified)
-            t_i = polished
-
-            # ── Step 6: 收敛判断 ────────────────────────────────────────────
-            converged = await self._check_convergence(prev_text, t_i)
-            if converged:
-                break
-            prev_text = t_i
-            current_text = t_i
-
-        # ── Step 7: 可读性检验 ──────────────────────────────────────────────
-        final_text = await self._check_readability(t_i)
+        # ── Step 2: 可读性检验，仅在明显超标时触发一次重写 ──────────────────────
+        final_text = await self._check_readability(simplified)
         return final_text
 
-    async def _call_combined_layperson_expert(self, text: str) -> dict:
-        """
-        合并 Layperson + Medical Expert 为一个 LLM 调用
-        返回术语注释列表
+    async def _call_popularize_agent(self, text: str) -> str:
+        """单次 LLM 调用：把医学证据文本直接通俗化改写为患者可读文本。
+
+        合并了原先的"术语注释 → 简化改写 → 语言净化"三步，避免多次串行 LLM 调用。
         """
         prompt = """\
-You are a medical terminology assistant. Analyze the medical text below and identify complex terms, abbreviations, and statistical expressions that ordinary patients would find difficult to understand.
-
-For each identified term, provide:
-1. The term as it appears in the text
-2. A plain-language explanation (max 20 Chinese characters)
-3. A simple analogy if possible
-
-Medical text:
-{text}
-
-Output JSON format:
-{{
-  "annotations": [
-    {{"term": "OS", "plain": "总生存期，指从治疗开始到患者死亡的时间", "analogy": "可以理解为治疗后的存活时间"}},
-    {{"term": "95% CI", "plain": "95%置信区间，表示真实值可能存在的范围", "analogy": "类似于"大概在XX到XX之间""}}
-  ],
-  "difficulty_score": 0.8
-}}
-
-Output ONLY valid JSON, no other text."""
-
-        messages = [
-            {"role": "system", "content": prompt.format(text=text[:3000])},
-            {"role": "user", "content": "Please analyze the medical terms in the text above."},
-        ]
-
-        response = await asyncio.to_thread(self.llm.chat, messages, temperature=0.1, max_tokens=1000)
-
-        # 尝试解析 JSON
-        try:
-            # 提取 JSON 部分
-            json_match = re.search(r'\{.*\}', response, re.DOTALL)
-            if json_match:
-                return json.loads(json_match.group())
-        except (json.JSONDecodeError, AttributeError):
-            pass
-        return {"annotations": [], "difficulty_score": 0.5}
-
-    async def _call_simplifier_agent(self, text: str, annotations: dict) -> str:
-        """Simplifier Agent：交叉注意力缝合，重塑文本"""
-        annotations_str = json.dumps(annotations.get("annotations", []), ensure_ascii=False, indent=2)
-
-        prompt = """\
-You are a medical text simplifier. Rewrite the following medical text for ordinary patients.
+You are a medical text simplifier for ordinary patients. Rewrite the medical evidence text below into plain, patient-friendly language in ONE pass.
 
 Requirements:
-1. Replace complex medical terms with plain language (use the annotations provided)
-2. Break long sentences into short ones (max 20 words per sentence)
-3. Use active voice
-4. Keep all key medical facts and numbers
-5. Use analogies to explain complex concepts
-6. Target reading level: high school or below (FKGL <= 10)
+1. Replace complex medical terms, abbreviations, and statistical expressions (e.g. OS, 95% CI, HR, p-value) with plain language; briefly explain them inline when first used.
+2. Break long sentences into short ones (aim for <= 20 words per sentence).
+3. Use active voice and everyday words; remove redundant phrases and filler.
+4. Keep ALL key medical facts and numbers accurate — do not invent or drop data.
+5. Use simple analogies to explain difficult concepts when helpful.
+6. Target reading level: high school or below (FKGL <= 10).
+7. Write in the same language as the patient-facing context (Chinese).
 
-Term annotations (term -> plain explanation):
-{annotations}
-
-Medical text to simplify:
+Medical evidence text:
 {text}
 
-Output the simplified text directly (no JSON, no markdown headers, just plain text)."""
-
-        messages = [
-            {"role": "system", "content": prompt.format(annotations=annotations_str, text=text[:4000])},
-            {"role": "user", "content": "Please simplify the above medical text for patients."},
-        ]
-
-        return await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=2000)
-
-    async def _call_combined_clarifier_checker(self, text: str) -> str:
-        """合并 Language Clarifier + Redundancy Checker 为一个 LLM 调用"""
-        prompt = """\
-You are a medical text editor. Polish the following patient-friendly medical text.
-
-Requirements:
-1. Replace remaining academic jargon with everyday words
-2. Remove redundant phrases and repetitive content
-3. Remove unnecessary modifiers and filler words
-4. Keep sentences concise but complete
-5. Ensure the text is easy to read and understand
-6. Do NOT change any medical facts or numbers
-
-Text to polish:
-{text}
-
-Output the polished text directly (no JSON, no markdown headers, just plain text)."""
+Output the simplified plain text directly (no JSON, no markdown headers, just the text)."""
 
         messages = [
             {"role": "system", "content": prompt.format(text=text[:4000])},
-            {"role": "user", "content": "Please polish the above text."},
+            {"role": "user", "content": "Please rewrite the above medical text into plain language for patients."},
         ]
 
-        return await asyncio.to_thread(self.llm.chat, messages, temperature=0.2, max_tokens=2000)
-
-    async def _check_convergence(self, prev_text: str, curr_text: str) -> bool:
-        """检查相邻迭代是否收敛"""
-        if not prev_text or not curr_text:
-            return False
-        len_diff = abs(len(prev_text) - len(curr_text))
-        max_len = max(len(prev_text), len(curr_text))
-        if max_len == 0:
-            return True
-        normalized_diff = len_diff / max_len
-        return normalized_diff < self.convergence_threshold
+        return await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=1200)
 
     async def _check_readability(self, text: str) -> str:
         """可读性检验，若 FKGL > 10 则触发重新润色"""
@@ -293,13 +196,52 @@ Text:
 
         return text
 
+    #: source_type → 中文研究类型名，用于证据卡片 study_type 字段
+    _SOURCE_TYPE_CN = {
+        "package_insert": "药品说明书",
+        "guide": "临床指南",
+        "guideline": "临床指南",
+        "meeting": "会议摘要",
+        "trial": "临床试验",
+        "paper_en": "英文文献",
+        "paper_cn": "中文文献",
+        "paper": "学术论文",
+        "unknown": "未知来源",
+    }
+
+    def _build_evidence_cards(self, evidences: list[dict]) -> list[dict]:
+        """从结构化证据数据直接组装 layer2 证据卡片（不经过 LLM）。
+
+        证据卡片完全由代码从已结构化的 evidences 组装，避免让 LLM 重新输出
+        大段 JSON 而被 max_tokens 截断。两处（解析成功 / fallback）复用本方法。
+        """
+        cards = []
+        for ev in evidences[:5]:
+            source_type = ev.get("source_type") or "unknown"
+            study_type = self._SOURCE_TYPE_CN.get(source_type, source_type)
+            abstract = ev.get("abstract") or ""
+            cards.append({
+                "study_type": study_type,
+                "sample_size": None,
+                "intervention": None,
+                "comparator": None,
+                "outcome": abstract[:100] if abstract else None,
+                "limitations": None,
+                "evidence_level": ev.get("evidence_level") or "unknown",
+                "source_id": ev.get("pmid") or ev.get("doi") or ev.get("nct_id") or ev.get("id", ""),
+                "source_url": ev.get("url"),
+            })
+        return cards
+
     async def _compose_three_layer_output(self, simplified_text: str, evidences: list[dict], query: str) -> dict:
         """
         生成三层结构化回答
 
-        使用 LLM 将简化后的文本和证据合成为标准格式
+        核心思路：LLM 只生成叙述性文本（layer1 结论 + layer3 患者解释），
+        证据卡片（layer2）由代码从结构化证据直接组装。这样 composer 的 LLM
+        输出体量很小，不易被 max_tokens 截断，从根本上避免"原始 JSON 被当正文显示"。
         """
-        # 构建证据摘要
+        # 构建证据摘要（仅供 LLM 参考写叙述，不要求其输出卡片）
         evidence_summary = "\n".join([
             f"- [{ev.get('source_type', 'unknown')}] {ev.get('title', '')[:100]} "
             f"(ID: {ev.get('pmid') or ev.get('doi') or ev.get('nct_id') or 'N/A'})"
@@ -307,7 +249,9 @@ Text:
         ])
 
         prompt = """\
-You are a medical information assistant for patients. Given the patient's query, retrieved evidence, and simplified explanation, compose a structured three-layer response.
+You are a medical information assistant for patients. Given the patient's query, retrieved evidence, and simplified explanation, compose the NARRATIVE parts of a patient-facing response.
+
+You ONLY write the narrative text (the core conclusion and the patient explanation). Do NOT output evidence cards — those are assembled separately by the system.
 
 Patient query: {query}
 
@@ -317,25 +261,20 @@ Retrieved evidence:
 Simplified explanation:
 {simplified_text}
 
-Output a JSON object with this exact structure:
+CRITICAL — layer1_conclusion.text is the patient's "core answer at a glance":
+- It MUST directly and substantively ANSWER the patient's question, not be a vague slogan or empty placeholder.
+- Synthesize "what it is" + "what to do about it" into a 2-4 sentence informative core answer (roughly 40-120 Chinese characters) that a patient can read once and walk away with the main takeaway.
+- Ground it in the retrieved evidence and simplified explanation above; mention the key finding/direction concretely.
+- Stay compliant: do NOT diagnose the individual, do NOT give prescriptions or dosages, do NOT phrase population evidence as personal medical advice. Use everyday Chinese.
+- Bad (reject): "建议咨询医生了解更多。" / "这是一个需要重视的问题。"
+- Good (accept): "针对XX，目前主流的循证方向是A和B；研究显示A在……方面有获益。具体是否适合你，需要结合个人情况和医生讨论。"
+
+Output a JSON object with EXACTLY these two top-level keys (no evidence cards):
 {{
   "layer1_conclusion": {{
-    "text": "One sentence conclusion (max 50 chars)",
+    "text": "2-4 sentence informative core answer that directly answers the question",
     "citations": ["PMID1", "PMID2"]
   }},
-  "layer2_evidence_cards": [
-    {{
-      "study_type": "RCT/系统综述/指南/...",
-      "sample_size": "923 patients",
-      "intervention": "Pembrolizumab + Chemotherapy",
-      "comparator": "Chemotherapy alone",
-      "outcome": "Median OS 22.0 vs 10.7 months",
-      "limitations": "Limited Asian population",
-      "evidence_level": "high",
-      "source_id": "PMID: 32743622",
-      "source_url": "https://pubmed.ncbi.nlm.nih.gov/32743622"
-    }}
-  ],
   "layer3_patient_explanation": {{
     "what_is_it": "Explain the disease/concept using an analogy",
     "what_evidence_says": "What the latest research found, in everyday language",
@@ -353,72 +292,160 @@ Output ONLY valid JSON, no other text."""
                 evidence_summary=evidence_summary,
                 simplified_text=simplified_text[:3000],
             )},
-            {"role": "user", "content": "Please compose the structured three-layer response."},
+            {"role": "user", "content": "Please compose the narrative two-layer response (no evidence cards)."},
         ]
 
-        composed = await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=3000)
+        composed = await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=1500)
 
-        # 解析 JSON
-        result = self._parse_three_layer_json(composed, evidences)
+        # 解析 JSON（仅叙述部分）；layer2 由代码组装
+        result = self._parse_three_layer_json(composed, evidences, simplified_text)
         return result
 
-    def _parse_three_layer_json(self, composed_text: str, evidences: list[dict]) -> dict:
-        """解析 LLM 输出的 JSON，带回退机制"""
+    def _parse_three_layer_json(self, composed_text: str, evidences: list[dict], simplified_text: str = "") -> dict:
+        """解析 composer 返回的叙述 JSON（layer1 + layer3），带回退机制。
+
+        解析成功 → 用代码组装的证据卡片补上 layer2，返回完整三层。
+        解析失败 → fallback 使用纯文本 simplified_text（绝不灌入原始 composed JSON）。
+        """
+        data = None
         # 尝试直接解析
         try:
-            data = json.loads(composed_text)
-            if self._validate_output(data):
-                return data
+            parsed = json.loads(composed_text)
+            if self._validate_narrative(parsed):
+                data = parsed
         except (json.JSONDecodeError, TypeError):
             pass
 
         # 尝试提取 JSON 部分
-        try:
-            json_match = re.search(r'\{.*\}', composed_text, re.DOTALL)
-            if json_match:
-                data = json.loads(json_match.group())
-                if self._validate_output(data):
-                    return data
-        except (json.JSONDecodeError, AttributeError):
-            pass
+        if data is None:
+            try:
+                json_match = re.search(r'\{.*\}', composed_text, re.DOTALL)
+                if json_match:
+                    parsed = json.loads(json_match.group())
+                    if self._validate_narrative(parsed):
+                        data = parsed
+            except (json.JSONDecodeError, AttributeError):
+                pass
 
-        # 回退：从证据构建结构化输出
-        return self._fallback_output(evidences, composed_text)
+        if data is None:
+            # 解析失败：用纯文本 simplified_text 兜底，绝不使用 composed JSON 文本
+            return self._fallback_output(evidences, simplified_text)
 
-    def _validate_output(self, data: dict) -> bool:
-        """验证输出结构是否完整"""
-        required = ["layer1_conclusion", "layer2_evidence_cards", "layer3_patient_explanation"]
+        # 解析成功：用代码组装证据卡片补上 layer2，并清洗叙述字段防脏数据
+        data["layer2_evidence_cards"] = self._build_evidence_cards(evidences)
+        self._sanitize_narrative_fields(data, evidences, simplified_text)
+        return data
+
+    def _validate_narrative(self, data: dict) -> bool:
+        """验证 composer 叙述输出是否含 layer1_conclusion + layer3_patient_explanation。"""
+        if not isinstance(data, dict):
+            return False
+        required = ["layer1_conclusion", "layer3_patient_explanation"]
         return all(key in data for key in required)
 
-    def _fallback_output(self, evidences: list[dict], raw_text: str) -> dict:
-        """LLM 输出解析失败时的回退方案"""
-        # 从证据构建基本输出
-        evidence_cards = []
-        for ev in evidences[:5]:
-            evidence_cards.append({
-                "study_type": ev.get("source_type") or "unknown",
-                "sample_size": None,
-                "intervention": None,
-                "comparator": None,
-                "outcome": ev.get("abstract", "")[:100] if ev.get("abstract") else None,
-                "limitations": None,
-                "evidence_level": ev.get("evidence_level") or "unknown",
-                "source_id": ev.get("pmid") or ev.get("doi") or ev.get("nct_id") or ev.get("id", ""),
-                "source_url": ev.get("url"),
-            })
+    @staticmethod
+    def _looks_like_raw_json(text) -> bool:
+        """判断某展示字段是否仍是 JSON 痕迹（脏数据）。"""
+        if not isinstance(text, str):
+            return False
+        stripped = text.lstrip()
+        return stripped.startswith("{") or '"layer1_conclusion"' in text
 
-        # 从原始文本提取第一句话作为结论
-        first_sentence = raw_text.split(".")[0] + "." if raw_text else "请查看下方详细解释。"
+    def _sanitize_narrative_fields(self, data: dict, evidences: list[dict], simplified_text: str) -> None:
+        """保险：若任一展示字段残留 JSON 痕迹，用 simplified_text 兜底替换。
+
+        就地修改 data 的 layer1_conclusion.text 与 layer3 各叙述字段。
+        """
+        layer1 = data.get("layer1_conclusion")
+        if isinstance(layer1, dict):
+            if self._looks_like_raw_json(layer1.get("text")):
+                layer1["text"] = self._compose_fallback_conclusion(evidences, simplified_text)
+        else:
+            data["layer1_conclusion"] = {
+                "text": self._compose_fallback_conclusion(evidences, simplified_text),
+                "citations": [],
+            }
+
+        layer3 = data.get("layer3_patient_explanation")
+        if isinstance(layer3, dict):
+            clean_text = (simplified_text or "").strip()
+            for field in ("what_is_it", "what_evidence_says", "what_it_means_for_you", "when_to_see_doctor"):
+                if self._looks_like_raw_json(layer3.get(field)):
+                    layer3[field] = clean_text[:500] if clean_text else "详见下方完整解释。"
+
+    def _compose_fallback_conclusion(self, evidences: list[dict], raw_text: str) -> str:
+        """从简化文本/证据中提取一段有信息量的核心答案，而非只取第一句。
+
+        优先用简化文本的前若干句拼出 2-4 句、约 40-160 字的核心答案；
+        简化文本不足时，用 Top 证据标题兜底，保证结论非空且有内容。
+        """
+        # 1) 优先从简化/合成文本中提取前几句有意义内容
+        text = (raw_text or "").strip()
+        if text:
+            # 按中英文句末标点切句，过滤过短的碎片
+            sentences = [
+                s.strip()
+                for s in re.split(r"(?<=[。！？.!?])\s*", text)
+                if len(s.strip()) >= 6
+            ]
+            if sentences:
+                conclusion = ""
+                for s in sentences:
+                    if len(conclusion) >= 120:
+                        break
+                    conclusion += s
+                conclusion = conclusion.strip()
+                if len(conclusion) >= 20:
+                    return conclusion[:200]
+                # 内容太短，继续走证据兜底，但保留已有片段作为前缀
+                if conclusion:
+                    text = conclusion
+
+        # 2) 用 Top 证据标题拼出一句有指向性的核心答案
+        titles = [
+            (ev.get("title") or "").strip()
+            for ev in evidences[:2]
+            if (ev.get("title") or "").strip()
+        ]
+        if titles:
+            joined = "；".join(t[:60] for t in titles)
+            return (
+                f"根据检索到的权威医学证据，与该问题相关的研究主要涉及：{joined}。"
+                "具体是否适合你的情况，请结合个人病情与医生讨论。"
+            )[:200]
+
+        # 3) 实在没有可用内容时的中性兜底
+        if text:
+            return text[:200]
+        return "已为你检索到相关医学证据，请查看下方证据卡片与通俗解释了解详情。"
+
+    def _fallback_output(self, evidences: list[dict], simplified_text: str) -> dict:
+        """LLM 叙述输出解析失败时的回退方案。
+
+        关键：所有展示字段使用纯文本 simplified_text（由 loop 产出），
+        绝不使用 composer 返回的原始 JSON 文本，从根源杜绝"原始 JSON 当正文显示"。
+        """
+        # 证据卡片由代码从结构化证据直接组装（与解析成功路径一致）
+        evidence_cards = self._build_evidence_cards(evidences)
+
+        # 从简化文本/证据中提取有意义的核心答案，而非只取第一句
+        conclusion_text = self._compose_fallback_conclusion(evidences, simplified_text)
+
+        clean_text = (simplified_text or "").strip()
+        what_is_it = clean_text[:500] if clean_text else "详见下方完整解释。"
+        what_evidence_says = (
+            clean_text[500:1000] if len(clean_text) > 500 else "详见下方完整解释。"
+        )
 
         return {
             "layer1_conclusion": {
-                "text": first_sentence[:200],
+                "text": conclusion_text,
                 "citations": [ev.get("pmid") for ev in evidences[:3] if ev.get("pmid")],
             },
             "layer2_evidence_cards": evidence_cards,
             "layer3_patient_explanation": {
-                "what_is_it": raw_text[:500] if raw_text else "详见下方完整解释。",
-                "what_evidence_says": raw_text[500:1000] if len(raw_text) > 500 else "详见下方完整解释。",
+                "what_is_it": what_is_it,
+                "what_evidence_says": what_evidence_says,
                 "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
                 "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
                 "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。",

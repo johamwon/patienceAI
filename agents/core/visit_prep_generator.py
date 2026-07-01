@@ -56,6 +56,67 @@ def _normalize_emotion(emotion) -> str:
     return str(value)
 
 
+#: 常见非疾病修饰词，用于从 query 中粗提取疾病/主题（去掉这些噪声词后保留主体）。
+_TOPIC_NOISE_WORDS = (
+    # 提问 / 语气 / 虚词
+    "最新", "进展", "研究", "治疗", "疗法", "怎么办", "怎么样", "如何", "是什么",
+    "有哪些", "哪个", "哪种", "更好", "区别", "副作用", "效果", "方案", "用药",
+    "能不能", "可以吗", "吗", "呢", "啊", "的", "了", "和", "与", "或",
+    "请问", "想了解", "了解", "咨询", "问题", "情况",
+    # 人称 / 关系词
+    "我", "你", "您", "他", "她", "朋友", "父亲", "母亲", "爸爸", "妈妈", "爸", "妈",
+    "家人", "家属", "孩子", "儿子", "女儿", "老公", "老婆", "丈夫", "妻子",
+    "爷爷", "奶奶", "外公", "外婆", "亲戚", "同事", "邻居",
+    # 患病 / 动作类动词
+    "得了", "得", "患了", "患", "有", "长了", "长", "查出", "确诊", "诊断",
+    "最近", "突然", "现在", "目前",
+)
+
+#: 人称/关系残留词：去噪后若片段仍含这些，视为提取失败（避免"朋友父亲得"这类垃圾主题）。
+_TOPIC_RESIDUAL_MARKERS = (
+    "我", "你", "您", "他", "她", "朋友", "父亲", "母亲", "爸", "妈",
+    "家人", "家属", "孩子", "儿子", "女儿", "老公", "老婆", "丈夫", "妻子",
+    "爷爷", "奶奶", "外公", "外婆", "亲戚", "同事", "邻居",
+    "得", "患", "查出", "确诊", "诊断",
+)
+
+
+def _extract_disease_topic(query: str) -> str:
+    """从患者 query 中粗略提取疾病/主题词，用于无证据时定制条目。
+
+    采用轻量启发式（不依赖外部 NLP）：去除常见的提问修饰词、人称/关系词与标点，
+    保留疾病/药物等主体片段。
+
+    去噪后做合理性校验：若剩余片段仍含明显的人称/关系/动词残留，或长度异常、
+    不像疾病名，则返回空字符串——宁可让调用方走完全通用模板，也不塞一个错误主题。
+    """
+    if not query:
+        return ""
+    topic = query.strip()
+    # 去除标点与空白
+    topic = re.sub(r"[，。、？！,.\?!；;：:\s]+", " ", topic).strip()
+    # 逐个剔除噪声修饰词（按长度降序，先剔长词避免子串残留，如先去"父亲"再去"父"）
+    for word in sorted(_TOPIC_NOISE_WORDS, key=len, reverse=True):
+        topic = topic.replace(word, " ")
+    # 合并多余空格，取最长的主体片段（通常是疾病/药物名）
+    fragments = [f for f in topic.split() if f]
+    if not fragments:
+        return ""
+    topic = max(fragments, key=len)
+
+    # ── 合理性校验 ────────────────────────────────────────────────
+    # 1) 过短（如单字残留）视为无效
+    if len(topic) < 2:
+        return ""
+    # 2) 过长，不像一个疾病/药物名（多半是没切干净的句子片段）
+    if len(topic) > 20:
+        return ""
+    # 3) 仍含人称/关系/患病动词残留 → 判定为垃圾片段，返回空
+    if any(marker in topic for marker in _TOPIC_RESIDUAL_MARKERS):
+        return ""
+    return topic
+
+
 def _build_evidence_digest(evidences: list[dict], top_k: int = 5) -> str:
     """把证据列表压缩成一段供 LLM 参考的摘要文本。"""
     parts = []
@@ -73,15 +134,33 @@ def _build_evidence_digest(evidences: list[dict], top_k: int = 5) -> str:
 
 def _build_prompt(query: str, evidence_digest: str, emotion: str, has_evidence: bool) -> str:
     """构造注入人格+合规约束的任务提示词。"""
+    disease_topic = _extract_disease_topic(query)
+    topic_hint = (
+        f"本次查询的核心疾病/主题是「{disease_topic}」。" if disease_topic else ""
+    )
+
     if has_evidence:
         context_block = f"""\
 以下是检索到的与患者查询相关的医学证据摘要，请基于这些证据生成针对性的就医准备条目：
 
 {evidence_digest}"""
-        evidence_rule = "请结合上述证据，生成与患者具体情况相关的、有针对性的沟通条目。"
+        evidence_rule = (
+            f"{topic_hint}\n"
+            "请把每一条都牢牢锚定到上述具体疾病/主题与证据要点上："
+            "引用证据中提到的治疗方向、药物类别、检查项目、疗效或风险等具体信息，"
+            "生成只对「这次查询」成立的、个性化的沟通条目。"
+            "严禁出现「我的情况严重吗」「有什么需要注意的」这类放之四海皆准的泛泛问题。"
+        )
     else:
         context_block = "（本次未检索到相关医学证据。）"
-        evidence_rule = "由于没有检索到针对性证据，请围绕该查询主题生成通用的、稳妥的就医准备条目。"
+        evidence_rule = (
+            f"{topic_hint}\n"
+            "虽然没有检索到针对性证据，但请紧扣上述疾病/主题本身的常见诊疗维度"
+            "（如该病的主流治疗选择、典型检查、起效与复诊节奏、常见副作用与随访要点）"
+            "生成具体、有指向性的就医准备条目，避免完全通用、与主题无关的空泛模板。"
+        )
+
+    example_block = _build_topic_example(disease_topic)
 
     task = f"""\
 你的任务：为患者生成一份"就医准备包"，帮助他/她在见医生时知道该问什么、该说什么、该查什么、该确认什么。
@@ -92,6 +171,7 @@ def _build_prompt(query: str, evidence_digest: str, emotion: str, has_evidence: 
 {context_block}
 
 {evidence_rule}
+{example_block}
 
 请生成以下四类条目，每类是若干条独立的文本项（每类 3-5 条）：
 1. questions_for_doctor：该问医生的关键问题（必须是问句形式）。
@@ -100,6 +180,7 @@ def _build_prompt(query: str, evidence_digest: str, emotion: str, has_evidence: 
 4. treatment_options_to_confirm：该与医生确认的治疗方案方向（以"需要和医生确认……"的沟通口吻）。
 
 硬性要求：
+- 每一条都必须紧扣本次查询的具体疾病/主题，能体现出"这是为这个病/这个问题量身准备的"，不能是任何疾病都适用的通用问题。
 - 每一条都必须是"问句"或"与医生沟通的要点"形式，绝不能是诊断结论或处方剂量。
 - 不得出现"你患了X""确诊为X"等诊断结论。
 - 不得出现具体药物剂量、用药增减指令（如"每天吃X毫克"）。
@@ -114,6 +195,16 @@ def _build_prompt(query: str, evidence_digest: str, emotion: str, has_evidence: 
 }}"""
 
     return with_persona(task)
+
+
+def _build_topic_example(disease_topic: str) -> str:
+    """给出一个具体 vs 泛泛的示例，引导模型产出锚定主题的条目。"""
+    topic = disease_topic or "该疾病"
+    return (
+        "示例（仅示意「具体、有针对性」的风格，请结合本次主题改写，不要照抄）：\n"
+        f"- 好的提问：针对「{topic}」，我适合药物治疗还是其他治疗方式？这类药物通常多久起效？复诊频率应该怎样安排？\n"
+        "- 不好的提问：我的情况严重吗？我需要注意什么？（过于笼统，禁止这样写）"
+    )
 
 
 def _parse_pack_json(raw: str) -> Optional[dict]:
@@ -161,7 +252,38 @@ def _coerce_items(value) -> list[str]:
 
 
 def _generic_pack(query: str) -> dict:
-    """无证据 / JSON 解析失败时的通用就医准备包模板（R7.5）。"""
+    """无证据 / JSON 解析失败时的就医准备包模板（R7.5）。
+
+    优先根据 query 主题定制条目；提取不到明确主题时退回完全通用的稳妥模板。
+    """
+    topic = _extract_disease_topic(query)
+    if topic:
+        return {
+            "questions_for_doctor": [
+                f"针对「{topic}」，目前主流的治疗方向有哪些？我比较适合哪一种？",
+                f"针对「{topic}」，不同治疗方式的预期效果、起效时间和可能的副作用分别是什么？",
+                f"我的「{topic}」目前大概处于什么阶段？接下来一段时间可能会怎样变化？",
+                f"针对「{topic}」，复查和随访应该多久一次、需要重点关注哪些指标？",
+                f"如果暂时观察等待，「{topic}」出现哪些信号时我需要尽快复诊？",
+            ],
+            "info_to_tell_doctor": [
+                f"我和「{topic}」相关的主要症状、出现时间以及变化趋势。",
+                "我过去的疾病史、手术史以及家族相关病史。",
+                "我正在使用的所有药物、保健品和过敏史。",
+                "我最近的生活状态变化，比如睡眠、食欲、体重和情绪。",
+            ],
+            "tests_to_request": [
+                f"可以问医生：针对「{topic}」，是否需要做进一步检查来明确诊断或分期？",
+                f"可以问医生：评估「{topic}」通常需要哪些检查或化验，现有结果是否已经足够？",
+                "可以问医生：这些检查的目的、过程和注意事项分别是什么？",
+            ],
+            "treatment_options_to_confirm": [
+                f"需要和医生确认：针对「{topic}」现在是否需要立即开始治疗，还是可以先观察？",
+                f"需要和医生确认：针对「{topic}」不同治疗方向的利弊，以及哪种更适合我的整体情况。",
+                "需要和医生确认：后续的复查与随访计划如何安排。",
+            ],
+        }
+
     return {
         "questions_for_doctor": [
             "我目前的情况，最需要优先关注和处理的是什么？",

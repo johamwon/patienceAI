@@ -49,7 +49,7 @@ class ExplainRequest(BaseModel):
 
 class LayerOneConclusion(BaseModel):
     """一句话结论"""
-    text: str
+    text: str = Field(default="已为你检索到相关医学证据，请查看下方证据与通俗解释了解详情。")
     citations: list[str] = Field(default_factory=list, description="绑定的PMID/DOI列表")
 
 
@@ -68,10 +68,10 @@ class EvidenceCard(BaseModel):
 
 class PatientExplanation(BaseModel):
     """患者通俗解释"""
-    what_is_it: str = Field(description="这是什么——用类比解释")
-    what_evidence_says: str = Field(description="证据说明什么")
-    what_it_means_for_you: str = Field(description="对你意味着什么")
-    when_to_see_doctor: str = Field(description="何时需要立即就医")
+    what_is_it: str = Field(default="详见下方内容。", description="这是什么——用类比解释")
+    what_evidence_says: str = Field(default="详见下方内容。", description="证据说明什么")
+    what_it_means_for_you: str = Field(default="请结合你的具体情况与主治医生讨论。", description="对你意味着什么")
+    when_to_see_doctor: str = Field(default="如出现症状加重或不适，请及时就医。", description="何时需要立即就医")
     disclaimer: str = Field(
         default="本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
     )
