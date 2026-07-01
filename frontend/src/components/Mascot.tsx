@@ -80,19 +80,29 @@ function resolveEmotion(emotion?: EmotionState | string): EmotionVisual {
 type MascotProps = {
   /** 情绪状态，缺失或无法识别时回退为 calm（R5.1 / R5.3） */
   emotion?: EmotionState | string;
+  /** 尺寸（像素），默认 120。用于在对话气泡区作为小头像复用。 */
+  size?: number;
+  /** 是否显示内置文字气泡，默认 true。作为头像复用时设为 false。 */
+  showBubble?: boolean;
+  /** 是否包裹默认的浮动容器，默认 true。作为内联头像时设为 false。 */
+  withContainer?: boolean;
 };
 
-const Mascot: React.FC<MascotProps> = ({ emotion }) => {
+const Mascot: React.FC<MascotProps> = ({
+  emotion,
+  size = 120,
+  showBubble = true,
+  withContainer = true,
+}) => {
   const visual = resolveEmotion(emotion);
 
-  return (
-    <div className="mascot-container">
+  const svg = (
       <svg
         className="mascot-svg"
         viewBox="0 0 200 200"
-        width="120"
-        height="120"
-        aria-label={`患癌知光吉祥物：小光（${visual.bubbleText}）`}
+        width={size}
+        height={size}
+        aria-label={`医语桥吉祥物：小光（${visual.bubbleText}）`}
       >
         {/* 光环/光晕 - 代表希望和知识 */}
         <defs>
@@ -159,16 +169,23 @@ const Mascot: React.FC<MascotProps> = ({ emotion }) => {
           />
         </g>
 
-        {/* 文字气泡 - 随情绪状态变化 */}
-        <g>
-          <rect x="40" y="155" width="120" height="22" rx="11" fill="white" stroke="#E0E0E0" strokeWidth="1" />
-          <text x="100" y="169" textAnchor="middle" fontSize="10" fill="#666" fontFamily="Arial, sans-serif">
-            {visual.bubbleText}
-          </text>
-        </g>
+        {/* 文字气泡 - 随情绪状态变化（作为内联头像时可隐藏） */}
+        {showBubble && (
+          <g>
+            <rect x="40" y="155" width="120" height="22" rx="11" fill="white" stroke="#E0E0E0" strokeWidth="1" />
+            <text x="100" y="169" textAnchor="middle" fontSize="10" fill="#666" fontFamily="Arial, sans-serif">
+              {visual.bubbleText}
+            </text>
+          </g>
+        )}
       </svg>
-    </div>
   );
+
+  if (!withContainer) {
+    return svg;
+  }
+
+  return <div className="mascot-container">{svg}</div>;
 };
 
 export default Mascot;

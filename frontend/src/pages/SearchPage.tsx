@@ -92,6 +92,9 @@ export default function SearchPage() {
         sessionIdRef.current
       );
       setExplanation(explainRes);
+
+      // 方案A：核心答案返回后，自动异步补上就医准备包，不阻塞主答案展示。
+      void fetchVisitPrep(query);
     } catch (err: any) {
       setError(err.message || "发生错误，请重试");
     } finally {
@@ -99,16 +102,17 @@ export default function SearchPage() {
     }
   };
 
-  const handleGenerateVisitPrep = async () => {
-    if (!query.trim() || visitPrepLoading) return;
+  // 自动获取就医准备包：失败时只设错误态、不抛出，避免影响主答案（方案A）。
+  const fetchVisitPrep = async (prepQuery: string) => {
+    if (!prepQuery.trim()) return;
     setVisitPrepLoading(true);
     setVisitPrepError(null);
     try {
       // 复用当前 query 与稳定的会话 id，让后端会话记忆生效
-      const res = await getVisitPrep(query, sessionIdRef.current);
+      const res = await getVisitPrep(prepQuery, sessionIdRef.current);
       setVisitPrep(res);
     } catch (err: any) {
-      setVisitPrepError(err.message || "就医准备包生成失败，请重试");
+      setVisitPrepError(err.message || "就医准备包生成失败");
     } finally {
       setVisitPrepLoading(false);
     }
@@ -137,8 +141,8 @@ export default function SearchPage() {
       <Mascot emotion={explanation?.emotion_state} />
 
       <header className="header">
-        <h1>患癌知光</h1>
-        <p className="subtitle">面向患者的疑难杂症科研动态检索与通俗化解释</p>
+        <h1>医语桥</h1>
+        <p className="subtitle">面向患者的循证医学检索与通俗化解释</p>
       </header>
 
       <form onSubmit={handleSubmit} className="search-form">
@@ -227,7 +231,6 @@ export default function SearchPage() {
           visitPrep={visitPrep}
           visitPrepLoading={visitPrepLoading}
           visitPrepError={visitPrepError}
-          onGenerateVisitPrep={handleGenerateVisitPrep}
         />
       )}
 

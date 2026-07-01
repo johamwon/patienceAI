@@ -1,21 +1,100 @@
+/* =====================================================================
+   医语桥 设计系统 (Design System)
+   参考：现代医疗/健康产品 + Linear/Notion 的克制现代风格
+   - 主色：医疗信任感的蓝绿色系（teal）
+   - 强调色：温暖的琥珀/珊瑚色，用于陪伴元素（小光）
+   - 统一的圆角、阴影层级、间距尺度、字体层级
+   ===================================================================== */
 :root {
-  --primary-color: #7FB3D3;
-  --primary-dark: #5B9BD5;
-  --success-color: #88C9A1;
-  --warning-color: #F4D03F;
-  --error-color: #F1948A;
-  --text-color: #4A4A4A;
-  --text-secondary: #8C8C8C;
-  --bg-color: #F8FBFD;
-  --card-bg: #FFFFFF;
-  --border-color: #E8F4F8;
-  --accent-pink: #FFB6C1;
-  --accent-yellow: #FFF4CC;
-  --accent-green: #E8F5E9;
-  --shadow-soft: 0 4px 20px rgba(123, 179, 211, 0.15);
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
-  --radius-soft: 16px;
-  --radius-btn: 25px;
+  /* —— 主色：蓝绿/青色系（信任、专业、平静）—— */
+  --teal-50: #ecfbf8;
+  --teal-100: #d2f4ed;
+  --teal-200: #a7e8dc;
+  --teal-300: #6fd5c4;
+  --teal-400: #38bba6;
+  --teal-500: #1ba18d;
+  --teal-600: #0f8275;
+  --teal-700: #0c685f;
+  --teal-800: #0c534d;
+
+  --primary: var(--teal-500);
+  --primary-dark: var(--teal-600);
+  --primary-soft: var(--teal-100);
+  --primary-tint: var(--teal-50);
+
+  /* —— 温暖强调色：用于陪伴元素（小光 / 暖场白）—— */
+  --warm-50: #fff7ed;
+  --warm-100: #ffedd5;
+  --warm-200: #fed7aa;
+  --warm-400: #fb923c;
+  --warm-500: #f5853f;
+  --warm-600: #e06a28;
+
+  /* —— 语义色 —— */
+  --success: #2eb872;
+  --success-soft: #e7f7ef;
+  --warning: #e8a317;
+  --warning-soft: #fdf4e0;
+  --danger: #e5564b;
+  --danger-soft: #fdeeed;
+
+  /* —— 中性色（文字 / 背景 / 描边）—— */
+  --ink-900: #15302c;
+  --ink-700: #2f4742;
+  --ink-600: #4a5d59;
+  --ink-500: #6b7c78;
+  --ink-400: #93a09c;
+
+  --text: var(--ink-700);
+  --text-secondary: var(--ink-500);
+  --text-muted: var(--ink-400);
+
+  --bg: #f4f8f7;
+  --bg-gradient-top: #f3faf8;
+  --bg-gradient-bottom: #eef5fb;
+  --surface: #ffffff;
+  --surface-soft: #f8fbfa;
+  --border: #e4ecea;
+  --border-strong: #d2dedb;
+
+  /* —— 圆角尺度 —— */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* —— 阴影层级 —— */
+  --shadow-xs: 0 1px 2px rgba(15, 48, 44, 0.04);
+  --shadow-sm: 0 2px 8px rgba(15, 48, 44, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 48, 44, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 48, 44, 0.10);
+  --shadow-focus: 0 0 0 3px rgba(27, 161, 141, 0.18);
+
+  /* —— 间距尺度（4 的倍数）—— */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* —— 字体层级 —— */
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --fs-2xl: 28px;
+  --fs-3xl: 34px;
+
+  --font-mono: "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+
+  --content-width: 860px;
 }
 
 * {
@@ -24,29 +103,54 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
-  background: linear-gradient(180deg, #F8FBFD 0%, #F0F7FF 100%);
-  color: var(--text-color);
-  line-height: 1.7;
-  min-height: 100vh;
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
-/* Mascot */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(180deg, var(--bg-gradient-top) 0%, var(--bg-gradient-bottom) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--primary-dark);
+}
+
+::selection {
+  background: var(--teal-200);
+  color: var(--ink-900);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-xs);
+}
+
+/* =====================================================================
+   Mascot 吉祥物
+   ===================================================================== */
 .mascot-container {
   display: flex;
   justify-content: center;
-  padding-top: 20px;
-  animation: float 3s ease-in-out infinite;
+  padding-top: var(--space-6);
+  animation: float 3.4s ease-in-out infinite;
 }
 
 .mascot-svg {
-  filter: drop-shadow(0 4px 12px rgba(123, 179, 211, 0.3));
+  filter: drop-shadow(0 8px 18px rgba(27, 161, 141, 0.22));
   transition: transform 0.3s ease;
 }
 
-.mascot-svg:hover {
-  transform: scale(1.05) rotate(5deg);
+.mascot-container .mascot-svg:hover {
+  transform: scale(1.05) rotate(4deg);
 }
 
 @keyframes float {
@@ -54,115 +158,135 @@ body {
   50% { transform: translateY(-8px); }
 }
 
-/* Header */
+@media (prefers-reduced-motion: reduce) {
+  .mascot-container { animation: none; }
+}
+
+/* =====================================================================
+   Header 页头
+   ===================================================================== */
 .header {
   text-align: center;
-  padding: 20px 20px 10px;
-  background: linear-gradient(135deg, #E8F4FD 0%, #F0E6FF 100%);
-  position: relative;
+  padding: var(--space-4) var(--space-5) var(--space-2);
 }
 
 .header h1 {
-  font-size: 2.2rem;
+  font-size: var(--fs-3xl);
   color: var(--primary-dark);
-  margin-bottom: 8px;
-  font-weight: 600;
+  margin-bottom: var(--space-2);
+  font-weight: 700;
   letter-spacing: 0.5px;
 }
 
 .subtitle {
-  font-size: 1rem;
+  font-size: var(--fs-md);
   color: var(--text-secondary);
   font-weight: 400;
 }
 
-/* Search Form */
+/* =====================================================================
+   Search Form 搜索区
+   ===================================================================== */
 .search-form {
-  max-width: 800px;
-  margin: 24px auto;
-  padding: 0 20px;
-  display: flex;
-  gap: 10px;
+  max-width: var(--content-width);
+  margin: var(--space-8) auto var(--space-5);
+  padding: 0 var(--space-5);
 }
 
 .input-wrapper {
   display: flex;
-  gap: 10px;
-  flex: 1;
+  gap: var(--space-3);
+  background: var(--surface);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--teal-300);
+  box-shadow: var(--shadow-lg), var(--shadow-focus);
 }
 
 .search-input {
   flex: 1;
   padding: 14px 20px;
-  font-size: 15px;
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-btn);
+  font-size: var(--fs-md);
+  border: none;
+  border-radius: var(--radius-pill);
   outline: none;
-  transition: all 0.3s ease;
-  background: white;
-  color: var(--text-color);
+  background: transparent;
+  color: var(--text);
 }
 
-.search-input:focus {
-  border-color: var(--primary-dark);
-  box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.15);
+.search-input::placeholder {
+  color: var(--text-muted);
 }
 
 .search-form button {
-  padding: 14px 28px;
-  font-size: 15px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: white;
+  padding: 14px 32px;
+  font-size: var(--fs-base);
+  background: linear-gradient(135deg, var(--teal-400) 0%, var(--teal-600) 100%);
+  color: #fff;
   border: none;
-  border-radius: var(--radius-btn);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .search-form button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(91, 155, 213, 0.4);
+  box-shadow: 0 6px 18px rgba(15, 130, 117, 0.35);
+}
+
+.search-form button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .search-form button:disabled {
-  background: #D0D0D0;
+  background: #cdd8d5;
   cursor: not-allowed;
 }
 
-/* Disease Selector */
+/* =====================================================================
+   Disease Selector 疾病选择器
+   ===================================================================== */
 .disease-selector-toggle {
-  max-width: 800px;
-  margin: 16px auto;
-  padding: 0 20px;
+  max-width: var(--content-width);
+  margin: var(--space-4) auto;
+  padding: 0 var(--space-5);
   text-align: center;
 }
 
 .toggle-btn {
   padding: 10px 24px;
-  font-size: 14px;
-  background: var(--accent-green);
-  color: #4A8B5C;
-  border: 1px solid #B8DCC8;
-  border-radius: var(--radius-btn);
+  font-size: var(--fs-sm);
+  background: var(--surface);
+  color: var(--primary-dark);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  box-shadow: var(--shadow-xs);
 }
 
 .toggle-btn:hover {
-  background: #D4EDDA;
+  background: var(--primary-tint);
+  border-color: var(--teal-300);
   transform: translateY(-1px);
 }
 
 .disease-selector {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 0 20px;
+  max-width: 920px;
+  margin: var(--space-5) auto;
+  padding: 0 var(--space-5);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  gap: var(--space-4);
   animation: fadeIn 0.3s ease-in;
 }
 
@@ -172,46 +296,47 @@ body {
 }
 
 .disease-category {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-soft);
-  padding: 16px;
-  box-shadow: var(--shadow-card);
-  transition: all 0.3s ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .disease-category:hover {
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
 .disease-category h3 {
-  font-size: 15px;
+  font-size: var(--fs-base);
   color: var(--primary-dark);
-  margin-bottom: 10px;
-  font-weight: 600;
+  margin-bottom: var(--space-3);
+  font-weight: 700;
 }
 
 .disease-queries {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .disease-btn {
-  padding: 5px 12px;
-  font-size: 12px;
-  background: var(--accent-yellow);
-  color: #8B7355;
-  border: 1px solid #F0E0A0;
-  border-radius: 15px;
+  padding: 6px 14px;
+  font-size: var(--fs-xs);
+  background: var(--primary-tint);
+  color: var(--primary-dark);
+  border: 1px solid var(--teal-100);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 }
 
 .disease-btn:hover:not(:disabled) {
-  background: #FFE5A0;
-  transform: scale(1.03);
+  background: var(--teal-100);
+  border-color: var(--teal-300);
+  transform: translateY(-1px);
 }
 
 .disease-btn:disabled {
@@ -219,37 +344,40 @@ body {
   cursor: not-allowed;
 }
 
-/* Demo Queries */
+/* =====================================================================
+   Demo Queries 演示词
+   ===================================================================== */
 .demo-queries {
-  max-width: 900px;
-  margin: 16px auto;
-  padding: 0 20px;
+  max-width: 920px;
+  margin: var(--space-4) auto;
+  padding: 0 var(--space-5);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .demo-label {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   color: var(--text-secondary);
-  margin-right: 4px;
+  margin-right: var(--space-1);
 }
 
 .demo-btn {
-  padding: 6px 14px;
-  font-size: 13px;
-  background: #F0F7FF;
-  color: var(--primary-dark);
-  border: 1px solid #D4E8F7;
-  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: var(--fs-sm);
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-xs);
 }
 
 .demo-btn:hover:not(:disabled) {
   background: var(--primary-dark);
-  color: white;
+  color: #fff;
   border-color: var(--primary-dark);
   transform: translateY(-1px);
 }
@@ -260,110 +388,123 @@ body {
 }
 
 .demo-notice {
-  max-width: 900px;
-  margin: 12px auto;
-  padding: 12px 16px;
-  background: #FFF9E6;
-  border: 1px solid #FFE5A0;
-  border-radius: 8px;
-  font-size: 13px;
-  color: #B8960C;
+  max-width: 920px;
+  margin: var(--space-3) auto;
+  padding: 12px 18px;
+  background: var(--warning-soft);
+  border: 1px solid #f3e2bb;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  color: #9a7414;
   text-align: center;
 }
 
+/* =====================================================================
+   状态：错误 / 加载
+   ===================================================================== */
 .error-message {
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: var(--content-width);
+  margin: var(--space-5) auto;
   padding: 16px 20px;
-  background: #FFF0F0;
-  border: 1px solid #FFD4D4;
-  border-radius: 8px;
-  color: #D94848;
-  font-size: 14px;
+  background: var(--danger-soft);
+  border: 1px solid #f6cfcb;
+  border-radius: var(--radius-sm);
+  color: #c13f35;
+  font-size: var(--fs-base);
 }
 
 .loading-explanation {
   text-align: center;
-  padding: 40px;
+  padding: var(--space-10);
   color: var(--text-secondary);
 }
 
 .loading-explanation p {
-  margin-top: 16px;
-  font-size: 14px;
+  margin-top: var(--space-4);
+  font-size: var(--fs-base);
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #E8F4FD;
-  border-top: 3px solid var(--primary-dark);
+  border: 3px solid var(--teal-100);
+  border-top-color: var(--primary);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 0.9s linear infinite;
   margin: 0 auto;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.spinner-inline {
+  width: 18px;
+  height: 18px;
+  border-width: 2.5px;
+  margin: 0;
 }
 
-/* Evidence List */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =====================================================================
+   Evidence List 检索证据列表（无解释时展示）
+   ===================================================================== */
 .evidence-list {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 20px;
+  max-width: 920px;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-5);
 }
 
 .evidence-list h2 {
-  margin-bottom: 20px;
-  color: var(--text-color);
-  font-size: 1.3rem;
+  margin-bottom: var(--space-5);
+  color: var(--text);
+  font-size: var(--fs-xl);
 }
 
 .evidence-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-soft);
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-card);
-  transition: all 0.3s ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .evidence-card:hover {
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .evidence-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
 }
 
 .evidence-source {
-  background: var(--primary-color);
-  color: white;
+  background: var(--primary);
+  color: #fff;
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
 }
 
 .evidence-level {
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  color: white;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  color: #fff;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .evidence-title {
-  font-size: 17px;
-  margin-bottom: 8px;
-  color: var(--text-color);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-2);
+  color: var(--text);
+  line-height: 1.5;
 }
 
 .evidence-title a {
@@ -377,597 +518,630 @@ body {
 
 .evidence-authors {
   color: var(--text-secondary);
-  font-size: 13px;
-  margin-bottom: 8px;
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-2);
 }
 
 .evidence-abstract {
-  color: var(--text-color);
-  font-size: 14px;
-  line-height: 1.7;
-  margin-bottom: 12px;
+  color: var(--text);
+  font-size: var(--fs-base);
+  line-height: 1.75;
+  margin-bottom: var(--space-3);
 }
 
 .evidence-footer {
   display: flex;
-  gap: 16px;
-  font-size: 12px;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  font-size: var(--fs-xs);
   color: var(--text-secondary);
 }
 
 .evidence-id {
-  font-family: "SF Mono", Monaco, monospace;
-  background: #F5F5F5;
-  padding: 2px 6px;
-  border-radius: 4px;
+  font-family: var(--font-mono);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
 }
 
-/* Explanation View */
+/* =====================================================================
+   Explanation View 解释结果容器
+   ===================================================================== */
 .explanation-view {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 20px;
+  max-width: var(--content-width);
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-5);
+  animation: fadeIn 0.35s ease-out;
 }
 
+/* 通用卡片层 */
 .layer {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-soft);
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
 }
 
 .layer h2 {
-  margin-bottom: 16px;
-  font-size: 1.2rem;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-lg);
   color: var(--primary-dark);
 }
 
-.layer-1 .conclusion-text {
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.7;
-  color: var(--text-color);
+/* =====================================================================
+   1. Companion Banner —「小光对你说」对话气泡区（陪伴感）
+   ===================================================================== */
+.companion-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: linear-gradient(135deg, var(--warm-50) 0%, #fffaf3 100%);
+  border: 1px solid var(--warm-100);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
-.layer-1 .citations {
-  margin-top: 12px;
-  font-size: 12px;
+.companion-banner-avatar {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border-radius: 50%;
+  box-shadow: var(--shadow-xs);
+}
+
+.companion-banner-avatar .mascot-svg {
+  filter: none;
+}
+
+.companion-banner-body {
+  flex: 1;
+  /* 对话气泡：带小尾巴的气泡感 */
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--warm-100);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-xs);
+}
+
+.companion-banner-body::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 22px;
+  width: 14px;
+  height: 14px;
+  background: var(--surface);
+  border-left: 1px solid var(--warm-100);
+  border-bottom: 1px solid var(--warm-100);
+  transform: rotate(45deg);
+}
+
+.companion-banner-name {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--warm-600);
+  margin-bottom: var(--space-1);
+  letter-spacing: 0.3px;
+}
+
+.companion-banner-text {
+  margin: 0;
+  font-size: var(--fs-base);
+  line-height: 1.8;
+  color: var(--text);
+}
+
+/* =====================================================================
+   2. Risk Banner 风险提示
+   ===================================================================== */
+.risk-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  border: 1px solid #f3e2bb;
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+  background: var(--warning-soft);
+}
+
+.risk-banner-icon {
+  font-size: 20px;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.risk-banner strong {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: #9a7414;
+}
+
+.risk-banner p {
+  font-size: var(--fs-base);
+  color: var(--ink-600);
+}
+
+/* =====================================================================
+   3. Core Answer 核心回答区（视觉焦点）
+   ===================================================================== */
+.core-answer {
+  position: relative;
+  background: linear-gradient(135deg, var(--teal-50) 0%, #f3fbf9 100%);
+  border: 1px solid var(--teal-100);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-8);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-md);
+}
+
+.core-answer-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.core-answer-icon {
+  font-size: 20px;
+}
+
+.core-answer-label h2 {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.core-answer-text {
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.65;
+  color: var(--ink-900);
+}
+
+.core-answer-citations {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
   color: var(--text-secondary);
-  font-family: "SF Mono", Monaco, monospace;
+  font-family: var(--font-mono);
 }
 
+/* =====================================================================
+   4. Patient Explanation 患者通俗解释
+   ===================================================================== */
+.explanation-section {
+  margin-bottom: var(--space-5);
+}
+
+.explanation-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.explanation-section h3 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-2);
+  color: var(--primary-dark);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.explanation-section p {
+  font-size: var(--fs-base);
+  line-height: 1.85;
+  color: var(--text);
+}
+
+.explanation-section.warning {
+  background: var(--danger-soft);
+  border-left: 4px solid var(--danger);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-sm);
+}
+
+.explanation-section.warning h3 {
+  color: #c13f35;
+}
+
+.disclaimer {
+  background: var(--surface-soft);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* =====================================================================
+   5. Visit Prep entry 就医准备包入口（自动前置）
+   ===================================================================== */
+.visit-prep-entry {
+  margin-bottom: var(--space-5);
+}
+
+.visit-prep-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--surface);
+  border: 1px dashed var(--teal-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-xs);
+}
+
+.visit-prep-loading p {
+  font-size: var(--fs-base);
+  margin: 0;
+}
+
+.visit-prep-soft-error {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+/* =====================================================================
+   6. Evidence Accordion 可折叠的「查看支撑证据」区
+   ===================================================================== */
+.evidence-accordion {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.evidence-accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.evidence-accordion-toggle:hover {
+  background: var(--surface-soft);
+}
+
+.evidence-accordion-title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.evidence-accordion-chevron {
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text-secondary);
+  transition: transform 0.25s ease;
+}
+
+.evidence-accordion-chevron.open {
+  transform: rotate(180deg);
+}
+
+.evidence-accordion-body {
+  padding: 0 var(--space-6) var(--space-6);
+  border-top: 1px solid var(--border);
+  animation: fadeIn 0.25s ease-out;
+}
+
+.evidence-group {
+  margin-top: var(--space-5);
+}
+
+.evidence-group-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: var(--space-3);
+}
+
+/* 证据卡片（紧凑化） */
 .evidence-card-detail {
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  background: #FAFBFD;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+  background: var(--surface-soft);
+}
+
+.evidence-card-detail p {
+  font-size: var(--fs-sm);
+  margin-top: 4px;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-2);
 }
 
 .study-type {
-  background: var(--primary-color);
-  color: white;
+  background: var(--primary);
+  color: #fff;
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
 }
 
 .evidence-level-badge {
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
+  color: #fff;
 }
 
-.evidence-level-badge.high { background: var(--success-color); color: white; }
-.evidence-level-badge.moderate { background: var(--warning-color); color: white; }
-.evidence-level-badge.low { background: var(--error-color); color: white; }
+.evidence-level-badge.high { background: var(--success); }
+.evidence-level-badge.moderate { background: var(--warning); }
+.evidence-level-badge.low { background: var(--danger); }
 
 .source-link {
-  margin-top: 8px;
-  font-size: 13px;
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
 }
 
 .source-link a {
   color: var(--primary-dark);
-  font-family: "SF Mono", Monaco, monospace;
+  font-family: var(--font-mono);
 }
 
-.explanation-section {
-  margin-bottom: 20px;
-}
-
-.explanation-section h3 {
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: var(--primary-dark);
-  font-weight: 600;
-}
-
-.explanation-section p {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--text-color);
-}
-
-.explanation-section.warning {
-  background: #FFF5F5;
-  border-left: 4px solid var(--error-color);
-  padding: 16px;
-  border-radius: 8px;
-}
-
-.disclaimer {
-  background: #F8FBFD;
-  border: 1px dashed var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 20px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  text-align: center;
-}
-
-.risk-banner {
-  border: 2px solid;
-  border-radius: 8px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  background: #FFF9E6;
-}
-
-.risk-banner strong {
-  display: block;
-  margin-bottom: 8px;
-  color: #B8960C;
-}
-
-/* Companion Banner（暖场白展示条）— 小光的一句陪伴话，温暖柔和（R3.1） */
-.companion-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFF7E0 100%);
-  border: 1px solid #F0E2B0;
-  border-left: 4px solid var(--accent-pink);
-  border-radius: var(--radius-soft);
-  box-shadow: var(--shadow-card);
-}
-
-.companion-banner-avatar {
-  font-size: 22px;
-  line-height: 1.4;
-  flex-shrink: 0;
-}
-
-.companion-banner-text {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--text-color);
-  font-weight: 500;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .header {
-    padding: 12px 16px 8px;
-  }
-
-  .header h1 {
-    font-size: 1.5rem;
-  }
-
-  .subtitle {
-    font-size: 0.85rem;
-  }
-
-  .mascot-container {
-    padding-top: 8px;
-  }
-
-  .mascot-svg {
-    width: 80px;
-    height: 80px;
-  }
-
-  .search-form {
-    margin: 16px auto;
-    padding: 0 12px;
-  }
-
-  .search-input {
-    padding: 12px 16px;
-    font-size: 15px;
-  }
-
-  .search-form button {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
-
-  .disease-selector-toggle {
-    margin: 12px auto;
-    padding: 0 12px;
-  }
-
-  .disease-selector {
-    grid-template-columns: 1fr;
-    padding: 0 12px;
-    margin: 12px auto;
-  }
-
-  .demo-queries {
-    padding: 0 12px;
-  }
-
-  .demo-btn {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-
-  .evidence-list,
-  .explanation-view {
-    padding: 0 12px;
-    margin: 16px auto;
-  }
-
-  .layer {
-    padding: 14px;
-    margin-bottom: 12px;
-  }
-
-  .layer-1 .conclusion-text {
-    font-size: 15px;
-  }
-
-  .evidence-card {
-    padding: 14px;
-  }
-
-  .evidence-title {
-    font-size: 15px;
-  }
-
-  .explanation-section h3 {
-    font-size: 14px;
-  }
-
-  .explanation-section p {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header h1 {
-    font-size: 1.3rem;
-  }
-
-  .subtitle {
-    font-size: 0.8rem;
-  }
-
-  .mascot-svg {
-    width: 60px;
-    height: 60px;
-  }
-
-  .search-input {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  .search-form button {
-    padding: 10px 16px;
-    font-size: 13px;
-  }
-
-  .layer {
-    padding: 12px;
-  }
-
-  .evidence-card {
-    padding: 12px;
-  }
-}
-
-/* Visit Prep View */
+/* =====================================================================
+   Visit Prep View 就医准备包
+   ===================================================================== */
 .visit-prep-view {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 20px;
+  /* 嵌入解释结果中，无需额外外边距 */
+}
+
+.visit-prep-layer {
+  background: linear-gradient(135deg, var(--teal-50) 0%, var(--surface) 60%);
+  border: 1px solid var(--teal-100);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
 }
 
 .visit-prep-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
 }
 
 .visit-prep-header h2 {
   margin-bottom: 0;
-  font-size: 1.2rem;
+  font-size: var(--fs-lg);
   color: var(--primary-dark);
 }
 
 .visit-prep-print-btn {
-  padding: 8px 18px;
-  font-size: 13px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: white;
-  border: none;
-  border-radius: var(--radius-btn);
+  padding: 9px 20px;
+  font-size: var(--fs-sm);
+  background: var(--surface);
+  color: var(--primary-dark);
+  border: 1.5px solid var(--teal-300);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  transition: all 0.2s ease;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .visit-prep-print-btn:hover {
+  background: var(--primary-dark);
+  color: #fff;
+  border-color: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(91, 155, 213, 0.4);
+  box-shadow: 0 4px 12px rgba(15, 130, 117, 0.3);
 }
 
 .visit-prep-note {
-  background: #FFF9E6;
-  border: 1px solid #FFE5A0;
-  border-radius: 8px;
+  background: var(--warning-soft);
+  border: 1px solid #f3e2bb;
+  border-radius: var(--radius-sm);
   padding: 12px 16px;
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: #B8960C;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  color: #9a7414;
 }
 
 .visit-prep-category {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
 }
 
 .visit-prep-category h3 {
-  font-size: 15px;
-  margin-bottom: 10px;
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-3);
   color: var(--primary-dark);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .visit-prep-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .visit-prep-item {
-  background: #FAFBFD;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   padding: 12px 16px;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 }
 
 .visit-prep-item:hover {
-  box-shadow: var(--shadow-card);
+  border-color: var(--teal-200);
+  box-shadow: var(--shadow-xs);
+}
+
+.visit-prep-item.checked {
+  background: var(--success-soft);
+  border-color: #bfe6d0;
 }
 
 .visit-prep-item label {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--space-3);
   cursor: pointer;
 }
 
 .visit-prep-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin-top: 3px;
-  accent-color: var(--primary-dark);
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--primary);
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .visit-prep-item-text {
-  font-size: 15px;
+  font-size: var(--fs-base);
   line-height: 1.7;
-  color: var(--text-color);
+  color: var(--text);
 }
 
 .visit-prep-item.checked .visit-prep-item-text {
   text-decoration: line-through;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .visit-prep-positioning {
-  background: #F8FBFD;
-  border: 1px dashed var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 20px;
-  font-size: 13px;
+  background: var(--surface-soft);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
   color: var(--text-secondary);
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  .visit-prep-view {
-    padding: 0 12px;
-    margin: 16px auto;
-  }
-
-  .visit-prep-header h2 {
-    font-size: 1.05rem;
-  }
-
-  .visit-prep-print-btn {
-    padding: 7px 14px;
-    font-size: 12px;
-  }
-
-  .visit-prep-item-text {
-    font-size: 14px;
-  }
-}
-
-/* 打印样式：隐藏勾选框与按钮，让清单适合打印 */
-@media print {
-  body {
-    background: #FFFFFF;
-  }
-
-  .mascot-container,
-  .header,
-  .search-form,
-  .disease-selector-toggle,
-  .disease-selector,
-  .demo-queries,
-  .demo-notice,
-  .visit-prep-print-btn {
-    display: none !important;
-  }
-
-  .visit-prep-view {
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  .visit-prep-layer {
-    border: none;
-    box-shadow: none;
-    padding: 0;
-  }
-
-  .visit-prep-item {
-    border: 1px solid #CCCCCC;
-    box-shadow: none;
-    break-inside: avoid;
-  }
-
-  .visit-prep-item input[type="checkbox"] {
-    /* 保留方框占位以便手写勾选，但隐藏交互控件外观 */
-    -webkit-appearance: none;
-    appearance: none;
-    border: 1.5px solid #888888;
-    border-radius: 3px;
-    background: #FFFFFF;
-  }
-
-  .visit-prep-item.checked .visit-prep-item-text {
-    text-decoration: none;
-    color: var(--text-color);
-  }
-}
-
-/* Trial Card（临床试验卡片） */
+/* =====================================================================
+   Trial Card 临床试验卡片
+   ===================================================================== */
 .trial-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-soft);
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-card);
-  transition: all 0.3s ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow 0.2s ease;
 }
 
 .trial-card:hover {
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-sm);
 }
 
 .trial-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: var(--space-4);
 }
 
 .trial-card-tag {
-  background: var(--primary-color);
-  color: white;
+  background: var(--primary);
+  color: #fff;
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
 }
 
 .trial-card-nct {
-  font-family: "SF Mono", Monaco, monospace;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
   color: var(--primary-dark);
-  background: #F0F7FF;
+  background: var(--primary-tint);
   padding: 4px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-xs);
 }
 
 .trial-card-fields {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .trial-card-field {
   display: grid;
   grid-template-columns: 80px 1fr;
-  gap: 12px;
+  gap: var(--space-3);
   align-items: start;
 }
 
 .trial-card-field dt {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: 700;
   color: var(--primary-dark);
 }
 
 .trial-card-field dd {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   line-height: 1.7;
-  color: var(--text-color);
+  color: var(--text);
 }
 
 .trial-card-note {
-  background: #FFF9E6;
-  border: 1px solid #FFE5A0;
-  border-radius: 8px;
+  background: var(--warning-soft);
+  border: 1px solid #f3e2bb;
+  border-radius: var(--radius-sm);
   padding: 12px 16px;
-  font-size: 13px;
-  color: #B8960C;
+  font-size: var(--fs-sm);
+  color: #9a7414;
 }
 
-@media (max-width: 768px) {
-  .trial-card {
-    padding: 14px;
-  }
-
-  .trial-card-field {
-    grid-template-columns: 72px 1fr;
-    gap: 8px;
-  }
-
-  .trial-card-field dt,
-  .trial-card-field dd {
-    font-size: 13px;
-  }
-}
-
-/* 研究进展（Research Progress） */
+/* =====================================================================
+   Research Progress 研究进展
+   ===================================================================== */
 .research-progress-item {
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+  background: var(--surface);
 }
 
 .research-progress-item:last-child {
@@ -978,55 +1152,255 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .research-stage-badge {
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  color: white;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: #fff;
 }
 
-/* 突破性 RCT：稳重色，传达可信度（R12.2） */
-.research-stage-badge.breakthrough {
-  background: var(--primary-dark);
-}
-
-/* 早期临床试验：提示色，提示尚未确立（R12.3/R12.4） */
-.research-stage-badge.early {
-  background: var(--warning-color);
-  color: #7A5C00;
-}
-
-/* 临床前/动物实验：更强提示色，强调不确定性（R12.3/R12.4） */
-.research-stage-badge.preclinical {
-  background: var(--error-color);
-}
+.research-stage-badge.breakthrough { background: var(--primary-dark); }
+.research-stage-badge.early { background: var(--warning); color: #6b4e00; }
+.research-stage-badge.preclinical { background: var(--danger); }
 
 .research-evidence-level {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   color: var(--text-secondary);
 }
 
 .research-progress-summary {
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--text-color);
+  font-size: var(--fs-base);
+  line-height: 1.75;
+  color: var(--text);
   margin: 0;
 }
 
-/* 不确定性说明：醒目提示样式，避免患者误读为已确立疗效（R12.3/R12.4） */
 .research-uncertainty-note {
-  margin-top: 12px;
-  background: #FFF5F5;
-  border-left: 4px solid var(--error-color);
-  border-radius: 8px;
+  margin-top: var(--space-3);
+  background: var(--danger-soft);
+  border-left: 4px solid var(--danger);
+  border-radius: var(--radius-sm);
   padding: 12px 16px;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   line-height: 1.7;
-  color: #B5524C;
+  color: #b5524c;
+}
+
+/* =====================================================================
+   响应式 Responsive
+   ===================================================================== */
+@media (max-width: 768px) {
+  .header {
+    padding: var(--space-3) var(--space-4) var(--space-2);
+  }
+
+  .header h1 {
+    font-size: var(--fs-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--fs-sm);
+  }
+
+  .mascot-container {
+    padding-top: var(--space-2);
+  }
+
+  .mascot-container .mascot-svg {
+    width: 88px;
+    height: 88px;
+  }
+
+  .search-form {
+    margin: var(--space-5) auto var(--space-4);
+    padding: 0 var(--space-3);
+  }
+
+  .input-wrapper {
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .search-input {
+    padding: 12px 16px;
+    text-align: center;
+  }
+
+  .search-form button {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .disease-selector-toggle {
+    margin: var(--space-3) auto;
+    padding: 0 var(--space-3);
+  }
+
+  .disease-selector {
+    grid-template-columns: 1fr;
+    padding: 0 var(--space-3);
+    margin: var(--space-3) auto;
+  }
+
+  .demo-queries {
+    padding: 0 var(--space-3);
+  }
+
+  .demo-btn {
+    font-size: var(--fs-xs);
+    padding: 6px 12px;
+  }
+
+  .evidence-list,
+  .explanation-view {
+    padding: 0 var(--space-3);
+    margin: var(--space-5) auto;
+  }
+
+  .layer {
+    padding: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  .core-answer {
+    padding: var(--space-5);
+  }
+
+  .core-answer-text {
+    font-size: var(--fs-lg);
+  }
+
+  .companion-banner {
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .companion-banner-avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .companion-banner-avatar .mascot-svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .evidence-accordion-toggle {
+    padding: var(--space-4);
+  }
+
+  .evidence-accordion-body {
+    padding: 0 var(--space-4) var(--space-4);
+  }
+
+  .visit-prep-layer {
+    padding: var(--space-4);
+  }
+
+  .evidence-card {
+    padding: var(--space-4);
+  }
+
+  .evidence-title {
+    font-size: var(--fs-md);
+  }
+
+  .trial-card {
+    padding: var(--space-4);
+  }
+
+  .trial-card-field {
+    grid-template-columns: 72px 1fr;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: var(--fs-xl);
+  }
+
+  .mascot-container .mascot-svg {
+    width: 72px;
+    height: 72px;
+  }
+
+  .core-answer-text {
+    font-size: var(--fs-md);
+  }
+
+  .layer {
+    padding: var(--space-3);
+  }
+}
+
+/* =====================================================================
+   打印样式：隐藏交互元素，让就医准备包清单适合打印
+   ===================================================================== */
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .mascot-container,
+  .header,
+  .search-form,
+  .disease-selector-toggle,
+  .disease-selector,
+  .demo-queries,
+  .demo-notice,
+  .companion-banner,
+  .risk-banner,
+  .core-answer,
+  .layer-3,
+  .evidence-accordion,
+  .visit-prep-print-btn {
+    display: none !important;
+  }
+
+  .explanation-view,
+  .visit-prep-view {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .visit-prep-layer {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    background: #fff;
+  }
+
+  .visit-prep-item {
+    border: 1px solid #cccccc;
+    box-shadow: none;
+    background: #fff;
+    break-inside: avoid;
+  }
+
+  .visit-prep-item input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1.5px solid #888888;
+    border-radius: 3px;
+    background: #ffffff;
+  }
+
+  .visit-prep-item.checked {
+    background: #fff;
+  }
+
+  .visit-prep-item.checked .visit-prep-item-text {
+    text-decoration: none;
+    color: var(--text);
+  }
 }
