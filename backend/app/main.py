@@ -92,7 +92,8 @@ async def cache_delete(query: str):
 
 # ─── 前端静态托管（单容器部署：FastAPI 同时托管前端 dist）─────────────────────
 # 在项目根目录寻找 frontend/dist（容器内 WORKDIR /app 下为 frontend/dist）
-_FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "..", "..", "frontend", "dist")
+# __file__ = backend/app/main.py -> dirname = backend/app -> ../.. = 项目根目录
+_FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
 if os.path.isdir(_FRONTEND_DIST):
     # 托管 /assets 等静态资源
     app.mount("/assets", StaticFiles(directory=os.path.join(_FRONTEND_DIST, "assets")), name="assets")
