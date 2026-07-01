@@ -125,6 +125,65 @@ class VisitPrepResponse(BaseModel):
     note: Optional[str] = None
 
 
+# ---------------------------------------------------------------------------
+# 研究雷达订阅（Research Radar Subscription）相关模型
+# 依赖顺序：PushDigestItem -> PushDigest -> InAppMessage；SubscriptionOffer 供 ExplainResponse 引用
+# ---------------------------------------------------------------------------
+
+
+class Subscription(BaseModel):
+    """一条订阅记录（核心订阅库，零 PII）"""
+    id: str
+    anon_user_id: str
+    disease_keyword: str
+    status: str = "active"
+    created_at: str
+
+
+class SubscribeRequest(BaseModel):
+    """创建订阅请求（显式同意）"""
+    anon_user_id: str
+    disease_keyword: str = Field(..., min_length=1, max_length=100)
+
+
+class ChannelSetRequest(BaseModel):
+    """开启推送渠道请求（in_app 时 contact 为空）"""
+    anon_user_id: str
+    channel: Literal["in_app", "email", "wechat"]
+    contact: Optional[str] = None
+
+
+class PushDigestItem(BaseModel):
+    """推送摘要中的单条新进展（含研究阶段与证据等级标注）"""
+    summary: str
+    research_stage: Literal["breakthrough_rct", "early_trial", "preclinical"]
+    evidence_level: str
+    uncertainty_note: Optional[str] = None
+    source_id: Optional[str] = None
+
+
+class PushDigest(BaseModel):
+    """针对一条或多条新进展生成的群体层面通俗化研究进展摘要"""
+    disease_keyword: str
+    items: list[PushDigestItem] = Field(default_factory=list)
+    generated_at: str
+    is_demo: bool = False
+
+
+class InAppMessage(BaseModel):
+    """站内消息（零 PII，承载 Push_Digest）"""
+    id: str
+    digest: PushDigest
+    created_at: str
+    read: bool = False
+
+
+class SubscriptionOffer(BaseModel):
+    """解释完成后小光主动发起的订阅邀约"""
+    disease_keyword: str
+    prompt_text: str
+
+
 class ExplainResponse(BaseModel):
     layer1_conclusion: LayerOneConclusion
     layer2_evidence_cards: list[EvidenceCard]
@@ -135,6 +194,7 @@ class ExplainResponse(BaseModel):
     emotion_state: str = "calm"
     trial_cards: list[TrialCard] = Field(default_factory=list)
     research_progress: list[ResearchProgress] = Field(default_factory=list)
+    subscription_offer: Optional[SubscriptionOffer] = None
 
 
 class EvaluateRequest(BaseModel):

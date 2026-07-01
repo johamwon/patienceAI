@@ -1,181 +1,2226 @@
 {
+  "8fc29875191755986e4fb25178170dde": {
+    "query": "我朋友父亲得了渐冻症怎么办",
+    "data": {
+      "layer1_conclusion": {
+        "text": "渐冻症目前无法治愈，但通过规范治疗可延缓病情进展、改善生活质量；建议遵循中国专家共识，及时到神经科就诊，制定个性化治疗方案。",
+        "citations": [
+          "肌萎缩侧索硬化诊断和治疗中国专家共识2022",
+          "肌萎缩侧索硬化诊断和治疗中国专家共识2026"
+        ]
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "渐冻症就像身体里的‘电线’（神经）慢慢断掉，导致肌肉逐渐无力、萎缩，最后影响说话、吞咽甚至呼吸。",
+        "what_evidence_says": "最新研究和专家共识表明，虽然渐冻症无法根治，但早诊断、早治疗能有效延缓病情，药物如利鲁唑能帮助部分患者延长生存时间，改善生活质量。",
+        "what_it_means_for_you": "1. 尽快带您朋友的父亲去大医院的神经科就诊，做详细检查；2. 遵医嘱进行规范治疗，包括药物和康复训练；3. 关注呼吸和吞咽功能，必要时使用辅助设备。",
+        "when_to_see_doctor": "如果出现呼吸困难、无法吞咽、频繁呛咳或病情突然加重，需立即就医。",
+        "disclaimer": "本内容为医学文献的通俗解读，仅作参考，不构成医疗建议，不能替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "我知道听到“渐冻症”这三个字，心里会特别慌，特别担心。这种病确实很棘手，目前也没有根治的方法，但别灰心，还有许多办法可以缓解症状，提高生活质量。最重要的是，和医生一起制定适合的方案，一步一步来。",
+      "emotion_state": "anxiety",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "肌萎缩侧索硬化诊断和治疗中国专家共识2026",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "T.I. 2 肌萎缩侧索硬化的分子和细胞疗法",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.nmd.2006.05.246"
+        },
+        {
+          "summary": "肌萎缩侧索硬化症患者构音障碍与吞咽困难的表现特征",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/mus.27729"
+        },
+        {
+          "summary": "肌萎缩侧索硬化的治疗PACTALS指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "用于评估肌萎缩侧索硬化症患者持续使用无创通气障碍因素与促进因素的调查问卷开发",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1212/WNL.0000000000210677"
+        },
+        {
+          "summary": "肌萎缩侧索硬化的神经生物学：一项综合研究",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1212/WNL.0000000000208424"
+        },
+        {
+          "summary": "自体间充质干细胞移植治疗肌萎缩侧索硬化——病例报告",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1007/s00276-023-03224-6"
+        },
+        {
+          "summary": "伊朗肌萎缩侧索硬化临床实践指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "肌萎缩侧索硬化诊断和治疗中国专家共识2022",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "肌萎缩侧索硬化诊断和治疗中国专家共识2022",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "Chrysin induces death of prostate cancer cells by inducing ROS and ER stress.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25861"
+        },
+        {
+          "summary": "Transforming growth factor β induces bone marrow mesenchymal stem cell migration via noncanonical signals and N-cadherin.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25863"
+        },
+        {
+          "summary": "Mitochondria-targeted esculetin inhibits PAI-1 levels by modulating STAT3 activation and miR-19b via SIRT3: Role in acute coronary artery syndrome.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25865"
+        },
+        {
+          "summary": "Promotion of cell growth and adhesion of a peptide hydrogel scaffold via mTOR/cadherin signaling.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25864"
+        },
+        {
+          "summary": "Potato aphid Macrosiphum euphorbiae performance is determined by aphid genotype and not mycorrhizal fungi or water availability.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1744-7917.12445"
+        },
+        {
+          "summary": "The skin barrier function gene SPINK5 is associated with challenge-proven IgE-mediated food allergy in infants.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/all.13143"
+        },
+        {
+          "summary": "PGE2 /EP4 receptor attenuated mucosal injury via β-arrestin1/Src/EGFR-mediated proliferation in portal hypertensive gastropathy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13752"
+        },
+        {
+          "summary": "Estimating mating rates in wild Drosophila melanogaster females by decay rates of male reproductive proteins in their reproductive tracts.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1755-0998.12661"
+        },
+        {
+          "summary": "A phase 2 safety study of accelerated elotuzumab infusion, over less than 1 h, in combination with lenalidomide and dexamethasone, in patients with multiple myeloma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/ajh.24687"
+        },
+        {
+          "summary": "Utilizing melatonin to combat bacterial infections and septic injury.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13751"
+        },
+        {
+          "summary": "Protective antibodies against Clostridium difficile are present in intravenous immunoglobulin and are retained in humans following its administration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cei.12946"
+        },
+        {
+          "summary": "Antibiotic administration alleviates the aggravating effect of orthodontic force on ligature-induced experimental periodontitis bone loss in mice.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jre.12439"
+        },
+        {
+          "summary": "Association of Hypercalcemia Before Treatment With Hypocalcemia After Treatment in Dogs With Primary Hyperparathyroidism.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jvim.14644"
+        },
+        {
+          "summary": "Exploration of the Brn4-regulated genes enhancing adult hippocampal neurogenesis by RNA sequencing.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jnr.24043"
+        },
+        {
+          "summary": "Problem-Solving Phase Transitions During Team Collaboration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cogs.12482"
+        },
+        {
+          "summary": "Peri-implant bone remodeling at the interface of three different implant types: a histomorphometric study in mini-pigs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/clr.13009"
+        },
+        {
+          "summary": "Effect of a one-step self-etch adhesive on endogenous dentin matrix metalloproteinases.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/eos.12337"
+        },
+        {
+          "summary": "The use of herbal supplements and alternative therapies by patients with amyotrophic lateral sclerosis (ALS).",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_10"
+        },
+        {
+          "summary": "Amyotrophic lateral sclerosis: contemporary concepts in etiopathogenesis and pharmacotherapy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1517/13543784.13.12.1593"
+        },
+        {
+          "summary": "A double-blind, placebo-controlled randomized clinical trial of alpha-tocopherol (vitamin E) in the treatment of amyotrophic lateral sclerosis. ALS riluzole-tocopherol Study Group.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1080/146608201300079364"
+        },
+        {
+          "summary": "Assessing Perceptual Effects of Interactive Tasks",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Amyotrophic Lateral Sclerosis Registry",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "Remote Home Assessment of Patients With Amyotrophic Lateral Sclerosis",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "Contribution of Diaphragmatic Ultrasound for Monitoring Diaphragmatic Function in Patients With Amyotrophic Lateral Sclerosis",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Metagenomic Characterization of the Intestinal Microbiota in ALS Patients and Association With Clinical Phenotypes",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        }
+      ]
+    },
+    "cached_at": "2026-06-30T23:34:30.301573",
+    "expires_at": "2026-07-01T23:34:30.301573"
+  },
+  "3e22bb110729ffd3fa64275146bf0407": {
+    "query": "visitprep::我朋友父亲得了渐冻症怎么办",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "针对渐冻症，目前有哪些治疗方案可以延缓病情进展？",
+          "除了药物治疗，还有没有其他辅助治疗或康复方法可以尝试？",
+          "渐冻症的病情通常会以怎样的速度进展？有没有办法预测？",
+          "如果出现呼吸困难，什么时候需要开始使用呼吸机或其他呼吸支持？",
+          "有没有临床试验或新疗法适合我朋友的父亲参与？"
+        ],
+        "info_to_tell_doctor": [
+          "我朋友的父亲目前主要的症状是肌肉无力，特别是手部和腿部，而且说话有些含糊。",
+          "他之前被诊断为渐冻症，已经开始服用利鲁唑，但效果似乎不明显。",
+          "他没有其他严重的慢性病，但有轻微的高血压，正在服用降压药。",
+          "他的食欲最近下降，体重也减轻了一些，睡眠质量也不太好。",
+          "我们非常关心他的生活质量，希望尽量延缓病情发展，同时减少他的痛苦。"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要做肌电图（EMG）来进一步评估神经肌肉状况？",
+          "可以问医生是否需要定期监测肺功能，以早期发现呼吸问题？",
+          "可以问医生是否需要做基因检测，看看是否与遗传因素有关？",
+          "可以问医生是否需要营养评估，因为他的食欲和体重都有变化。",
+          "可以问医生是否需要做心理评估，因为长期面对这种疾病可能会有情绪问题。"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认目前使用的利鲁唑是否需要调整剂量或更换其他药物？",
+          "需要和医生确认物理治疗和职业治疗的具体方案，帮助他保持活动能力。",
+          "需要和医生确认是否可以使用辅助设备，比如进食辅助工具或轮椅。",
+          "需要和医生确认如果病情进展到晚期，如何管理呼吸衰竭和吞咽困难。",
+          "需要和医生确认是否有其他支持疗法，比如高压氧治疗或康复训练。"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-06-30T23:35:45.231015",
+    "expires_at": "2026-07-01T23:35:45.231015"
+  },
+  "9c17ecf7bbd865a4d8a8aa57d1350a1b": {
+    "query": "CAR-T疗法淋巴瘤",
+    "data": {
+      "layer1_conclusion": {
+        "text": "CAR-T疗法是治疗某些淋巴瘤的新型免疫疗法，尤其对B细胞非霍奇金淋巴瘤效果显著；最新专家共识建议在符合条件的患者中使用，具体方案需医生评估。",
+        "citations": []
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "CAR-T疗法就像给你的免疫细胞装上‘导航系统’，让它们精准找到并攻击淋巴瘤细胞，是近年来癌症治疗的重大突破。",
+        "what_evidence_says": "最新专家共识表明，CAR-T疗法对成人B细胞非霍奇金淋巴瘤和老年弥漫大B细胞淋巴瘤有良好效果，尤其在其他治疗方法无效时，能显著提高治疗效果。",
+        "what_it_means_for_you": "如果你被诊断为B细胞淋巴瘤，可以和医生讨论是否适合CAR-T疗法；治疗前需全面评估身体状况，治疗中需密切监测副作用。",
+        "when_to_see_doctor": "治疗后如果出现高烧、呼吸困难或意识模糊，需立即就医。",
+        "disclaimer": "本内容为医学文献的通俗解读，仅作参考，不构成医疗建议，不能替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "CAR-T疗法在淋巴瘤的治疗中确实带来了很多希望，尤其对一些复发或难治的病例。不过，它也面临一些挑战，比如适用范围和个体反应的差异。咱们可以一起看看它在不同类型淋巴瘤中的应用和效果。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "CAR-T 细胞疗法在治疗惰性及侵袭性淋巴瘤中的应用经验",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.18620/ctt-1866-8836-2023-12-3-1-176"
+        },
+        {
+          "summary": "接受 CD19 CAR T 细胞疗法治疗淋巴瘤的预存自身免疫性疾病患者的安全性、肿瘤进展及自身免疫性疾病活动度：一项回顾性队列比较研究",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/art.43008"
+        },
+        {
+          "summary": "CD19 CAR-T治疗成人B细胞非霍奇金淋巴瘤管理实践专家共识（2025版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "CD19 CAR-T治疗成人B细胞非霍奇金淋巴瘤管理实践专家共识（2025版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "Challenges and limitations of chimeric antigen receptor T-cell therapies in solid tumors: why are approvals restricted to hematologic malignancies?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1186/s13045-025-01744-9"
+        },
+        {
+          "summary": "TCL-835：CAR T细胞疗法治疗复发/难治性T细胞淋巴瘤的有效性与安全性：一项系统评价与荟萃分析",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/S2152-2650(25)02514-5"
+        },
+        {
+          "summary": "单中心应用嵌合抗原受体（CAR）疗法治疗侵袭性 B 细胞淋巴瘤的真实世界经验",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1182/blood-2024-205831"
+        },
+        {
+          "summary": "嵌合抗原受体T细胞在B细胞淋巴瘤恶性肿瘤中的有效性与安全性：一项系统评价与荟萃分析",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.annonc.2024.07.367"
+        },
+        {
+          "summary": "老年弥漫大B细胞淋巴瘤诊断与治疗中国专家共识（2024年版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "淋巴瘤免疫治疗中国专家共识(2024年版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "淋巴瘤免疫治疗中国专家共识(2024年版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "Late relapse after CAR-T cell therapy for adult patients with hematologic malignancies: A definite evidence from systematic review and meta-analysis on individual data.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.phrs.2023.106742"
+        },
+        {
+          "summary": "CAR-T cell therapy for patients with hematological malignancies. A systematic review.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/ejh.13851"
+        },
+        {
+          "summary": "CAR T-cell therapy in mature lymphoid malignancies: clinical opportunities and challenges.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.21037/atm-20-5546"
+        },
+        {
+          "summary": "CAR-T cells: Early successes in blood cancer and challenges in solid tumors.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.apsb.2020.10.020"
+        },
+        {
+          "summary": "Efficacy and safety of chimeric antigen receptor-T cells in the treatment of B cell lymphoma: a systematic review and meta-analysis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/CM9.0000000000000568"
+        },
+        {
+          "summary": "L’émergence des traitements par cellules CAR-T dans les lymphomes.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/S0007-4551(19)30047-5"
+        },
+        {
+          "summary": "A Phase I/IIa Trial Using CD19-Targeted Third-Generation CAR T Cells for Lymphoma and Leukemia.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1158/1078-0432.CCR-18-0426"
+        },
+        {
+          "summary": "The application of CAR-T cell therapy in hematological malignancies: advantages and challenges.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.apsb.2018.03.001"
+        },
+        {
+          "summary": "Chimeric antigen receptor T-cell therapies for lymphoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1038/nrclinonc.2017.128"
+        },
+        {
+          "summary": "Chrysin induces death of prostate cancer cells by inducing ROS and ER stress.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25861"
+        },
+        {
+          "summary": "Transforming growth factor β induces bone marrow mesenchymal stem cell migration via noncanonical signals and N-cadherin.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25863"
+        },
+        {
+          "summary": "Mitochondria-targeted esculetin inhibits PAI-1 levels by modulating STAT3 activation and miR-19b via SIRT3: Role in acute coronary artery syndrome.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25865"
+        },
+        {
+          "summary": "Promotion of cell growth and adhesion of a peptide hydrogel scaffold via mTOR/cadherin signaling.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25864"
+        },
+        {
+          "summary": "Potato aphid Macrosiphum euphorbiae performance is determined by aphid genotype and not mycorrhizal fungi or water availability.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1744-7917.12445"
+        },
+        {
+          "summary": "The skin barrier function gene SPINK5 is associated with challenge-proven IgE-mediated food allergy in infants.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/all.13143"
+        },
+        {
+          "summary": "PGE2 /EP4 receptor attenuated mucosal injury via β-arrestin1/Src/EGFR-mediated proliferation in portal hypertensive gastropathy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13752"
+        },
+        {
+          "summary": "Estimating mating rates in wild Drosophila melanogaster females by decay rates of male reproductive proteins in their reproductive tracts.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1755-0998.12661"
+        },
+        {
+          "summary": "A phase 2 safety study of accelerated elotuzumab infusion, over less than 1 h, in combination with lenalidomide and dexamethasone, in patients with multiple myeloma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/ajh.24687"
+        },
+        {
+          "summary": "Utilizing melatonin to combat bacterial infections and septic injury.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13751"
+        },
+        {
+          "summary": "Protective antibodies against Clostridium difficile are present in intravenous immunoglobulin and are retained in humans following its administration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cei.12946"
+        },
+        {
+          "summary": "Antibiotic administration alleviates the aggravating effect of orthodontic force on ligature-induced experimental periodontitis bone loss in mice.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jre.12439"
+        },
+        {
+          "summary": "Association of Hypercalcemia Before Treatment With Hypocalcemia After Treatment in Dogs With Primary Hyperparathyroidism.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jvim.14644"
+        },
+        {
+          "summary": "Exploration of the Brn4-regulated genes enhancing adult hippocampal neurogenesis by RNA sequencing.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jnr.24043"
+        },
+        {
+          "summary": "Problem-Solving Phase Transitions During Team Collaboration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cogs.12482"
+        },
+        {
+          "summary": "Peri-implant bone remodeling at the interface of three different implant types: a histomorphometric study in mini-pigs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/clr.13009"
+        },
+        {
+          "summary": "Effect of a one-step self-etch adhesive on endogenous dentin matrix metalloproteinases.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/eos.12337"
+        },
+        {
+          "summary": "Multiparametric Cardiac MRI in Patients Under CAR T-cell Therapy",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Zanubrutinib and CAR T-cell Therapy for the Treatment of Recurrent or Refractory Aggressive B-cell Non-Hodgkin's Lymphoma or Transformed Indolent B-cell Lymphoma",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "CD19 CAR-T Expressing IL7 and CCL19 Combined With PD1 mAb for Relapsed or Refractory Diffuse Large B Cell Lymphoma",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "Evaluation of Bridging Radiation Therapy Before CAR T-Cell Infusion for the Treatment of Relapsed or Refractory Large B-Cell Lymphoma",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Intracerebroventricular Administration of CD19-CAR T Cells (CD19CAR-CD28-CD3zeta-EGFRt-expressing Tn/Mem T-lymphocytes) for the Treatment of Central Nervous System Lymphoma",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        }
+      ]
+    },
+    "cached_at": "2026-06-30T23:39:08.666236",
+    "expires_at": "2026-07-01T23:39:08.666236"
+  },
+  "fb90518ec380a84d0b7dd23714c9b2bd": {
+    "query": "visitprep::CAR-T疗法淋巴瘤",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "CAR-T疗法对我的淋巴瘤类型有效吗？我的淋巴瘤亚型适合做CAR-T吗？",
+          "CAR-T治疗前需要做哪些准备？比如基因检测或其他特殊检查？",
+          "CAR-T治疗后，通常多久能看到效果？完全缓解需要多长时间？",
+          "CAR-T治疗的副作用有哪些？特别是细胞因子释放综合征（CRS）和免疫效应细胞相关神经毒性综合征（ICANS）的风险有多大？",
+          "如果CAR-T治疗失败或复发，接下来还有哪些治疗选择？"
+        ],
+        "info_to_tell_doctor": [
+          "我之前接受过化疗、放疗和其他免疫治疗，效果不太理想，想了解CAR-T是否适合我。",
+          "我有慢性病史，比如高血压和糖尿病，目前在服用相关药物，这会影响CAR-T治疗吗？",
+          "我之前有感染史，比如乙肝病毒携带，这会不会影响CAR-T的疗效或安全性？",
+          "我最近感到疲劳、食欲下降，体重也减轻了一些，这些症状会不会影响CAR-T治疗的开展？",
+          "我之前用过PD-1抑制剂，但效果不明显，这是否会影响CAR-T的疗效？"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要做淋巴瘤的基因检测，确认我的淋巴瘤类型是否适合CAR-T治疗？",
+          "可以问医生是否需要评估我的心脏、肝肾功能，因为听说CAR-T治疗对这些器官有影响。",
+          "可以问医生是否需要做PET-CT或骨髓穿刺，进一步确认淋巴瘤的病情进展和CAR-T的适用性。",
+          "可以问医生是否需要检测我体内的病毒载量，比如乙肝病毒，因为免疫抑制可能让病毒激活。",
+          "可以问医生是否需要做免疫功能评估，看看我的身体状况能不能承受CAR-T治疗？"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认CAR-T治疗的具体流程，包括治疗前的桥接治疗、淋巴细胞采集和回输的时间安排。",
+          "需要和医生确认CAR-T治疗后的随访计划，比如多久复查一次，需要做哪些检查来监测疗效和副作用。",
+          "需要和医生确认CAR-T治疗的费用和医保报销情况，因为听说CAR-T费用很高。",
+          "需要和医生确认CAR-T治疗期间，是否需要使用其他药物来预防或控制副作用，比如托珠单抗或类固醇。",
+          "需要和医生确认，如果CAR-T治疗后出现进展或复发，是否有备用的治疗方案，比如其他免疫治疗或临床试验。"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-06-30T23:39:27.198291",
+    "expires_at": "2026-07-01T23:39:27.198291"
+  },
+  "0adb3e1b7e51e389023e569a15c7057d": {
+    "query": "免疫治疗联合化疗对晚期肺腺癌的效果如何？我想了解一下最新研究",
+    "data": {
+      "layer1_conclusion": {
+        "text": "免疫治疗联合化疗对晚期肺腺癌效果较好，尤其在没有特定基因突变的情况下，能延长生存期；有基因突变者需结合基因状态决定方案。具体方案请咨询医生。",
+        "citations": []
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "晚期肺腺癌就像一场身体里的‘战争’，癌细胞快速扩散。免疫治疗是唤醒你体内‘军队’（免疫系统）攻击癌细胞，化疗是用药物直接‘打击’癌细胞。两者联合，就像‘军队’和‘武器’配合作战，更有效。",
+        "what_evidence_says": "最新研究显示，对于没有特定基因突变的晚期肺腺癌，免疫治疗加化疗能更好控制病情，延长生存时间。如果有特定基因突变，治疗方案会更复杂，可能需要先用针对性的药物，再看是否加入免疫治疗。",
+        "what_it_means_for_you": "1. 与医生讨论你的基因检测结果，确定是否有特定突变；2. 了解免疫治疗联合化疗的可能副作用，做好准备；3. 定期复查，监测治疗效果。",
+        "when_to_see_doctor": "如果出现严重呼吸困难、持续高烧、剧烈胸痛或明显体重下降，需立即就医。",
+        "disclaimer": "本内容是对医学文献的通俗解读，仅作参考，不构成医疗建议，不能替代医生的判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "了解晚期肺腺癌的治疗效果确实让人很关心，免疫治疗联合化疗是目前研究的热点之一，但效果会因人而异，也存在一些挑战。我们来看看最新的研究怎么说，但记得这些是群体数据，具体方案还得和医生讨论哦。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "贝伐珠单抗联合化疗对比免疫治疗联合化疗在晚期 PD-L1 阴性肺腺癌中的疗效：一项真实世界回顾性队列分析",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.annonc.2025.10.802"
+        },
+        {
+          "summary": "Immunotherapy resistance in non-small cell lung cancer: from mechanisms to therapeutic opportunities.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1186/s13046-025-03519-z"
+        },
+        {
+          "summary": "肺结核与肺癌共病诊疗专家共识",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "免疫化疗对比标准治疗在小细胞肺癌中的疗效研究",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1136/ejhpharm-2024-eahp.169"
+        },
+        {
+          "summary": "一线化疗联合免疫治疗或抗血管生成治疗治疗晚期 KRAS 突变非小细胞肺癌的有效性",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.annonc.2024.10.721"
+        },
+        {
+          "summary": "一线免疫化疗治疗的晚期肺腺癌患者中，免疫治疗时机对生存率的影响：一项倾向评分匹配研究。",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2024.42.16_suppl.e20560"
+        },
+        {
+          "summary": "Clinical status and perspective on the application of immunotherapy combined with chemotherapy in advanced non-small cell lung cancer: a review.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.21037/cco-23-92"
+        },
+        {
+          "summary": "驱动基因阴性晚期非小细胞肺癌一线免疫治疗耐药评估及治疗策略中国专家共识（2024版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "驱动基因阳性晚期非小细胞肺癌免疫治疗专家共识(2023版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "驱动基因阳性晚期非小细胞肺癌免疫治疗专家共识(2023版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "Clinical effects of Chemotherapy combined with Immunotherapy in patients with advanced NSCLC and the effect on their nutritional status and immune function.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.12669/pjms.39.2.6365"
+        },
+        {
+          "summary": "免疫治疗联合重组人血管内皮抑素在晚期非小细胞肺癌二线治疗中较免疫检查点抑制剂联合化疗改善了临床结局。",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2023.41.16_suppl.e21133"
+        },
+        {
+          "summary": "晚期驱动基因阳性非小细胞肺癌免疫治疗专家共识(2022版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "Chemotherapy plus single/double immunotherapy in the treatment of non-oncogene addicted advanced non-small cell lung cancer: where do we stand and where are we going?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1080/14737140.2022.2026772"
+        },
+        {
+          "summary": "The prospect of immunotherapy combined with chemotherapy in patients with advanced non-small cell lung cancer: a narrative review.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.21037/atm-21-4878"
+        },
+        {
+          "summary": "Efficacy and Safety of First-Line Immunotherapy Combinations for Advanced NSCLC: A Systematic Review and Network Meta-Analysis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.jtho.2021.03.016"
+        },
+        {
+          "summary": "Neoadjuvant immunotherapy combined with chemotherapy for local advanced non-small cell lung cancer: a case report.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.21037/atm-21-1565"
+        },
+        {
+          "summary": "Paradigms on Immunotherapy Combinations with Chemotherapy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1158/2159-8290.CD-20-1312"
+        },
+        {
+          "summary": "The New Immunotherapy Combinations in the Treatment of Advanced Non-Small Cell Lung Cancer: Reality and Perspectives.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.2174/1574884714666190809124555"
+        },
+        {
+          "summary": "Enhancing antitumor response by combining immune checkpoint inhibitors with chemotherapy in solid tumors.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1093/annonc/mdy551"
+        },
+        {
+          "summary": "Molecular basis and rationale for combining immune checkpoint inhibitors with chemotherapy in non-small cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.drup.2019.100644"
+        },
+        {
+          "summary": "The Integration of Radiotherapy with Immunotherapy for the Treatment of Non-Small Cell Lung Cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1158/1078-0432.CCR-17-3620"
+        },
+        {
+          "summary": "Combination of immunotherapy with chemotherapy and radiotherapy in lung cancer: is this the beginning of the end for cancer?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1177/1758835918762094"
+        },
+        {
+          "summary": "Combining chemotherapy with PD-1 blockade in NSCLC.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.pharmthera.2018.01.003"
+        },
+        {
+          "summary": "Chemotherapy-induced immunomodulation in non-small-cell lung cancer: a rationale for combination chemoimmunotherapy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.2217/imt-2017-0052"
+        },
+        {
+          "summary": "Chrysin induces death of prostate cancer cells by inducing ROS and ER stress.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25861"
+        },
+        {
+          "summary": "Transforming growth factor β induces bone marrow mesenchymal stem cell migration via noncanonical signals and N-cadherin.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25863"
+        },
+        {
+          "summary": "Mitochondria-targeted esculetin inhibits PAI-1 levels by modulating STAT3 activation and miR-19b via SIRT3: Role in acute coronary artery syndrome.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25865"
+        },
+        {
+          "summary": "Promotion of cell growth and adhesion of a peptide hydrogel scaffold via mTOR/cadherin signaling.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25864"
+        },
+        {
+          "summary": "Potato aphid Macrosiphum euphorbiae performance is determined by aphid genotype and not mycorrhizal fungi or water availability.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1744-7917.12445"
+        },
+        {
+          "summary": "The skin barrier function gene SPINK5 is associated with challenge-proven IgE-mediated food allergy in infants.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/all.13143"
+        },
+        {
+          "summary": "PGE2 /EP4 receptor attenuated mucosal injury via β-arrestin1/Src/EGFR-mediated proliferation in portal hypertensive gastropathy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13752"
+        },
+        {
+          "summary": "Estimating mating rates in wild Drosophila melanogaster females by decay rates of male reproductive proteins in their reproductive tracts.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1755-0998.12661"
+        },
+        {
+          "summary": "A phase 2 safety study of accelerated elotuzumab infusion, over less than 1 h, in combination with lenalidomide and dexamethasone, in patients with multiple myeloma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/ajh.24687"
+        },
+        {
+          "summary": "Utilizing melatonin to combat bacterial infections and septic injury.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13751"
+        },
+        {
+          "summary": "Protective antibodies against Clostridium difficile are present in intravenous immunoglobulin and are retained in humans following its administration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cei.12946"
+        },
+        {
+          "summary": "Antibiotic administration alleviates the aggravating effect of orthodontic force on ligature-induced experimental periodontitis bone loss in mice.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jre.12439"
+        },
+        {
+          "summary": "Association of Hypercalcemia Before Treatment With Hypocalcemia After Treatment in Dogs With Primary Hyperparathyroidism.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jvim.14644"
+        },
+        {
+          "summary": "Exploration of the Brn4-regulated genes enhancing adult hippocampal neurogenesis by RNA sequencing.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jnr.24043"
+        },
+        {
+          "summary": "Problem-Solving Phase Transitions During Team Collaboration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cogs.12482"
+        },
+        {
+          "summary": "Peri-implant bone remodeling at the interface of three different implant types: a histomorphometric study in mini-pigs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/clr.13009"
+        },
+        {
+          "summary": "Effect of a one-step self-etch adhesive on endogenous dentin matrix metalloproteinases.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/eos.12337"
+        },
+        {
+          "summary": "Prognostic Impact of Immune Microenvironment in Lung Squamous Cell Carcinoma: Tumor-Infiltrating CD10+ Neutrophil/CD20+ Lymphocyte Ratio as an Independent Prognostic Factor.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/JTO.0000000000000617"
+        },
+        {
+          "summary": "The interplay of immunotherapy and chemotherapy: harnessing potential synergies.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1158/2326-6066.CIR-15-0064"
+        },
+        {
+          "summary": "Synergy between chemotherapy and immunotherapy in the treatment of established murine solid tumors.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_1"
+        },
+        {
+          "summary": "Multi-omics Based Prediction of Treatment Response to Immunotherapy Combined with Chemotherapy in Advanced Gastric/Gastroesophageal Junction Cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Testing the Addition of Radiation Therapy to the Usual Treatment (Immunotherapy With or Without Chemotherapy) for Advanced Stage Non-small Cell Lung Cancer Patients Who Are PD-L1 Negative",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "Single-drug Chemotherapy Plus Immunotherapy in Metastatic Non-small Cell Lung Cancer Elderly Patients",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "Differences in Rate of Decline in CT-defined Skeletal Muscle Mass and Physical Performance in Patients With Advanced Non-small Cell Lung Cancer Receiving Chemotherapy and Targeted Therapy/Immunotherapy, Before and After Treatment.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Randomized Trial of Glutathione With Anti-PD-1 and Chemotherapy in Advanced NSCLC",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        }
+      ]
+    },
+    "cached_at": "2026-06-30T23:54:04.834518",
+    "expires_at": "2026-07-01T23:54:04.834518"
+  },
+  "f8331c3595a64e40804514fe0d19176e": {
+    "query": "青光眼最新治疗方法",
+    "data": {
+      "layer1_conclusion": {
+        "text": "青光眼最新治疗方法包括早期筛查、药物治疗、激光及手术治疗；2024年西藏共识特别强调新生血管性青光眼的管理，2020年中国指南推荐个性化治疗方案。",
+        "citations": []
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "青光眼就像眼睛里的‘水位’太高，压力过大，会压坏视神经，就像气球吹太大会破一样，可能导致失明。",
+        "what_evidence_says": "最新研究和指南表明，早期发现和治疗很关键。2024年西藏的专家共识专门针对一种特殊类型的青光眼——新生血管性青光眼，提出了详细的管理方法。2020年中国青光眼指南推荐根据个人情况，采用药物、激光或手术等个性化治疗方案，控制眼压，保护视力。",
+        "what_it_means_for_you": "1. 定期做眼睛检查，尤其是有家族史或高风险的人；2. 如果确诊，遵医嘱用药或接受其他治疗；3. 注意用眼休息，避免长时间盯着屏幕。",
+        "when_to_see_doctor": "出现突然视力模糊、眼痛、头痛、恶心呕吐或虹视（看灯周围有彩虹圈）时，需立即就医。",
+        "disclaimer": "本内容为医学文献的通俗解读，仅作参考，不构成医疗建议，不能替代医生的判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "青光眼的治疗一直在进步，您关注最新方法，说明您很重视自己的眼健康。目前确实有一些新的研究和治疗方法，不过具体适合您的方案，还是需要医生根据您的情况来判断。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "Evidence-based recommendations for the diagnosis and treatment of neovascular glaucoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/s0161-6420(01)00775-8"
+        },
+        {
+          "summary": "Chrysin induces death of prostate cancer cells by inducing ROS and ER stress.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25861"
+        },
+        {
+          "summary": "Transforming growth factor β induces bone marrow mesenchymal stem cell migration via noncanonical signals and N-cadherin.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25863"
+        },
+        {
+          "summary": "Effect of a one-step self-etch adhesive on endogenous dentin matrix metalloproteinases.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/eos.12337"
+        },
+        {
+          "summary": "Antibiotic administration alleviates the aggravating effect of orthodontic force on ligature-induced experimental periodontitis bone loss in mice.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jre.12439"
+        },
+        {
+          "summary": "The skin barrier function gene SPINK5 is associated with challenge-proven IgE-mediated food allergy in infants.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/all.13143"
+        },
+        {
+          "summary": "Association of Hypercalcemia Before Treatment With Hypocalcemia After Treatment in Dogs With Primary Hyperparathyroidism.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jvim.14644"
+        },
+        {
+          "summary": "A phase 2 safety study of accelerated elotuzumab infusion, over less than 1 h, in combination with lenalidomide and dexamethasone, in patients with multiple myeloma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/ajh.24687"
+        },
+        {
+          "summary": "Potato aphid Macrosiphum euphorbiae performance is determined by aphid genotype and not mycorrhizal fungi or water availability.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1744-7917.12445"
+        },
+        {
+          "summary": "PGE2 /EP4 receptor attenuated mucosal injury via β-arrestin1/Src/EGFR-mediated proliferation in portal hypertensive gastropathy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13752"
+        },
+        {
+          "summary": "Exploration of the Brn4-regulated genes enhancing adult hippocampal neurogenesis by RNA sequencing.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jnr.24043"
+        },
+        {
+          "summary": "Variations in treatment among adult-onset open-angle glaucoma patients.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.ophtha.2005.02.010"
+        },
+        {
+          "summary": "Targeted preventive measures and advanced approaches in personalised treatment of glaucoma neuropathy.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1007/s13167-010-0018-1"
+        },
+        {
+          "summary": "Treatment of ocular hypertension and open angle glaucoma: meta-analysis of randomised controlled trials.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1136/bmj.38506.594977.E0"
+        },
+        {
+          "summary": "Mitochondria-targeted esculetin inhibits PAI-1 levels by modulating STAT3 activation and miR-19b via SIRT3: Role in acute coronary artery syndrome.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25865"
+        },
+        {
+          "summary": "Problem-Solving Phase Transitions During Team Collaboration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cogs.12482"
+        },
+        {
+          "summary": "Peri-implant bone remodeling at the interface of three different implant types: a histomorphometric study in mini-pigs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/clr.13009"
+        },
+        {
+          "summary": "Treatment outcomes in malignant glaucoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.ophtha.2012.10.024"
+        },
+        {
+          "summary": "Utilizing melatonin to combat bacterial infections and septic injury.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13751"
+        },
+        {
+          "summary": "[Treatment of glaucoma].",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_19"
+        },
+        {
+          "summary": "Glaucoma clinical trials and what they mean for our patients.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/s0002-9394(03)00143-0"
+        },
+        {
+          "summary": "Current management of glaucoma and the need for complete therapy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_21"
+        },
+        {
+          "summary": "Protective antibodies against Clostridium difficile are present in intravenous immunoglobulin and are retained in humans following its administration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cei.12946"
+        },
+        {
+          "summary": "The medical and surgical treatment of glaucoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3238/arztebl.2009.0597"
+        },
+        {
+          "summary": "Pharmacotherapy of glaucoma.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1089/jop.2014.0067"
+        },
+        {
+          "summary": "Interventions for angle-closure glaucoma: an evidence-based update.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/S0161-6420(03)00540-2"
+        },
+        {
+          "summary": "Promotion of cell growth and adhesion of a peptide hydrogel scaffold via mTOR/cadherin signaling.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25864"
+        },
+        {
+          "summary": "The pathophysiology and treatment of glaucoma: a review.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1001/jama.2014.3192"
+        },
+        {
+          "summary": "Estimating mating rates in wild Drosophila melanogaster females by decay rates of male reproductive proteins in their reproductive tracts.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1755-0998.12661"
+        },
+        {
+          "summary": "Selective laser trabeculoplasty versus 0·5% timolol eye drops for the treatment of glaucoma in Tanzania: a randomised controlled trial.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/S2214-109X(21)00348-X"
+        },
+        {
+          "summary": "重视原发性开角型青光眼Schlemm管相关手术降眼压机制的研究",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3877/cma.j.issn.2095-2007.2017.05.001"
+        },
+        {
+          "summary": "青光眼的视神经保护策略",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/j:issn:0412-4081.2004.11.016"
+        },
+        {
+          "summary": "国内新生血管性青光眼治疗现状及方法探讨",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1672-5123.2010.10.058"
+        },
+        {
+          "summary": "恶性青光眼治疗方法探讨",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3321/j.issn:1672-3554.2005.z1.115"
+        },
+        {
+          "summary": "青光眼手术治疗方式的合理选择",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.2095-0160.2018.04.001"
+        },
+        {
+          "summary": "个性化方案治疗恶性青光眼的疗效分析",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3980/j.issn.1672-5123.2020.2.48"
+        },
+        {
+          "summary": "青光眼的手术治疗",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1002-266X.2008.18.081"
+        },
+        {
+          "summary": "恶性青光眼治疗的临床研究",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1672-5123.2004.03.019"
+        },
+        {
+          "summary": "恶性青光眼的预防及处理",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1672-5123.2006.04.020"
+        },
+        {
+          "summary": "青光眼视神经保护相关研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.399/j.issn.1006-8422.2019.01.026"
+        },
+        {
+          "summary": "中国青光眼指南（2020年）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "青光眼筛查与早期治疗指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "中国青光眼指南（2020年）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "青光眼筛查与早期治疗指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "西藏自治区新生血管性青光眼诊疗专家共识(2024年)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "原发性开角型青光眼的治疗管理",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.2478/afpuc-2025-0004"
+        },
+        {
+          "summary": "澳大利亚与新西兰的青光眼临床实践模式：一项针对眼科医生的双边调查",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/ceo.70045"
+        },
+        {
+          "summary": "青光眼中的 HIF-P4H-2 抑制",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/2211-5463.70205"
+        },
+        {
+          "summary": "探索患者对青光眼治疗的偏好：一项定性焦点小组研究",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/aos.16648"
+        },
+        {
+          "summary": "晚期阿卡米巴变形虫性角膜炎穿透性角膜移植术中继发性青光眼治疗与移植物失败：5年随访研究",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1136/bmjoo-2025-BCA.16"
+        },
+        {
+          "summary": "Efficacy of the Nanodropper Device on Intraocular Pressure in Patients With Glaucoma",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Comparison of Phaco Surgery With Goniosynechialysis Versus Trabeculectomy in Glaucoma Treatment",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "Dresden Glaucoma and Treatment Study (DGTS)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "INTEGRAL Study: A Longitudinal Study of Surgeries and Lasers in Glaucoma: Long-term Results and Success Predictors Analysed From a Large-scale Retrospective and Prospective Glaucoma Register",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Dresden Glaucoma and Treatment Study (DGTS)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        }
+      ]
+    },
+    "cached_at": "2026-07-01T08:33:18.255150",
+    "expires_at": "2026-07-02T08:33:18.255150"
+  },
   "4116b6993c09a83fbf1de394a16a6ed7": {
     "query": "肺腺癌免疫治疗",
     "data": {
       "layer1_conclusion": {
-        "text": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。.",
+        "text": "肺腺癌的免疫治疗是通过药物激活免疫系统对抗癌症，适合的情况需看肿瘤突变负荷等指标；围手术期和转移癌治疗中也有应用，具体方案需医生评估。",
         "citations": [
-          "32743622",
-          "35123456"
+          "guide1",
+          "guide2"
         ]
       },
       "layer2_evidence_cards": [
         {
-          "study_type": "guide",
+          "study_type": "临床指南",
           "sample_size": null,
           "intervention": null,
           "comparator": null,
-          "outcome": "推荐PD-1/PD-L1抑制剂联合化疗作为晚期非鳞非小细胞肺癌的一线治疗方案，PD-L1表达阳性患者优先选择免疫单药治疗。",
+          "outcome": null,
           "limitations": null,
-          "evidence_level": "high",
-          "source_id": "demo_guide_nsclc_2024",
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
           "source_url": null
         },
         {
-          "study_type": "paper_en",
+          "study_type": "临床指南",
           "sample_size": null,
           "intervention": null,
           "comparator": null,
-          "outcome": "In patients with metastatic non-small-cell lung cancer, pembrolizumab plus chemotherapy improved ove",
+          "outcome": null,
           "limitations": null,
-          "evidence_level": "high",
-          "source_id": "32743622",
-          "source_url": "https://pubmed.ncbi.nlm.nih.gov/32743622/"
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
         },
         {
-          "study_type": "paper_cn",
+          "study_type": "临床指南",
           "sample_size": null,
           "intervention": null,
           "comparator": null,
-          "outcome": "meta分析显示，免疫联合化疗方案降低晚期NSCLC患者死亡风险约21%，客观缓解率提高至45.2%。",
+          "outcome": null,
           "limitations": null,
-          "evidence_level": "high",
-          "source_id": "35123456",
-          "source_url": "https://pubmed.ncbi.nlm.nih.gov/35123456/"
-        }
-      ],
-      "layer3_patient_explanation": {
-        "what_is_it": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。",
-        "what_evidence_says": "详见下方完整解释。",
-        "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
-        "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
-        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
-      },
-      "risk_level": "low",
-      "risk_message": null
-    },
-    "cached_at": "2026-06-24T16:29:41.856577",
-    "expires_at": "2026-06-25T16:29:41.856577"
-  },
-  "4b0d5d315af39f44be1305259d45ad1f": {
-    "query": "我这个症状是不是癌症复发",
-    "data": {
-      "layer1_conclusion": {
-        "text": "未找到相关医学证据，请尝试使用更具体的医学名词进行查询。",
-        "citations": []
-      },
-      "layer2_evidence_cards": [],
-      "layer3_patient_explanation": {
-        "what_is_it": "抱歉，目前没有找到与您查询相关的权威医学文献。",
-        "what_evidence_says": "建议您尝试使用更具体的疾病名称或医学术语进行查询，例如'肺腺癌'而不是'肺癌'。",
-        "what_it_means_for_you": "如需了解特定疾病信息，请咨询您的主治医生或前往正规医疗机构。",
-        "when_to_see_doctor": "如您有具体症状或健康问题，请及时就医。",
-        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
-      },
-      "risk_level": "high",
-      "risk_message": "您的提问涉及个体化诊疗决策，系统无法提供此类建议。请立即咨询您的主治医生或前往正规医疗机构就诊。"
-    },
-    "cached_at": "2026-06-24T16:30:13.304083",
-    "expires_at": "2026-06-25T16:30:13.304083"
-  },
-  "0bf8e8355bdb3316a168854b381c6fd0": {
-    "query": "断食可以饿死癌细胞吗",
-    "data": {
-      "layer1_conclusion": {
-        "text": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。.",
-        "citations": []
-      },
-      "layer2_evidence_cards": [
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
         {
-          "study_type": "guide",
+          "study_type": "临床指南",
           "sample_size": null,
           "intervention": null,
           "comparator": null,
-          "outcome": "目前没有科学证据支持断食可以饿死癌细胞。癌细胞具有独特的代谢能力，即使在营养缺乏的环境下也能通过改变代谢途径获取能量。盲目断食反而可能导致营养不良，影响正常治疗。",
+          "outcome": null,
           "limitations": null,
-          "evidence_level": "high",
-          "source_id": "demo_rumor_001",
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
           "source_url": null
         }
       ],
       "layer3_patient_explanation": {
-        "what_is_it": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。",
-        "what_evidence_says": "详见下方完整解释。",
-        "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
-        "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
-        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
-      },
-      "risk_level": "medium",
-      "risk_message": null
-    },
-    "cached_at": "2026-06-24T16:30:21.459751",
-    "expires_at": "2026-06-25T16:30:21.459751"
-  },
-  "7abce8b4b9820b873e87e8f1b323b55e": {
-    "query": "渐冻症ALS最新研究",
-    "data": {
-      "layer1_conclusion": {
-        "text": "未找到相关医学证据，请尝试使用更具体的医学名词进行查询。",
-        "citations": []
-      },
-      "layer2_evidence_cards": [],
-      "layer3_patient_explanation": {
-        "what_is_it": "抱歉，目前没有找到与您查询相关的权威医学文献。",
-        "what_evidence_says": "建议您尝试使用更具体的疾病名称或医学术语进行查询，例如'肺腺癌'而不是'肺癌'。",
-        "what_it_means_for_you": "如需了解特定疾病信息，请咨询您的主治医生或前往正规医疗机构。",
-        "when_to_see_doctor": "如您有具体症状或健康问题，请及时就医。",
-        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+        "what_is_it": "免疫治疗就像给身体的‘保安系统’加油，让免疫细胞更有力地识别和攻击癌细胞，是治疗肺腺癌的重要方法之一。",
+        "what_evidence_says": "最新专家共识表明，免疫治疗在手术前后或肺癌转移时能发挥重要作用，尤其当肿瘤有更多基因突变时效果更好。如果靶向药失效，免疫治疗也是可选方案之一。",
+        "what_it_means_for_you": "1. 与医生讨论是否适合免疫治疗，特别是看肿瘤的基因检测结果；2. 如果有手术计划，问医生围手术期免疫治疗的可能；3. 定期复查，监测治疗效果和副作用。",
+        "when_to_see_doctor": "如果出现呼吸困难、持续咳嗽、胸痛或治疗后副作用（如皮疹、疲劳），需立即就医。",
+        "disclaimer": "本内容是对医学文献的通俗解读，仅作参考，不构成医疗建议，不能替代医生的判断。"
       },
       "risk_level": "low",
-      "risk_message": null
-    },
-    "cached_at": "2026-06-24T16:36:59.612671",
-    "expires_at": "2026-06-25T16:36:59.612671"
-  },
-  "1ed28a9c0c9caa87604d6bd256efc8c2": {
-    "query": "CAR-T疗法实体瘤最新研究",
-    "data": {
-      "layer1_conclusion": {
-        "text": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。.",
-        "citations": [
-          "demo_car_t_001"
-        ]
-      },
-      "layer2_evidence_cards": [
+      "risk_message": null,
+      "companion_message": "我知道肺腺癌的治疗选择让人很关注，免疫治疗也是很多患者和家属讨论的热点。之前您也问过这方面，我明白您想多了解一些。咱们一起看看有哪些信息可能对您有帮助。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
         {
-          "study_type": "meeting",
-          "sample_size": null,
-          "intervention": null,
-          "comparator": null,
-          "outcome": "多项I/II期临床试验显示，针对CLDN18.2的CAR-T在胃癌和胰腺癌中显示出初步疗效。",
-          "limitations": null,
-          "evidence_level": "moderate",
-          "source_id": "demo_meeting_car_t_2024",
-          "source_url": null
+          "summary": "Chrysin induces death of prostate cancer cells by inducing ROS and ER stress.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25861"
         },
         {
-          "study_type": "paper_en",
-          "sample_size": null,
-          "intervention": null,
-          "comparator": null,
-          "outcome": "CAR-T therapy has shown promising results in solid tumors with objective response rates of 30-50% in",
-          "limitations": null,
-          "evidence_level": "moderate",
-          "source_id": "demo_car_t_001",
-          "source_url": null
+          "summary": "Transforming growth factor β induces bone marrow mesenchymal stem cell migration via noncanonical signals and N-cadherin.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25863"
+        },
+        {
+          "summary": "Effect of a one-step self-etch adhesive on endogenous dentin matrix metalloproteinases.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/eos.12337"
+        },
+        {
+          "summary": "Antibiotic administration alleviates the aggravating effect of orthodontic force on ligature-induced experimental periodontitis bone loss in mice.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jre.12439"
+        },
+        {
+          "summary": "The skin barrier function gene SPINK5 is associated with challenge-proven IgE-mediated food allergy in infants.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/all.13143"
+        },
+        {
+          "summary": "Association of Hypercalcemia Before Treatment With Hypocalcemia After Treatment in Dogs With Primary Hyperparathyroidism.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jvim.14644"
+        },
+        {
+          "summary": "Emerging Therapeutic Strategies for Lung Cancer: The Role of Immunotherapy and HPV-Targeted Cancer Vaccines.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3390/vaccines13090957"
+        },
+        {
+          "summary": "Molecular basis and rationale for combining immune checkpoint inhibitors with chemotherapy in non-small cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.drup.2019.100644"
+        },
+        {
+          "summary": "Immunotherapy for non-small cell lung cancer: novel approaches to improve patient outcome.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/JTO.0b013e31822e28fc"
+        },
+        {
+          "summary": "A phase 2 safety study of accelerated elotuzumab infusion, over less than 1 h, in combination with lenalidomide and dexamethasone, in patients with multiple myeloma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/ajh.24687"
+        },
+        {
+          "summary": "Potato aphid Macrosiphum euphorbiae performance is determined by aphid genotype and not mycorrhizal fungi or water availability.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1744-7917.12445"
+        },
+        {
+          "summary": "PGE2 /EP4 receptor attenuated mucosal injury via β-arrestin1/Src/EGFR-mediated proliferation in portal hypertensive gastropathy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13752"
+        },
+        {
+          "summary": "Exploration of the Brn4-regulated genes enhancing adult hippocampal neurogenesis by RNA sequencing.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jnr.24043"
+        },
+        {
+          "summary": "What lies within: novel strategies in immunotherapy for non-small cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1634/theoncologist.2013-0171"
+        },
+        {
+          "summary": "Prognostic Impact of Immune Microenvironment in Lung Squamous Cell Carcinoma: Tumor-Infiltrating CD10+ Neutrophil/CD20+ Lymphocyte Ratio as an Independent Prognostic Factor.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/JTO.0000000000000617"
+        },
+        {
+          "summary": "Immunotherapy in lung cancer.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3978/j.issn.2218-6751.2013.10.13"
+        },
+        {
+          "summary": "Efficacy of Tumor Vaccines and Cellular Immunotherapies in Non-Small-Cell Lung Cancer: A Systematic Review and Meta-Analysis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2015.66.3955"
+        },
+        {
+          "summary": "Mitochondria-targeted esculetin inhibits PAI-1 levels by modulating STAT3 activation and miR-19b via SIRT3: Role in acute coronary artery syndrome.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25865"
+        },
+        {
+          "summary": "Tumor and Tumor-Associated Macrophage Programmed Death-Ligand 1 Expression Is Associated With Adjuvant Chemotherapy Benefit in Lung Adenocarcinoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.jtho.2021.09.009"
+        },
+        {
+          "summary": "Problem-Solving Phase Transitions During Team Collaboration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cogs.12482"
+        },
+        {
+          "summary": "Resistance to immunotherapy in non-small cell lung cancer: Unraveling causes, developing effective strategies, and exploring potential breakthroughs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.drup.2025.101215"
+        },
+        {
+          "summary": "Peri-implant bone remodeling at the interface of three different implant types: a histomorphometric study in mini-pigs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/clr.13009"
+        },
+        {
+          "summary": "Utilizing melatonin to combat bacterial infections and septic injury.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/bph.13751"
+        },
+        {
+          "summary": "Therapeutic Vaccination in Lung Cancer: Past Attempts, Current Approaches and Future Promises.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.70322/jrbtm.2025.10010"
+        },
+        {
+          "summary": "[Non-Small Cell Lung Cancer - from Immunobiology to Immunotherapy].",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_24"
+        },
+        {
+          "summary": "Allogeneic vaccination with a B7.1 HLA-A gene-modified adenocarcinoma cell line in patients with advanced non-small-cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2004.10.197"
+        },
+        {
+          "summary": "Protective antibodies against Clostridium difficile are present in intravenous immunoglobulin and are retained in humans following its administration.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/cei.12946"
+        },
+        {
+          "summary": "Immunotherapy as a strategy for the treatment of non-small-cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.2217/thy.10.84"
+        },
+        {
+          "summary": "Lung cancer immunotherapy in 2025: where we stand and what comes next?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3389/fimmu.2025.1728163"
+        },
+        {
+          "summary": "[Immunotherapy in the Treatment of Lung Cancer].",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.14735/amko20173S22"
+        },
+        {
+          "summary": "Lung cancer immunotherapy: progress, pitfalls, and promises.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1186/s12943-023-01740-y"
+        },
+        {
+          "summary": "Promotion of cell growth and adhesion of a peptide hydrogel scaffold via mTOR/cadherin signaling.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/jcp.25864"
+        },
+        {
+          "summary": "Estimating mating rates in wild Drosophila melanogaster females by decay rates of male reproductive proteins in their reproductive tracts.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1755-0998.12661"
+        },
+        {
+          "summary": "Immunotherapy resistance in non-small cell lung cancer: from mechanisms to therapeutic opportunities.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1186/s13046-025-03519-z"
+        },
+        {
+          "summary": "The next generation of immunotherapy: keeping lung cancer in check.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1186/s13045-017-0456-5"
+        },
+        {
+          "summary": "免疫治疗联合含铂双药治疗肺腺癌疗效及对患者短期生存的影响",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.11713/j.issn.1009-4822.2023.05.010"
+        },
+        {
+          "summary": "免疫治疗联合贝伐珠单抗抗血管生成双靶治疗对老年晚期肺腺癌患者近期临床疗效及安全性的影响",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1006-4931.2024.13.026"
+        },
+        {
+          "summary": "高龄肺腺鳞癌患者免疫治疗一例并文献复习",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.0254-9026.2020.06.019"
+        },
+        {
+          "summary": "肺腺癌肿瘤免疫微环境及其与疗效和预后的关系",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3872/j.issn.1007-385x.2023.08.013"
+        },
+        {
+          "summary": "免疫治疗:肺癌如何应用?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_4"
+        },
+        {
+          "summary": "肺癌免疫治疗:免疫抑制细胞和肺内免疫",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1674-8115.2020.08.023"
+        },
+        {
+          "summary": "肺癌的免疫治疗进展",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_6"
+        },
+        {
+          "summary": "肺癌的细胞免疫治疗",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.1673-436X.2008.01.006"
+        },
+        {
+          "summary": "肺癌免疫治疗进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3779/j.issn.1009-3419.2009.05.014"
+        },
+        {
+          "summary": "免疫治疗——开启肺癌治疗的新时代",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.1001-0939.2020.02.003"
+        },
+        {
+          "summary": "转移性肺淋巴上皮样癌的免疫治疗",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.jtho.2024.09.1118"
+        },
+        {
+          "summary": "免疫治疗时代 IV 期肺浸润性粘液腺癌的临床结局：一项基于 SEER 数据库的分析",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1164/ajrccm.2025.211.Abstracts.A4786"
+        },
+        {
+          "summary": "免疫治疗时代对伴有肝转移的肺腺癌患者生存率的影响",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.esmoop.2026.106661"
+        },
+        {
+          "summary": "免疫治疗时代的晚期非小细胞肺癌：生存率与多原发恶性肿瘤的风险",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "meeting_4"
+        },
+        {
+          "summary": "EGFR-TKIs耐药后应对策略及标准化质量控制中国专家共识",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "可切除非小细胞肺癌围手术期免疫治疗热点问题中国专家共识",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "射波刀机器人立体定向放射外科治疗肺转移癌中国专家共识",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "肿瘤突变负荷应用于肺癌免疫治疗的专家共识",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "多学科共识：免疫治疗的形态和功能反应",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "Testing the Addition of Radiation Therapy to the Usual Treatment (Immunotherapy With or Without Chemotherapy) for Advanced Stage Non-small Cell Lung Cancer Patients Who Are PD-L1 Negative",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Testing the Addition of Radiation Therapy to the Usual Treatment (Immunotherapy With or Without Chemotherapy) for Advanced Stage Non-small Cell Lung Cancer Patients Who Are PD-L1 Negative",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "A Study on the Efficacy of Immunotherapy, the Occurrence and Severity of Adverse Reactions in Patients with Non-small Cell Lung Cancer in High-altitude Areas",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "Testing the Addition of Radiation Therapy to the Usual Treatment (Immunotherapy With or Without Chemotherapy) for Advanced Stage Non-small Cell Lung Cancer Patients Who Are PD-L1 Negative",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Local Ablative Stereotactic Radiotherapy for Residual Hypermetabolic Lesion in Patients With Locally Advanced or Metastatic Non-small Cell Lung Cancer Long-term Responders to Immunotherapy",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
         }
-      ],
-      "layer3_patient_explanation": {
-        "what_is_it": "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。",
-        "what_evidence_says": "详见下方完整解释。",
-        "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
-        "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
-        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
-      },
-      "risk_level": "low",
-      "risk_message": null
+      ]
     },
-    "cached_at": "2026-06-24T16:38:18.644646",
-    "expires_at": "2026-06-25T16:38:18.644646"
+    "cached_at": "2026-07-01T08:44:30.353528",
+    "expires_at": "2026-07-02T08:44:30.353528"
+  },
+  "57cac5be220f76326dd2c974ddd97a88": {
+    "query": "visitprep::肺腺癌免疫治疗",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "针对我的肺腺癌，免疫治疗（比如免疫检查点抑制剂）适合我吗？",
+          "如果使用免疫治疗，比如PD-1/PD-L1抑制剂，通常需要治疗多长时间？",
+          "免疫治疗的副作用有哪些？我需要特别注意哪些？",
+          "除了免疫治疗，还有没有其他联合治疗方案，比如和化疗或靶向治疗一起用？",
+          "免疫治疗后，多久能看到效果？需要做哪些检查来评估疗效？",
+          "如果免疫治疗不起效，接下来的治疗方案是什么？"
+        ],
+        "info_to_tell_doctor": [
+          "（此处涉及个体化诊疗，请咨询医生）。",
+          "我之前接受过化疗，效果一般，副作用比较明显。",
+          "我有慢性支气管炎，不知道这会不会影响免疫治疗的效果。",
+          "我之前没有用过免疫治疗药物，但有朋友说副作用可能很大，想听听您的建议。",
+          "我目前身体状况还可以，但有点疲劳，不知道免疫治疗会不会让我更累。"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要做PD-L1表达检测，来判断免疫治疗的效果？",
+          "可以问医生是否需要做基因检测，看看有没有其他靶向治疗的机会？",
+          "可以问医生是否需要定期做影像学检查（比如CT或PET-CT），来监测免疫治疗的疗效？",
+          "可以问医生是否需要监测血液中的肿瘤标志物，比如CEA或CYFRA 21-1，来评估治疗效果？",
+          "可以问医生是否需要在治疗前做免疫相关指标的检查，评估我的免疫状态？"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认，我的肺腺癌分期和基因突变情况是否适合免疫治疗。",
+          "需要和医生确认，免疫治疗药物的选择，比如PD-1抑制剂或PD-L1抑制剂，哪一种更合适？",
+          "需要和医生确认，免疫治疗是否可以和抗血管生成药物联合使用，提高效果？",
+          "需要和医生确认，如果出现免疫相关副作用，比如皮疹或甲状腺问题，该怎么处理？",
+          "需要和医生确认，免疫治疗期间是否需要定期复查，以及复查的项目和频率。"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-07-01T08:44:43.749890",
+    "expires_at": "2026-07-02T08:44:43.749890"
   }
 }

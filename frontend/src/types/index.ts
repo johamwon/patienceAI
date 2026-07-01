@@ -80,4 +80,36 @@ export type ExplainResponse = {
   emotion_state: EmotionState | string;
   trial_cards: TrialCard[];
   research_progress: ResearchProgress[];
+  subscription_offer?: { disease_keyword: string; prompt_text: string };
+};
+
+// Research Radar Subscription types
+
+export type Subscription = {
+  id: string;
+  disease_keyword: string;
+  status: string;
+  created_at: string;
+};
+
+export type PushDigestItem = {
+  summary: string;
+  research_stage: "breakthrough_rct" | "early_trial" | "preclinical";
+  evidence_level: string;
+  uncertainty_note?: string;
+  source_id?: string;
+};
+
+export type PushDigest = {
+  disease_keyword: string;
+  items: PushDigestItem[];
+  generated_at: string;
+  is_demo: boolean;
+};
+
+export type InAppMessage = {
+  id: string;
+  digest: PushDigest;
+  created_at: string;
+  read: boolean;
 };

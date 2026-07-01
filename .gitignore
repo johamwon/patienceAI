@@ -21,3 +21,9 @@ coverage/
 htmlcov/
 .pytest_cache/
 .hypothesis/
+
+# Research Radar 本地持久化库（含订阅/联系方式 .db，不提交）
+backend/app/services/radar/data/
+
+# 本地任务过程记录，可能包含临时命令或密钥片段
+.kiro/specs/todo.md
