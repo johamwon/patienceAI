@@ -84,7 +84,6 @@ async def cache_delete(query: str):
 # ─── 前端静态托管（单容器部署：FastAPI 同时托管前端 dist）─────────────────────
 # 使用 pathlib 可靠地解析路径，支持多种部署场景
 from pathlib import Path
-import sys
 
 _POSSIBLE_FRONTEND_DIST = [
     # 容器部署：WORKDIR=/app, 文件结构 /app/backend/app/main.py, /app/frontend/dist
@@ -98,11 +97,6 @@ for _candidate in _POSSIBLE_FRONTEND_DIST:
     if _candidate.is_dir() and (_candidate / "index.html").exists():
         _FRONTEND_DIST = _candidate
         break
-
-print(f"[startup] __file__ = {__file__}", file=sys.stderr)
-print(f"[startup] FRONTEND_DIST = {_FRONTEND_DIST}", file=sys.stderr)
-if _FRONTEND_DIST:
-    print(f"[startup] Frontend dist contents: {list(_FRONTEND_DIST.iterdir())}", file=sys.stderr)
 
 if _FRONTEND_DIST:
     # 托管 /assets 等静态资源
