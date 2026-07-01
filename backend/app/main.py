@@ -41,15 +41,6 @@ app.add_middleware(
 
 # ─── Health ─────────────────────────────────────────────────────────────────
 
-@app.get("/")
-async def root():
-    return {
-        "name": "医语桥 API",
-        "version": "0.1.0",
-        "docs": "/docs",
-        "health": "/health",
-    }
-
 @app.get("/health")
 async def health():
     return {"status": "ok", "env": settings.app_env}
