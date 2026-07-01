@@ -91,18 +91,36 @@ async def cache_delete(query: str):
 
 
 # ─── 前端静态托管（单容器部署：FastAPI 同时托管前端 dist）─────────────────────
-# 在项目根目录寻找 frontend/dist（容器内 WORKDIR /app 下为 frontend/dist）
-# __file__ = backend/app/main.py -> dirname = backend/app -> ../.. = 项目根目录
-_FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
-if os.path.isdir(_FRONTEND_DIST):
+# 使用 pathlib 可靠地解析路径，支持多种部署场景
+from pathlib import Path
+import sys
+
+_POSSIBLE_FRONTEND_DIST = [
+    # 容器部署：WORKDIR=/app, 文件结构 /app/backend/app/main.py, /app/frontend/dist
+    Path(__file__).resolve().parent.parent.parent / "frontend" / "dist",
+    # 本地开发：从 backend/app/main.py 向上 3 级到项目根
+    Path(__file__).resolve().parent.parent.parent.parent / "frontend" / "dist",
+]
+
+_FRONTEND_DIST = None
+for _candidate in _POSSIBLE_FRONTEND_DIST:
+    if _candidate.is_dir() and (_candidate / "index.html").exists():
+        _FRONTEND_DIST = _candidate
+        break
+
+print(f"[startup] __file__ = {__file__}", file=sys.stderr)
+print(f"[startup] FRONTEND_DIST = {_FRONTEND_DIST}", file=sys.stderr)
+if _FRONTEND_DIST:
+    print(f"[startup] Frontend dist contents: {list(_FRONTEND_DIST.iterdir())}", file=sys.stderr)
+
+if _FRONTEND_DIST:
     # 托管 /assets 等静态资源
-    app.mount("/assets", StaticFiles(directory=os.path.join(_FRONTEND_DIST, "assets")), name="assets")
+    app.mount("/assets", StaticFiles(directory=str(_FRONTEND_DIST / "assets")), name="assets")
 
     @app.get("/{full_path:path}")
     async def spa_fallback(full_path: str):
         """SPA 兜底：非 API 路由一律返回 index.html，交给前端路由处理"""
-        # 命中已注册的 API/docs 路由时由 FastAPI 优先处理；这里只兜底静态资源与前端路由
-        candidate = os.path.join(_FRONTEND_DIST, full_path)
-        if full_path and os.path.isfile(candidate):
-            return FileResponse(candidate)
-        return FileResponse(os.path.join(_FRONTEND_DIST, "index.html"))
+        candidate = _FRONTEND_DIST / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(str(candidate))
+        return FileResponse(str(_FRONTEND_DIST / "index.html"))
