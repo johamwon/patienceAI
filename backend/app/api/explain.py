@@ -120,6 +120,7 @@ async def explain_evidence(req: ExplainRequest):
     from ..services.session_memory import session_store, SessionTurn
     from ..services.companion_engine import generate_companion_message
     from ..services.research_stage import to_research_progress, validate_nct
+    from ..services.answer_alignment import analyze_query_focus, rerank_evidences_for_query
     from .search import select_sources, sort_evidences
     from agents.core.simplification_loop import SimplificationLoop
     from agents.demo_scenarios import get_demo_scenario
@@ -133,6 +134,7 @@ async def explain_evidence(req: ExplainRequest):
             asyncio.to_thread(detect_emotion, req.query, llm_client),
             asyncio.to_thread(rewrite_query, req.query),
         )
+        query_focus = analyze_query_focus(req.query)
 
         # 2. 会话记忆（R4）：有 session_id 才读写；append 本轮，再取最近 N 轮做 history
         history = []
@@ -149,6 +151,14 @@ async def explain_evidence(req: ExplainRequest):
 
         # 3. 尝试从缓存获取（跳过空证据缓存；命中时补齐情绪/陪伴等会话相关字段）
         cached_result = cache_service.get(req.query, max_results=5)
+        if (
+            cached_result is not None
+            and query_focus.intent in {"latest_treatment", "clinical_trial", "drug_info"}
+            and "clarification_questions" not in cached_result
+        ):
+            print(f"[Cache] 跳过旧版缓存，重新生成问题对齐答案: {req.query[:30]}...")
+            cache_service.delete(req.query, max_results=5)
+            cached_result = None
         if cached_result is not None and _is_empty_evidence_cache(cached_result):
             print(f"[Cache] 跳过空证据缓存，重新检索: {req.query[:30]}...")
             cache_service.delete(req.query, max_results=5)
@@ -166,6 +176,7 @@ async def explain_evidence(req: ExplainRequest):
             )
             result.risk_level = risk_level
             result.risk_message = risk_message
+            result.clarification_questions = query_focus.clarification_questions
             evidence_dicts = [
                 c.model_dump() if hasattr(c, "model_dump") else c
                 for c in (result.layer2_evidence_cards or [])
@@ -225,6 +236,8 @@ async def explain_evidence(req: ExplainRequest):
 
         # 统一规整证据为 dict，供陪伴/研究阶段/试验卡片复用
         evidence_dicts = [_evidence_to_dict(ev) for ev in evidences]
+        evidence_dicts = rerank_evidences_for_query(evidence_dicts, query_focus)
+        evidences = evidence_dicts
 
         # 11. 仍然无证据：返回空结果路径（仍带情绪/陪伴/风险字段；不缓存空结果）
         if not evidences:
@@ -250,6 +263,7 @@ async def explain_evidence(req: ExplainRequest):
                 emotion_state=emotion.value,
                 trial_cards=[],
                 research_progress=[],
+                clarification_questions=query_focus.clarification_questions,
             )
             # 不缓存空结果——下次重试时可能检索成功
             return _apply_compliance_gate(result)
@@ -286,6 +300,7 @@ async def explain_evidence(req: ExplainRequest):
             emotion_state=emotion.value,
             trial_cards=trial_cards,
             research_progress=research_progress,
+            clarification_questions=query_focus.clarification_questions,
         )
 
         # 16. 写入缓存（仅缓存有证据的结果）

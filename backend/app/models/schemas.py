@@ -195,6 +195,10 @@ class ExplainResponse(BaseModel):
     trial_cards: list[TrialCard] = Field(default_factory=list)
     research_progress: list[ResearchProgress] = Field(default_factory=list)
     subscription_offer: Optional[SubscriptionOffer] = None
+    clarification_questions: list[str] = Field(
+        default_factory=list,
+        description="当问题缺少分期、既往治疗等关键信息时，给用户的非阻塞式追问",
+    )
 
 
 class EvaluateRequest(BaseModel):

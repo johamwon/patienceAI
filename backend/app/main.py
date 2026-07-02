@@ -1,4 +1,8 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
@@ -20,6 +24,14 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 settings = Settings()
+FRONTEND_DIST_DIR = Path(os.getenv("FRONTEND_DIST_DIR", "")).resolve() if os.getenv("FRONTEND_DIST_DIR") else None
+
+
+def _frontend_index_path() -> Path | None:
+    if not FRONTEND_DIST_DIR:
+        return None
+    index = FRONTEND_DIST_DIR / "index.html"
+    return index if index.exists() else None
 
 # ─── App ────────────────────────────────────────────────────────────────────
 
@@ -41,6 +53,9 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
+    index = _frontend_index_path()
+    if index:
+        return FileResponse(index)
     return {
         "name": "医语桥 API",
         "version": "0.1.0",
@@ -62,6 +77,11 @@ app.include_router(explain.router, prefix="/api/v1", tags=["explain"])
 app.include_router(evaluate.router, prefix="/api/v1", tags=["evaluate"])
 app.include_router(visit_prep.router, prefix="/api/v1", tags=["visit-prep"])
 
+if FRONTEND_DIST_DIR and FRONTEND_DIST_DIR.exists():
+    assets_dir = FRONTEND_DIST_DIR / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="frontend-assets")
+
 # ─── Cache Management ────────────────────────────────────────────────────────
 
 @app.get("/api/v1/cache/stats")
@@ -82,3 +102,20 @@ async def cache_delete(query: str):
     """删除指定查询的缓存"""
     cache_service.delete(query)
     return {"message": f"已删除缓存: {query}"}
+
+
+@app.get("/{full_path:path}", include_in_schema=False)
+async def frontend_spa(full_path: str):
+    """ModelScope Docker 部署时托管前端单页应用。"""
+    index = _frontend_index_path()
+    if not index:
+        raise HTTPException(status_code=404, detail="Not Found")
+    candidate = (FRONTEND_DIST_DIR / full_path).resolve()
+    if (
+        FRONTEND_DIST_DIR
+        and str(candidate).startswith(str(FRONTEND_DIST_DIR))
+        and candidate.exists()
+        and candidate.is_file()
+    ):
+        return FileResponse(candidate)
+    return FileResponse(index)

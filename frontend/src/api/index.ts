@@ -1,6 +1,7 @@
 import type { SearchResponse, ExplainResponse, VisitPrepResponse } from "../types";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.DEV ? "http://localhost:8000" : "");
 
 export async function searchEvidence(query: string, maxResults = 20): Promise<SearchResponse> {
   const res = await fetch(`${API_BASE}/api/v1/search`, {

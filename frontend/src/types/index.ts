@@ -81,6 +81,7 @@ export type ExplainResponse = {
   trial_cards: TrialCard[];
   research_progress: ResearchProgress[];
   subscription_offer?: { disease_keyword: string; prompt_text: string };
+  clarification_questions?: string[];
 };
 
 // Research Radar Subscription types

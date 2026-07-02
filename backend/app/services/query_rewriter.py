@@ -28,10 +28,23 @@ KNOWN_DRUG_PATTERNS = [
 # 触发额外源选择的关键词规则
 SOURCE_HINT_RULES = {
     "package_insert": KNOWN_DRUG_PATTERNS + ["说明书", "用法", "用量", "禁忌", "不良反应", "副作用", "服用", "注射"],
-    "meeting": ["最新", "进展", "新药", "突破", "ASCO", "ESMO", "AACR", "2024", "2025"],
-    "trial": ["临床试验", "招募", "入组", "试验", "NCT", "III期", "II期", "三期", "二期", "新药"],
-    "guide": ["指南", "规范", "共识", "标准", "是什么", "诊断", "分期", "分型"],
+    "meeting": ["最新", "进展", "新药", "突破", "新疗法", "治疗方案", "ASCO", "ESMO", "AACR", "2024", "2025", "2026"],
+    "trial": ["临床试验", "招募", "入组", "试验", "NCT", "III期", "II期", "三期", "二期", "新药", "新疗法", "最新治疗", "治疗方案"],
+    "guide": ["指南", "规范", "共识", "标准", "是什么", "诊断", "分期", "分型", "治疗方案", "治疗"],
 }
+
+DISEASE_ALIAS_RULES = [
+    {
+        "patterns": ["阿尔兹海默", "阿尔茨海默", "老年痴呆", "认知障碍", "痴呆"],
+        "cn": "阿尔茨海默病 阿尔兹海默症 认知障碍 痴呆 最新治疗方案",
+        "en": "Alzheimer disease dementia mild cognitive impairment disease modifying therapy anti amyloid treatment",
+    },
+    {
+        "patterns": ["帕金森"],
+        "cn": "帕金森病 最新治疗方案",
+        "en": "Parkinson disease latest treatment therapy clinical trial",
+    },
+]
 
 REWRITE_SYSTEM_PROMPT = """你是医学文献检索查询优化助手。你的任务是从患者的自然语言查询中提取核心医学术语，用于医学文献数据库检索。
 
@@ -100,9 +113,14 @@ def rewrite_query(query: str) -> QueryRewriteResult:
         if parsed:
             # 用规则补充 suggested_sources
             enhanced_sources = _enhance_sources_with_rules(query, parsed.get("suggested_sources", []))
+            cn, en = _enhance_terms_with_aliases(
+                query,
+                parsed.get("medical_terms_cn", "").strip(),
+                parsed.get("medical_terms_en", "").strip(),
+            )
             return QueryRewriteResult(
-                medical_terms_cn=parsed.get("medical_terms_cn", "").strip(),
-                medical_terms_en=parsed.get("medical_terms_en", "").strip(),
+                medical_terms_cn=cn,
+                medical_terms_en=en,
                 suggested_sources=enhanced_sources,
                 original_query=query,
             )
@@ -158,6 +176,19 @@ def _enhance_sources_with_rules(query: str, llm_sources: list[str]) -> list[str]
     return [s for s in sources if s in valid_sources]
 
 
+def _enhance_terms_with_aliases(query: str, cn_terms: str, en_terms: str) -> tuple[str, str]:
+    """用已知疾病别名补强检索词，避免口语病名导致检索偏题。"""
+    cn_parts = cn_terms.split()
+    en_parts = en_terms.split()
+    for rule in DISEASE_ALIAS_RULES:
+        if any(pattern in query for pattern in rule["patterns"]):
+            cn_parts.extend(rule["cn"].split())
+            en_parts.extend(rule["en"].split())
+    cn = " ".join(dict.fromkeys([p for p in cn_parts if p]))
+    en = " ".join(dict.fromkeys([p for p in en_parts if p]))
+    return cn, en
+
+
 def _fallback_rewrite(query: str) -> QueryRewriteResult:
     """
     LLM 调用失败时的后备方案：基于规则提取关键词
@@ -174,10 +205,11 @@ def _fallback_rewrite(query: str) -> QueryRewriteResult:
     for sw in stopwords:
         cleaned = cleaned.replace(sw, "")
     cleaned = cleaned.strip()
+    cn, en = _enhance_terms_with_aliases(query, cleaned if cleaned else query, "")
 
     return QueryRewriteResult(
-        medical_terms_cn=cleaned if cleaned else query,
-        medical_terms_en="",  # 无 LLM 时不提供英文翻译
+        medical_terms_cn=cn,
+        medical_terms_en=en,
         suggested_sources=sources,
         original_query=query,
     )

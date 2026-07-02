@@ -722,6 +722,31 @@ a {
   font-family: var(--font-mono);
 }
 
+.clarification-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.clarification-panel h2 {
+  font-size: var(--fs-md);
+  color: var(--primary-dark);
+  margin-bottom: var(--space-3);
+}
+
+.clarification-panel ul {
+  padding-left: var(--space-5);
+  color: var(--text);
+}
+
+.clarification-panel li {
+  line-height: 1.8;
+  margin-bottom: var(--space-2);
+}
+
 /* =====================================================================
    4. Patient Explanation 患者通俗解释
    ===================================================================== */

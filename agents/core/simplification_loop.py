@@ -14,6 +14,7 @@ import json
 import re
 from typing import Optional
 from ..prompts.system_prompts import get_prompt
+from backend.app.services.answer_alignment import analyze_query_focus, rerank_evidences_for_query
 
 
 class SimplificationLoop:
@@ -43,8 +44,11 @@ class SimplificationLoop:
         if not evidences:
             return self._empty_result(original_query)
 
+        focus = analyze_query_focus(original_query)
+        evidences = rerank_evidences_for_query(evidences, focus)
+
         # Step 1: 选择 Top 证据
-        top_evidences = self._select_top_evidences(evidences, top_k=5)
+        top_evidences = self._select_top_evidences(evidences, top_k=5, focus=focus)
 
         # Step 2: 合并证据文本
         evidence_text = self._merge_evidence_text(top_evidences)
@@ -53,7 +57,9 @@ class SimplificationLoop:
         simplified_text = await self._run_simplification_loop(evidence_text, original_query)
 
         # Step 4: 生成三层结构化回答
-        result = await self._compose_three_layer_output(simplified_text, top_evidences, original_query)
+        result = await self._compose_three_layer_output(
+            simplified_text, top_evidences, original_query
+        )
         return result
 
     def _empty_result(self, query: str) -> dict:
@@ -73,7 +79,9 @@ class SimplificationLoop:
             },
         }
 
-    def _select_top_evidences(self, evidences: list[dict], top_k: int = 5) -> list[dict]:
+    def _select_top_evidences(
+        self, evidences: list[dict], top_k: int = 5, focus=None
+    ) -> list[dict]:
         """按来源优先级选择 Top 证据"""
         priority_map = {
             "package_insert": 1,
@@ -86,6 +94,11 @@ class SimplificationLoop:
         }
 
         def sort_key(e):
+            relevance = 0
+            if focus is not None:
+                from backend.app.services.answer_alignment import score_evidence_relevance
+
+                relevance = score_evidence_relevance(e, focus)
             priority = priority_map.get(e.get("source_type", "unknown"), 7)
             pub_date = e.get("publish_date") or ""
             # 将日期转换为可排序的数值
@@ -99,7 +112,7 @@ class SimplificationLoop:
                     date_val = 0
             else:
                 date_val = 0
-            return (priority, -date_val)
+            return (-relevance, priority, -date_val)
 
         sorted_evidences = sorted(evidences, key=sort_key)
         return sorted_evidences[:top_k]
@@ -247,6 +260,8 @@ Text:
             f"(ID: {ev.get('pmid') or ev.get('doi') or ev.get('nct_id') or 'N/A'})"
             for ev in evidences[:5]
         ])
+        focus = analyze_query_focus(query)
+        focus_context = focus.prompt_context()
 
         prompt = """\
 You are a medical information assistant for patients. Given the patient's query, retrieved evidence, and simplified explanation, compose the NARRATIVE parts of a patient-facing response.
@@ -254,6 +269,9 @@ You are a medical information assistant for patients. Given the patient's query,
 You ONLY write the narrative text (the core conclusion and the patient explanation). Do NOT output evidence cards — those are assembled separately by the system.
 
 Patient query: {query}
+
+Question focus extracted by the system:
+{focus_context}
 
 Retrieved evidence:
 {evidence_summary}
@@ -265,6 +283,8 @@ CRITICAL — layer1_conclusion.text is the patient's "core answer at a glance":
 - It MUST directly and substantively ANSWER the patient's question, not be a vague slogan or empty placeholder.
 - Synthesize "what it is" + "what to do about it" into a 2-4 sentence informative core answer (roughly 40-120 Chinese characters) that a patient can read once and walk away with the main takeaway.
 - Ground it in the retrieved evidence and simplified explanation above; mention the key finding/direction concretely.
+- If the question focus is latest_treatment, directly answer in this order: current mainstream evidence-based treatment direction, newer disease-modifying/clinical-trial direction if evidence supports it, main limitations/uncertainty, and what to ask the doctor. Do not answer only by listing document titles.
+- If key patient context is missing, say what information would change the answer instead of pretending certainty.
 - Stay compliant: do NOT diagnose the individual, do NOT give prescriptions or dosages, do NOT phrase population evidence as personal medical advice. Use everyday Chinese.
 - Bad (reject): "建议咨询医生了解更多。" / "这是一个需要重视的问题。"
 - Good (accept): "针对XX，目前主流的循证方向是A和B；研究显示A在……方面有获益。具体是否适合你，需要结合个人情况和医生讨论。"
@@ -277,8 +297,8 @@ Output a JSON object with EXACTLY these two top-level keys (no evidence cards):
   }},
   "layer3_patient_explanation": {{
     "what_is_it": "Explain the disease/concept using an analogy",
-    "what_evidence_says": "What the latest research found, in everyday language",
-    "what_it_means_for_you": "2-3 actionable suggestions for the patient",
+    "what_evidence_says": "Directly summarize what the evidence says for the user's specific question, not just what documents were found",
+    "what_it_means_for_you": "2-3 actionable, non-prescriptive discussion points for the patient/family to ask the doctor",
     "when_to_see_doctor": "Specific symptoms that require immediate medical attention",
     "disclaimer": "This content is a plain-language interpretation of medical literature for reference only. It does not constitute medical advice and does not replace a doctor's judgment."
   }}
@@ -289,6 +309,7 @@ Output ONLY valid JSON, no other text."""
         messages = [
             {"role": "system", "content": prompt.format(
                 query=query,
+                focus_context=focus_context,
                 evidence_summary=evidence_summary,
                 simplified_text=simplified_text[:3000],
             )},
@@ -298,10 +319,16 @@ Output ONLY valid JSON, no other text."""
         composed = await asyncio.to_thread(self.llm.chat, messages, temperature=0.3, max_tokens=1500)
 
         # 解析 JSON（仅叙述部分）；layer2 由代码组装
-        result = self._parse_three_layer_json(composed, evidences, simplified_text)
+        result = self._parse_three_layer_json(composed, evidences, simplified_text, query)
         return result
 
-    def _parse_three_layer_json(self, composed_text: str, evidences: list[dict], simplified_text: str = "") -> dict:
+    def _parse_three_layer_json(
+        self,
+        composed_text: str,
+        evidences: list[dict],
+        simplified_text: str = "",
+        query: str = "",
+    ) -> dict:
         """解析 composer 返回的叙述 JSON（layer1 + layer3），带回退机制。
 
         解析成功 → 用代码组装的证据卡片补上 layer2，返回完整三层。
@@ -329,11 +356,11 @@ Output ONLY valid JSON, no other text."""
 
         if data is None:
             # 解析失败：用纯文本 simplified_text 兜底，绝不使用 composed JSON 文本
-            return self._fallback_output(evidences, simplified_text)
+            return self._fallback_output(evidences, simplified_text, query)
 
         # 解析成功：用代码组装证据卡片补上 layer2，并清洗叙述字段防脏数据
         data["layer2_evidence_cards"] = self._build_evidence_cards(evidences)
-        self._sanitize_narrative_fields(data, evidences, simplified_text)
+        self._sanitize_narrative_fields(data, evidences, simplified_text, query)
         return data
 
     def _validate_narrative(self, data: dict) -> bool:
@@ -351,7 +378,9 @@ Output ONLY valid JSON, no other text."""
         stripped = text.lstrip()
         return stripped.startswith("{") or '"layer1_conclusion"' in text
 
-    def _sanitize_narrative_fields(self, data: dict, evidences: list[dict], simplified_text: str) -> None:
+    def _sanitize_narrative_fields(
+        self, data: dict, evidences: list[dict], simplified_text: str, query: str = ""
+    ) -> None:
         """保险：若任一展示字段残留 JSON 痕迹，用 simplified_text 兜底替换。
 
         就地修改 data 的 layer1_conclusion.text 与 layer3 各叙述字段。
@@ -359,10 +388,10 @@ Output ONLY valid JSON, no other text."""
         layer1 = data.get("layer1_conclusion")
         if isinstance(layer1, dict):
             if self._looks_like_raw_json(layer1.get("text")):
-                layer1["text"] = self._compose_fallback_conclusion(evidences, simplified_text)
+                layer1["text"] = self._compose_fallback_conclusion(evidences, simplified_text, query)
         else:
             data["layer1_conclusion"] = {
-                "text": self._compose_fallback_conclusion(evidences, simplified_text),
+                "text": self._compose_fallback_conclusion(evidences, simplified_text, query),
                 "citations": [],
             }
 
@@ -373,12 +402,31 @@ Output ONLY valid JSON, no other text."""
                 if self._looks_like_raw_json(layer3.get(field)):
                     layer3[field] = clean_text[:500] if clean_text else "详见下方完整解释。"
 
-    def _compose_fallback_conclusion(self, evidences: list[dict], raw_text: str) -> str:
+    def _compose_fallback_conclusion(self, evidences: list[dict], raw_text: str, query: str = "") -> str:
         """从简化文本/证据中提取一段有信息量的核心答案，而非只取第一句。
 
         优先用简化文本的前若干句拼出 2-4 句、约 40-160 字的核心答案；
         简化文本不足时，用 Top 证据标题兜底，保证结论非空且有内容。
         """
+        focus = analyze_query_focus(query)
+        if focus.intent == "latest_treatment":
+            disease = focus.disease or "这个疾病"
+            source_types = {str(ev.get("source_type") or "") for ev in evidences[:5]}
+            directions = []
+            if "guide" in source_types:
+                directions.append("指南/专家共识中的规范治疗")
+            if "trial" in source_types:
+                directions.append("临床试验或新疗法研究")
+            if "meeting" in source_types:
+                directions.append("近期会议报道的新进展")
+            if not directions:
+                directions.append("已发表研究中的治疗证据")
+            return (
+                f"关于{disease}的最新治疗，当前证据更适合分成"
+                f"{'、'.join(directions)}来看。是否适合患者，取决于疾病阶段、"
+                "既往用药、合并疾病和医生评估；建议带着这些问题和专科医生讨论。"
+            )[:220]
+
         # 1) 优先从简化/合成文本中提取前几句有意义内容
         text = (raw_text or "").strip()
         if text:
@@ -419,7 +467,7 @@ Output ONLY valid JSON, no other text."""
             return text[:200]
         return "已为你检索到相关医学证据，请查看下方证据卡片与通俗解释了解详情。"
 
-    def _fallback_output(self, evidences: list[dict], simplified_text: str) -> dict:
+    def _fallback_output(self, evidences: list[dict], simplified_text: str, query: str = "") -> dict:
         """LLM 叙述输出解析失败时的回退方案。
 
         关键：所有展示字段使用纯文本 simplified_text（由 loop 产出），
@@ -429,13 +477,20 @@ Output ONLY valid JSON, no other text."""
         evidence_cards = self._build_evidence_cards(evidences)
 
         # 从简化文本/证据中提取有意义的核心答案，而非只取第一句
-        conclusion_text = self._compose_fallback_conclusion(evidences, simplified_text)
+        conclusion_text = self._compose_fallback_conclusion(evidences, simplified_text, query)
 
         clean_text = (simplified_text or "").strip()
+        focus = analyze_query_focus(query)
         what_is_it = clean_text[:500] if clean_text else "详见下方完整解释。"
         what_evidence_says = (
             clean_text[500:1000] if len(clean_text) > 500 else "详见下方完整解释。"
         )
+        what_it_means = "请结合您的主治医生建议综合判断。"
+        if focus.intent == "latest_treatment":
+            what_it_means = (
+                "可以和医生重点确认：目前处于哪个阶段、现有治疗目标是什么、"
+                "是否适合新药或临床试验，以及这些方案的风险和随访要求。"
+            )
 
         return {
             "layer1_conclusion": {
@@ -446,7 +501,7 @@ Output ONLY valid JSON, no other text."""
             "layer3_patient_explanation": {
                 "what_is_it": what_is_it,
                 "what_evidence_says": what_evidence_says,
-                "what_it_means_for_you": "请结合您的主治医生建议综合判断。",
+                "what_it_means_for_you": what_it_means,
                 "when_to_see_doctor": "如出现症状加重或不适，请及时就医。",
                 "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。",
             },

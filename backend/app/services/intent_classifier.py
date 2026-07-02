@@ -92,7 +92,10 @@ SEVERE_CONDITION_KEYWORDS = [
 # 意图关键词映射
 INTENT_KEYWORDS = {
     IntentType.DISEASE_UNDERSTANDING: ["是什么", "什么意思", "怎么回事", "定义", "简介", "概述"],
-    IntentType.TREATMENT_PROGRESS: ["最新进展", "研究进展", "新疗法", "新方案", "临床试验", "靶向", "免疫"],
+    IntentType.TREATMENT_PROGRESS: [
+        "最新进展", "研究进展", "最新", "新疗法", "新方案",
+        "治疗方案", "治疗", "方案", "临床试验", "靶向", "免疫",
+    ],
     IntentType.DRUG_INFO: ["药物", "药品", "副作用", "不良反应", "耐药", "用法", "剂量",
                           "替尼", "单抗", "哪个好", "哪个更好", "对比", "比较", "优劣"],
     IntentType.TEST_EXPLANATION: ["检查", "化验", "检测", "指标", "报告", "CT", "MRI", "PET"],
