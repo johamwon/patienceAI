@@ -18,7 +18,7 @@ class DemoTriggerRequest(BaseModel):
 
 @router.post("/radar/subscribe")
 async def subscribe(req: SubscribeRequest):
-    return radar_service.subscribe(req.anon_user_id, req.disease_keyword)
+    return radar_service.subscribe(req.anon_user_id, req.disease_keyword, req.entities_json)
 
 
 @router.get("/radar/subscriptions")

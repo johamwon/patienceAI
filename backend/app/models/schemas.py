@@ -37,12 +37,23 @@ class SearchRequest(BaseModel):
     )
 
 
+class GateResult(BaseModel):
+    """问题门禁分类结果"""
+    status: Literal[
+        "pass", "block_diagnosis", "block_emergency",
+        "block_off_topic", "redirect_companion", "redirect_clarify",
+    ]
+    user_message: str = Field(default="", description="展示给用户的门禁话术")
+    companion_trigger: bool = Field(default=False, description="是否触发陪伴引擎")
+
+
 class SearchResponse(BaseModel):
     query: str
     intent: Optional[str] = None
     risk_level: Literal["low", "medium", "high", "prohibited"] = "low"
     evidences: list[Evidence]
     total: int
+    gate: Optional[GateResult] = Field(default=None, description="问题门禁结果，非 pass 时存在")
 
 
 class ExplainRequest(BaseModel):
@@ -153,18 +164,28 @@ class VisitPrepResponse(BaseModel):
 
 
 class Subscription(BaseModel):
-    """一条订阅记录（核心订阅库，零 PII）"""
+    """一条订阅记录（核心订阅库，零 PII）
+
+    disease_keyword: 面向用户展示的简短主题词（如 "非小细胞肺癌 · 靶向治疗"）
+    entities_json: LLM 提取的结构化医学实体 JSON，用于精准检索（可选，向后兼容）
+    """
     id: str
     anon_user_id: str
     disease_keyword: str
+    entities_json: Optional[str] = None
     status: str = "active"
     created_at: str
 
 
 class SubscribeRequest(BaseModel):
-    """创建订阅请求（显式同意）"""
+    """创建订阅请求（显式同意）
+
+    disease_keyword: 展示用的简短主题词
+    entities_json: LLM 提取的结构化医学实体 JSON（可选，用于精准雷达检索）
+    """
     anon_user_id: str
     disease_keyword: str = Field(..., min_length=1, max_length=100)
+    entities_json: Optional[str] = None
 
 
 class ChannelSetRequest(BaseModel):
@@ -200,8 +221,13 @@ class InAppMessage(BaseModel):
 
 
 class SubscriptionOffer(BaseModel):
-    """解释完成后小光主动发起的订阅邀约"""
+    """解释完成后小光主动发起的订阅邀约
+
+    disease_keyword: 面向用户展示的简短主题词
+    entities_json: LLM 提取的结构化实体 JSON（订阅创建时回传存储）
+    """
     disease_keyword: str
+    entities_json: Optional[str] = None
     prompt_text: str
 
 

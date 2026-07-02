@@ -33,6 +33,9 @@ backend/app/services/radar/data/
 # TRAE 工作目录
 .trae/
 
+# WorkBuddy 工作目录
+.workbuddy/
+
 # 临时调试脚本
 test_knows_debug*.py
 test_loop.bat

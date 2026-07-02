@@ -3,7 +3,7 @@ import { setRadarChannel, subscribeRadar } from "../api";
 
 type SubscribePromptProps = {
   anonUserId: string;
-  offer?: { disease_keyword: string; prompt_text: string };
+  offer?: { disease_keyword: string; entities_json?: string; prompt_text: string };
   onSubscribed?: () => void;
 };
 
@@ -24,7 +24,7 @@ export default function SubscribePrompt({ anonUserId, offer, onSubscribed }: Sub
     setLoading(true);
     setMessage(null);
     try {
-      await subscribeRadar(anonUserId, offer.disease_keyword);
+      await subscribeRadar(anonUserId, offer.disease_keyword, offer.entities_json);
       await setRadarChannel(anonUserId, "email", normalizedEmail);
       setMessage("已订阅。以后有高质量新进展时，小光会通过邮件提醒你。");
       onSubscribed?.();

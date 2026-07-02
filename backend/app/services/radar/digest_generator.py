@@ -42,7 +42,12 @@ def _fallback_summary(disease_keyword: str, evidence: dict) -> str:
     )
 
 
-async def _llm_summary(disease_keyword: str, evidence: dict, llm_client) -> str:
+async def _llm_summary(
+    disease_keyword: str,
+    evidence: dict,
+    llm_client,
+    entities: dict | None = None,
+) -> str:
     if llm_client is None:
         return _fallback_summary(disease_keyword, evidence)
 
@@ -50,6 +55,26 @@ async def _llm_summary(disease_keyword: str, evidence: dict, llm_client) -> str:
     abstract = evidence.get("abstract") or ""
     source_type = evidence.get("source_type") or ""
     evidence_level = evidence.get("evidence_level") or "unknown"
+
+    # Build structured entity context for more precise summaries
+    entity_context = ""
+    if entities:
+        parts = []
+        primary = entities.get("primary_disease", "")
+        if primary:
+            parts.append(f"主要关注：{primary}")
+        drugs = entities.get("drugs", [])
+        if drugs:
+            parts.append(f"相关药物：{', '.join(drugs[:3])}")
+        biomarkers = entities.get("biomarkers", [])
+        if biomarkers:
+            parts.append(f"生物标志物：{', '.join(biomarkers[:3])}")
+        treatments = entities.get("treatment_types", [])
+        if treatments:
+            parts.append(f"治疗方向：{', '.join(treatments[:3])}")
+        if parts:
+            entity_context = "\n".join(parts) + "\n"
+
     prompt = f"""\
 请用中文为患者生成一段研究进展推送摘要，要求：
 1. 只描述群体层面的研究进展，不给个体诊断、处方、剂量或治疗指令。
@@ -57,7 +82,7 @@ async def _llm_summary(disease_keyword: str, evidence: dict, llm_client) -> str:
 3. 80-140字，适合站内消息和邮件。
 
 病症：{disease_keyword}
-来源类型：{source_type}
+{entity_context}来源类型：{source_type}
 证据等级：{evidence_level}
 标题：{title}
 摘要：{abstract[:1200]}
@@ -85,6 +110,7 @@ async def generate_push_digest(
     new_evidences: list[Any],
     llm_client=None,
     *,
+    entities: dict | None = None,
     is_demo: bool = False,
 ) -> PushDigest:
     """Generate a compliant PushDigest from fresh evidence items."""
@@ -93,7 +119,7 @@ async def generate_push_digest(
     for raw in new_evidences:
         evidence = _evidence_to_dict(raw)
         progress = to_research_progress(evidence)
-        summary = await _llm_summary(disease_keyword, evidence, llm_client)
+        summary = await _llm_summary(disease_keyword, evidence, llm_client, entities)
         summary = _clean(summary) or _fallback_summary(disease_keyword, evidence)
         uncertainty_note = _clean(progress.get("uncertainty_note"))
 

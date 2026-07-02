@@ -235,24 +235,121 @@ Text:
 
         证据卡片完全由代码从已结构化的 evidences 组装，避免让 LLM 重新输出
         大段 JSON 而被 max_tokens 截断。两处（解析成功 / fallback）复用本方法。
+
+        改进：从 title/abstract 中提取 sample_size / intervention 等字段，
+        而非全部留空，提升前端证据卡片的可核验性。
         """
         cards = []
         for ev in evidences[:5]:
             source_type = ev.get("source_type") or "unknown"
             study_type = self._SOURCE_TYPE_CN.get(source_type, source_type)
-            abstract = ev.get("abstract") or ""
+            abstract = (ev.get("abstract") or "").strip()
+            title = (ev.get("title") or "").strip()
+
+            # 提取样本量
+            sample_size = self._extract_sample_size(title + " " + abstract)
+
+            # 提取干预/治疗方向（从标题和摘要中取关键短语）
+            intervention = self._extract_intervention(title, abstract)
+
+            # 主要结局：取摘要的前 200 个非截断字符（比之前 100 字更有信息量）
+            outcome = abstract[:200].rsplit(" ", 1)[0] if abstract else None
+            if outcome and len(outcome) < 20:
+                outcome = abstract[:200]
+
+            # 局限性：尝试从摘要末尾检测
+            limitations = self._extract_limitations(abstract)
+
             cards.append({
                 "study_type": study_type,
-                "sample_size": None,
-                "intervention": None,
+                "sample_size": sample_size,
+                "intervention": intervention,
                 "comparator": None,
-                "outcome": abstract[:100] if abstract else None,
-                "limitations": None,
+                "outcome": outcome,
+                "limitations": limitations,
                 "evidence_level": ev.get("evidence_level") or "unknown",
                 "source_id": ev.get("pmid") or ev.get("doi") or ev.get("nct_id") or ev.get("id", ""),
                 "source_url": ev.get("url"),
             })
         return cards
+
+    @staticmethod
+    def _extract_sample_size(text: str) -> Optional[str]:
+        """从文本中提取样本量信息，如 n=123, N = 456, 123 patients 等。"""
+        if not text:
+            return None
+        patterns = [
+            r"n\s*[=＝]\s*(\d{1,8})",
+            r"N\s*[=＝]\s*(\d{1,8})",
+            r"([\d,]{1,8})\s*(?:例|名|位|个)\s*(?:患者|病人|受试者|样本)",
+            r"([\d,]{1,8})\s*(?:patients|participants|subjects|samples|individuals)",
+            r"sample\s*(?:size|of)\s*[\d,]{1,8}",
+            r"enrol(?:l)?(?:ed|ing|ment)\s*(?:of\s*)?([\d,]{1,8})",
+            r"included\s*([\d,]{1,8})\s*(?:patients|participants)",
+        ]
+        for pat in patterns:
+            m = re.search(pat, text, re.IGNORECASE)
+            if m:
+                num = m.group(1) if m.lastindex else m.group(0)
+                num = re.search(r"[\d,]+", num)
+                if num:
+                    return num.group(0)
+        return None
+
+    @staticmethod
+    def _extract_intervention(title: str, abstract: str) -> Optional[str]:
+        """从标题/摘要中提取治疗/干预方向的关键短语。"""
+        if not title and not abstract:
+            return None
+        text = f"{title}. {abstract[:500]}"
+        # 尝试匹配常见的干预模式
+        patterns = [
+            r"(immunotherapy|化疗|放疗|靶向治疗|靶向药|内分泌治疗|手术治疗|根治性手术|姑息治疗|支持治疗|[A-Za-z]+单抗|CAR[\s-]?T)",
+            r"(\w+umab|\w+cinib|\w+olizumab|\w+tinib|\w+parib)",
+            r"(vs\.?\s+\w+|versus\s+\w+|compared\s+(?:with|to)\s+\w+)",
+            r"(PD[\s-]?[1L]\s*抑制剂|CTLA[\s-]?4|EGFR[\s-]?TKI|ALK[\s-]?抑制剂|PARP[\s-]?抑制剂)",
+        ]
+        for pat in patterns:
+            m = re.search(pat, text, re.IGNORECASE)
+            if m:
+                return m.group(0).strip()
+        # 兜底：取标题最可能的干预词
+        if title:
+            intervention_keywords = [
+                "治疗", "therapy", "trial", "试验", "方案", "regimen",
+                "化疗", "放疗", "靶向", "免疫", "手术", "移植",
+            ]
+            for kw in intervention_keywords:
+                if kw in title:
+                    # 返回包含该关键词的 30 字片段
+                    idx = title.find(kw)
+                    start = max(0, idx - 10)
+                    end = min(len(title), idx + 20)
+                    return title[start:end].strip()
+        return None
+
+    @staticmethod
+    def _extract_limitations(abstract: str) -> Optional[str]:
+        """从摘要末尾检测局限性声明。"""
+        if not abstract or len(abstract) < 100:
+            return None
+        limitation_markers = [
+            "limitation", "局限性", "限制", "不足", "缺陷",
+            "further study", "further research", "more research", "larger sample",
+            "需要进一步", "尚需", "有待", "还需", "仍需进一步",
+            "caution", "preliminary", "初步", "尚不明确",
+        ]
+        # 在后 40% 部分搜索
+        tail = abstract[int(len(abstract) * 0.6):]
+        for marker in limitation_markers:
+            idx = tail.lower().find(marker.lower())
+            if idx >= 0:
+                start = max(0, idx - 20)
+                end = min(len(tail), idx + 80)
+                snippet = tail[start:end].strip(",. ;，。；：:")
+                if snippet:
+                    return "..." + snippet + "..."
+        return None
 
     async def _compose_three_layer_output(self, simplified_text: str, evidences: list[dict], query: str) -> dict:
         """

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { VisitPrepPack, VisitPrepResponse } from "../types";
 
 type VisitPrepCategory = {
@@ -75,6 +75,61 @@ export default function VisitPrepView(props: VisitPrepViewProps) {
     setChecked((prev) => ({ ...prev, [itemKey]: !prev[itemKey] }));
   };
 
+  // 导出功能：打包成纯文本
+  const buildExportText = useCallback(() => {
+    const lines: string[] = [];
+    lines.push("就医准备包");
+    lines.push("=".repeat(36));
+    lines.push("");
+
+    for (const category of CATEGORIES) {
+      const items = pack[category.key] ?? [];
+      if (items.length === 0) continue;
+      lines.push(`【${category.title}】${category.description}`);
+      lines.push("");
+      items.forEach((item, idx) => {
+        lines.push(`  ${idx + 1}. ${item}`);
+      });
+      lines.push("");
+    }
+
+    lines.push("-".repeat(36));
+    lines.push(pack.positioning_note);
+    return lines.join("\n");
+  }, [pack]);
+
+  const handleCopy = async () => {
+    const text = buildExportText();
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("已复制到剪贴板，可直接粘贴到备忘录或发给家人。");
+    } catch {
+      // 降级方案：创建临时 textarea
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      alert("已复制到剪贴板。");
+    }
+  };
+
+  const handleDownload = () => {
+    const text = buildExportText();
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "就医准备包.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const handlePrint = () => {
     window.print();
   };
@@ -93,9 +148,17 @@ export default function VisitPrepView(props: VisitPrepViewProps) {
             <h2>就医准备包</h2>
             <p>把焦虑变成一张能带进诊室的沟通清单。</p>
           </div>
-          <button type="button" className="visit-prep-print-btn" onClick={handlePrint}>
-            打印 / 导出
-          </button>
+          <div className="visit-prep-actions">
+            <button type="button" className="visit-prep-btn" onClick={handleCopy} aria-label="复制到剪贴板">
+              📋 复制
+            </button>
+            <button type="button" className="visit-prep-btn" onClick={handleDownload} aria-label="下载为文本文件">
+              💾 下载
+            </button>
+            <button type="button" className="visit-prep-print-btn" onClick={handlePrint} aria-label="打印">
+              🖨 打印
+            </button>
+          </div>
         </div>
 
         <div className="visit-prep-overview">

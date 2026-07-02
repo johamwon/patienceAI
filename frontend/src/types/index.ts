@@ -13,12 +13,19 @@ export type Evidence = {
   url?: string;
 };
 
+export type GateResult = {
+  status: "pass" | "block_diagnosis" | "block_emergency" | "block_off_topic" | "redirect_companion" | "redirect_clarify";
+  user_message: string;
+  companion_trigger: boolean;
+};
+
 export type SearchResponse = {
   query: string;
   intent?: string;
   risk_level: "low" | "medium" | "high" | "prohibited";
   evidences: Evidence[];
   total: number;
+  gate?: GateResult;
 };
 
 export type ClarificationAnswer = {
@@ -92,7 +99,7 @@ export type ExplainResponse = {
   emotion_state: EmotionState | string;
   trial_cards: TrialCard[];
   research_progress: ResearchProgress[];
-  subscription_offer?: { disease_keyword: string; prompt_text: string };
+  subscription_offer?: { disease_keyword: string; entities_json?: string; prompt_text: string };
   clarification_questions?: string[];
 };
 
@@ -102,6 +109,7 @@ export type Subscription = {
   id: string;
   anon_user_id?: string;
   disease_keyword: string;
+  entities_json?: string;
   status: string;
   created_at: string;
 };

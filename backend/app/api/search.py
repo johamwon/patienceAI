@@ -9,7 +9,7 @@ from typing import Any
 import re
 
 from fastapi import APIRouter, HTTPException
-from ..models.schemas import SearchRequest, SearchResponse, Evidence
+from ..models.schemas import SearchRequest, SearchResponse, Evidence, GateResult
 from ..services.answer_alignment import (
     analyze_query_focus,
     build_query_with_clarifications,
@@ -18,6 +18,7 @@ from ..services.answer_alignment import (
 )
 from ..services.knows_client import knows_client
 from ..services.intent_classifier import parse_query
+from ..services.query_gate import classify_query_gate
 from ..services.query_rewriter import rewrite_query
 
 router = APIRouter()
@@ -154,8 +155,23 @@ async def search_evidence(req: SearchRequest):
     - 罕见病/重症结果按发表时间降序；专门源无结果时回退默认源
     - 返回结构化证据列表
     """
-    # 1. 意图识别（含 rare_disease / severe_condition 标记）
+    # 0. 问题门禁：先判断适不适合回答（先于意图识别和检索）
     effective_query = build_query_with_clarifications(req.query, req.clarification_answers)
+    gate = classify_query_gate(effective_query)
+    if gate["status"] != "pass":
+        return SearchResponse(
+            query=req.query,
+            risk_level="prohibited" if gate["status"].startswith("block") else "low",
+            evidences=[],
+            total=0,
+            gate=GateResult(
+                status=gate["status"],
+                user_message=gate["user_message"],
+                companion_trigger=gate.get("companion_trigger", False),
+            ),
+        )
+
+    # 1. 意图识别（含 rare_disease / severe_condition 标记）
     focus = analyze_query_focus(effective_query)
     parsed = parse_query(effective_query)
     is_rare_severe = bool(parsed.get("rare_disease") or parsed.get("severe_condition"))

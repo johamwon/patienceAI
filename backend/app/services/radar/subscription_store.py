@@ -50,7 +50,7 @@ class SubscriptionStore(ABC):
 
     # ── 订阅生命周期 ──────────────────────────────────────────────
     @abstractmethod
-    def create(self, anon_user_id: str, disease_keyword: str) -> Subscription:
+    def create(self, anon_user_id: str, disease_keyword: str, entities_json: str | None = None) -> Subscription:
         """创建订阅；(anon_user_id, disease_keyword) 幂等（R1.6）。
 
         若已存在同一匿名用户对同一病症的活跃订阅，返回现有订阅。
@@ -162,7 +162,7 @@ class SQLiteSubscriptionStore(SubscriptionStore):
         return conn
 
     def _init_db(self) -> None:
-        """建表（若不存在）。"""
+        """建表（若不存在）并执行向后兼容迁移。"""
         with self._lock:
             conn = self._connect()
             try:
@@ -172,6 +172,7 @@ class SQLiteSubscriptionStore(SubscriptionStore):
                         id              TEXT PRIMARY KEY,
                         anon_user_id    TEXT NOT NULL,
                         disease_keyword TEXT NOT NULL,
+                        entities_json   TEXT,
                         status          TEXT NOT NULL DEFAULT 'active',
                         created_at      TEXT NOT NULL,
                         UNIQUE(anon_user_id, disease_keyword)
@@ -197,6 +198,11 @@ class SQLiteSubscriptionStore(SubscriptionStore):
                     );
                     """
                 )
+                # 向后兼容迁移：旧表没有 entities_json 列则补齐
+                try:
+                    conn.execute("ALTER TABLE subscriptions ADD COLUMN entities_json TEXT")
+                except sqlite3.OperationalError:
+                    pass  # 列已存在
                 conn.commit()
             finally:
                 conn.close()
@@ -207,12 +213,13 @@ class SQLiteSubscriptionStore(SubscriptionStore):
             id=row["id"],
             anon_user_id=row["anon_user_id"],
             disease_keyword=row["disease_keyword"],
+            entities_json=row["entities_json"] if "entities_json" in row.keys() else None,
             status=row["status"],
             created_at=row["created_at"],
         )
 
     # ── 订阅生命周期 ──────────────────────────────────────────────
-    def create(self, anon_user_id: str, disease_keyword: str) -> Subscription:
+    def create(self, anon_user_id: str, disease_keyword: str, entities_json: str | None = None) -> Subscription:
         with self._lock:
             conn = self._connect()
             try:
@@ -230,9 +237,9 @@ class SQLiteSubscriptionStore(SubscriptionStore):
                 try:
                     conn.execute(
                         "INSERT INTO subscriptions "
-                        "(id, anon_user_id, disease_keyword, status, created_at) "
-                        "VALUES (?, ?, ?, 'active', ?)",
-                        (sub_id, anon_user_id, disease_keyword, created_at),
+                        "(id, anon_user_id, disease_keyword, entities_json, status, created_at) "
+                        "VALUES (?, ?, ?, ?, 'active', ?)",
+                        (sub_id, anon_user_id, disease_keyword, entities_json, created_at),
                     )
                     conn.commit()
                 except sqlite3.IntegrityError:
@@ -246,8 +253,8 @@ class SQLiteSubscriptionStore(SubscriptionStore):
                     ).fetchone()
                     if row is not None:
                         conn.execute(
-                            "UPDATE subscriptions SET status = 'active' WHERE id = ?",
-                            (row["id"],),
+                            "UPDATE subscriptions SET status = 'active', entities_json = COALESCE(?, entities_json) WHERE id = ?",
+                            (entities_json, row["id"]),
                         )
                         conn.commit()
                         refreshed = conn.execute(

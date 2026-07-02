@@ -28,12 +28,14 @@ from ..models.schemas import (
     SubscriptionOffer,
 )
 from ..services.llm_client import llm_client
+from ..services.entity_extractor import extract_medical_entities, get_display_keyword
 from ..services.cache_service import cache_service, start_background_refresh
 from ..services.query_rewriter import rewrite_query
 from ..services.answer_alignment import (
     analyze_query_focus,
     build_query_with_clarifications,
     has_clarification_answers,
+    generate_clarification_questions,
 )
 import traceback
 
@@ -52,31 +54,41 @@ _URGENT_RISK_MESSAGE = (
 )
 
 
-def _build_subscription_offer(query: str) -> SubscriptionOffer | None:
+async def _build_subscription_offer(query: str) -> SubscriptionOffer | None:
     """Build an opt-in research radar offer from the query topic.
+
+    使用 LLM 从查询中提取结构化医学实体（疾病/药物/生物标志物/治疗类型），
+    生成精准的展示关键词，而非粗糙的规则裁剪。
 
     This does not create a subscription. It only gives the frontend a disease
     keyword and a patient-facing prompt; creation happens only after explicit
     user action.
     """
-    try:
-        from agents.core.visit_prep_generator import _extract_disease_topic
+    if not query or len(query.strip()) < 2:
+        return None
 
-        topic = _extract_disease_topic(query)
-    except Exception:
-        topic = query.strip()[:20]
+    # LLM 实体提取
+    entities = await extract_medical_entities(query, llm_client)
+    display_kw = get_display_keyword(entities, fallback=query.strip()[:30])
 
-    if not topic or len(topic.strip()) < 2:
+    if not display_kw or len(display_kw.strip()) < 2:
         return None
 
     text = (
-        f"要不要让小光帮你持续关注「{topic}」的最新研究？"
+        f"要不要让小光帮你持续关注「{display_kw}」的最新研究？"
         "如果以后有新的高质量指南、临床试验或重要研究，"
         "我可以通过邮件提醒你，"
         "并用能看懂的话解释研究阶段和不确定性。"
     )
     text = _clean(text)
-    return SubscriptionOffer(disease_keyword=topic.strip(), prompt_text=text)
+    # 把 entities 序列化附在 keyword 后面传给前端（前端不解析，原样回传）
+    import json as _json
+    entities_str = _json.dumps(entities, ensure_ascii=False)
+    return SubscriptionOffer(
+        disease_keyword=display_kw,
+        entities_json=entities_str,
+        prompt_text=text,
+    )
 
 
 def _evidence_to_dict(ev) -> dict:
@@ -171,9 +183,14 @@ def _contains_prompt_leak(data) -> bool:
 
 @router.post("/clarify", response_model=ClarifyResponse)
 async def clarify_query(req: ClarifyRequest):
-    """正式检索前判断是否需要逐题追问。"""
+    """正式检索前，由 LLM 判断是否需要逐题追问并动态生成问题。"""
+    from ..services.llm_client import llm_client as _llm
+
     focus = analyze_query_focus(req.query)
-    questions = focus.clarification_questions
+
+    # LLM 驱动：判断是否需要追问 + 动态生成问题
+    questions = await generate_clarification_questions(req.query, focus, _llm)
+
     return ClarifyResponse(
         needs_clarification=bool(questions),
         questions=questions,
@@ -209,7 +226,12 @@ async def explain_evidence(req: ExplainRequest):
         effective_query = build_query_with_clarifications(req.query, req.clarification_answers)
         has_answers = has_clarification_answers(req.clarification_answers)
         query_focus = analyze_query_focus(effective_query)
-        pending_questions = [] if has_answers else query_focus.clarification_questions
+        # LLM 驱动非阻塞追问提示：已回答过追问或 LLM 判定不需要时为空
+        pending_questions: list[str] = []
+        if not has_answers:
+            pending_questions = await generate_clarification_questions(
+                effective_query, query_focus, llm_client
+            )
 
         # 1. 情绪识别（R2.5）与 查询重写（检索前置）——两者互不依赖，并发执行。
         #    detect_emotion / rewrite_query 都是含 LLM 的同步函数，用 to_thread 包裹后
@@ -270,7 +292,7 @@ async def explain_evidence(req: ExplainRequest):
             result.companion_message = await generate_companion_message(
                 effective_query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
             )
-            result.subscription_offer = _build_subscription_offer(effective_query)
+            result.subscription_offer = await _build_subscription_offer(effective_query)
             return _apply_compliance_gate(result)
 
         print(f"[Cache] 缓存未命中，开始生成: {req.query[:30]}...")

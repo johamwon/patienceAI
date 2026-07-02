@@ -82,11 +82,19 @@ export async function evaluateResponse(predictions: any[], references: any[]) {
   return res.json();
 }
 
-export async function subscribeRadar(anonUserId: string, diseaseKeyword: string): Promise<Subscription> {
+export async function subscribeRadar(
+  anonUserId: string,
+  diseaseKeyword: string,
+  entitiesJson?: string,
+): Promise<Subscription> {
   const res = await fetch(`${API_BASE}/api/v1/radar/subscribe`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ anon_user_id: anonUserId, disease_keyword: diseaseKeyword }),
+    body: JSON.stringify({
+      anon_user_id: anonUserId,
+      disease_keyword: diseaseKeyword,
+      entities_json: entitiesJson,
+    }),
   });
   if (!res.ok) throw new Error(`订阅失败: ${res.status}`);
   return res.json();

@@ -2222,5 +2222,1765 @@
     },
     "cached_at": "2026-07-01T08:44:43.749890",
     "expires_at": "2026-07-02T08:44:43.749890"
+  },
+  "29586210e10306a4653e392f12372b2f": {
+    "query": "临床试验适合什么样的人参加？\n\n用户补充信息：\n- 你想了解的是哪一种疾病或诊断名称？：肺癌\n- 目前处于哪个分期/阶段，已经接受过哪些治疗？：晚期\n- 你更想了解已获批治疗、临床试验机会，还是日常照护和就医沟通？：临床试验",
+    "data": {
+      "layer1_conclusion": {
+        "text": "晚期肺癌临床试验适合体力状况较好、无严重并发症的患者；参加试验可能延长生存时间和控制肿瘤，但具体是否适合需医生评估。建议与主治医生讨论入组机会。",
+        "citations": [
+          "10.1093/ajhp/zxaf258",
+          "10.1016/j.esmoop.2026.106401"
+        ]
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "会议摘要",
+          "sample_size": null,
+          "intervention": "(nSCLC) 临床试验受试者与 SEER 登记库患者的比较",
+          "comparator": null,
+          "outcome": "Purpose: Lung cancer is the second most commonly diagnosed cancer worldwide and the leading cause of cancer-related death. Non–small cell lung cancer (NSCLC) accounts for 80–85% of cases. In the US,",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.1093/ajhp/zxaf258",
+          "source_url": null
+        },
+        {
+          "study_type": "会议摘要",
+          "sample_size": "17,879",
+          "intervention": "94P 临床试验参与对 IV 期非小细胞肺癌 (NS",
+          "comparator": null,
+          "outcome": "Background: Lung cancer is the leading cause of cancer-related death worldwide. Treatment for stage IV non-small cell lung cancer (NSCLC) has evolved in the past few decades through basic and",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.1016/j.esmoop.2026.106401",
+          "source_url": null
+        },
+        {
+          "study_type": "会议摘要",
+          "sample_size": null,
+          "intervention": "III 期肺癌临床试验中生活质量的整合情况 (2019-2",
+          "comparator": null,
+          "outcome": "Background:\n In the dynamic landscape of lung cancer treatment, marked by precision medicine advancements, addressing the persistent global health challenge of lung cancer requires nuanced",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.1200/JCO.2024.42.16_suppl.e23181",
+          "source_url": null
+        },
+        {
+          "study_type": "会议摘要",
+          "sample_size": null,
+          "intervention": "immunotherapy",
+          "comparator": null,
+          "outcome": "Background:\n Lung cancer remains the main cause of cancer-related mortality globally, with non-small cell (NSCLC) accounting for the majority of cases. The advent of immunotherapy (IO) has expanded",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.1200/JCO.2023.41.16_suppl.e13616",
+          "source_url": null
+        },
+        {
+          "study_type": "临床试验",
+          "sample_size": null,
+          "intervention": "Bevacizumab",
+          "comparator": null,
+          "outcome": "clinical trial The goal of this clinical trial is to learn whether the treatment of advanced non-small cell lung cancer with EGFR-TKIs, when combined with bevacizumab in the presence of positive",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "trial_0",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "临床试验就像新药或新疗法的‘测试阶段’，目的是看看这些方法是否比现有治疗更好、更安全。参加试验的患者能提前用上这些新方法，但也可能面临未知的风险。",
+        "what_evidence_says": "研究发现，参加晚期肺癌临床试验的患者，肿瘤控制时间和总生存时间往往更长。比如，试验组患者的中位总生存期比未参加试验的患者长近一倍。但这通常需要患者体力状况较好，没有太多其他严重健康问题，比如脑转移或体力太差（ECOG评分高）。",
+        "what_it_means_for_you": "1. 问问医生：你的体力状况和健康状况是否符合临床试验的要求；2. 了解目前有哪些适合你的晚期肺癌临床试验；3. 和医生讨论参加试验的利弊，比如新疗法的潜在好处和风险。",
+        "when_to_see_doctor": "如果出现呼吸困难加重、持续咳嗽、体重明显下降或新发症状，需尽快就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "了解临床试验的适合人群很重要，尤其是面对晚期肺癌时。每个人的情况不同，临床试验可能带来新希望，但也需要仔细考虑风险和益处。我们可以一起看看哪些人可能适合参加。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "III 期转移性非小细胞肺癌 (nSCLC) 临床试验受试者与 SEER 登记库患者的比较分析 (2025)",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1093/ajhp/zxaf258"
+        },
+        {
+          "summary": "94P 临床试验参与对 IV 期非小细胞肺癌 (NSCLC) 预后的影响：来自西班牙肺癌小组登记系统的真实世界数据",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.esmoop.2026.106401"
+        },
+        {
+          "summary": "以患者为中心的视角：考察 III 期肺癌临床试验中生活质量的整合情况 (2019-2023)。",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2024.42.16_suppl.e23181"
+        },
+        {
+          "summary": "免疫治疗时代晚期非小细胞肺癌 3 期临床试验的设计、报告及差异性研究。",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2023.41.16_suppl.e13616"
+        },
+        {
+          "summary": "CSF CTC-Capture-Guided EGFR-TKI and Bevacizumab Combination Therapy in EGFR-Mutant Advanced NSCLC",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Standard Care With or Without Early Palliative Care Provided by Palliative Care Specialist in Advanced Non-small Cell Lung Cancer Patients",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "Multi-site Trial of a Brief Behavioral Intervention for Dyspnea in Patients With Advanced Lung Cancer",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "Exploring the Neo-Adjuvant Therapy Effects on Lung Cancer Through Monitoring and Assessment of Tumor Environment",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Multi-site Trial of a Brief Behavioral Intervention for Dyspnea in Patients With Advanced Lung Cancer",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        },
+        {
+          "summary": "NCCN非小细胞肺癌指南（V2026.5）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "215 基于风险的肺癌筛查对大曼彻斯特地区晚期发病率的人群影响",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.lungcan.2025.108324"
+        },
+        {
+          "summary": "程序性死亡配体-1与肿瘤突变负荷检测在肺癌患者免疫检查点抑制剂治疗选择中的应用：来自美国病理学会、分子病理学协会、国际肺癌研究协会、肺病理学会和LUNGevity基金会的指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "盐酸安罗替尼治疗晚期肺癌中国专家共识(2023年版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "大细胞神经内分泌肺癌：英国胸部肿瘤学会和肺部病理学家协会的共识声明",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "早期、局部晚期和转移期非小细胞肺癌管理国家临床实践指南扩展版",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "A Roadmap to Transform Lung Cancer Outcomes: Priorities in Biology, Therapeutic Innovation, Early Detection, Prevention, and Interception.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1158/2159-8290.CD-25-2318"
+        },
+        {
+          "summary": "Interventional Clinical Trials in Metastatic Pulmonary Large-Cell Neuroendocrine Carcinoma: A Systematic Review of Prospective, Interventional Trials.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3390/cancers18060964"
+        },
+        {
+          "summary": "The progress of tumor vaccines clinical trials in non-small cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1007/s12094-024-03678-z"
+        },
+        {
+          "summary": "Top advances of the year: Targeted therapy for lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/cncr.35423"
+        },
+        {
+          "summary": "Clinical Trials for Oral, Inhaled and Intravenous Drug Delivery System for Lung Cancer and Emerging Nanomedicine-Based Approaches.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.2147/IJN.S432839"
+        },
+        {
+          "summary": "A Prospective Cohort Study to Define the Clinical Features and Outcome of Lung Cancers Harboring HER2 Aberration in Japan (HER2-CS STUDY).",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.chest.2019.01.011"
+        },
+        {
+          "summary": "New Developments in Neoadjuvant Therapy for Lung Cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_25"
+        },
+        {
+          "summary": "Are clinical trial eligibility criteria an accurate reflection of a real-world population of advanced non-small-cell lung cancer patients?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3747/co.25.3978"
+        },
+        {
+          "summary": "Patients with Advanced Non-Small Cell Lung Cancer: Are Research Biopsies a Barrier to Participation in Clinical Trials?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.jtho.2015.09.006"
+        },
+        {
+          "summary": "Molecular profiling and targeted therapy for advanced thoracic malignancies: a biomarker-derived, multiarm, multihistology phase II basket trial.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2014.58.2007"
+        },
+        {
+          "summary": "Using multiplexed assays of oncogenic drivers in lung cancers to select targeted drugs.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1001/jama.2014.3741"
+        },
+        {
+          "summary": "Randomized phase II trial of erlotinib alone or with carboplatin and paclitaxel in patients who were never or light former smokers with advanced lung adenocarcinoma: CALGB 30406 trial.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2011.40.1315"
+        },
+        {
+          "summary": "The eligibility of advanced non-small-cell lung cancer patients for targeted therapy clinical trials.",
+          "research_stage": "breakthrough_rct",
+          "evidence_level": "very_low",
+          "uncertainty_note": null,
+          "source_id": "10.1093/annonc/mdr443"
+        },
+        {
+          "summary": "Cooperative group research efforts in lung cancer 2008: focus on advanced-stage non-small-cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3816/CLC.2008.n.050"
+        },
+        {
+          "summary": "Screening for lung cancer: a review of the current literature.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1378/chest.123.1_suppl.72s"
+        },
+        {
+          "summary": "Predicting response to paclitaxel/carboplatin-based therapy in non-small cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/s0093-7754(01)90058-2"
+        },
+        {
+          "summary": "Treatment of advanced non-small-cell lung cancer: a review of current randomized clinical trials and an examination of emerging therapies.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1177/107327480100800404"
+        },
+        {
+          "summary": "Antisense-mediated depletion of potato leaf omega3 fatty acid desaturase lowers linolenic acid content and reduces gene activation in response to wounding.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00382.x"
+        },
+        {
+          "summary": "Glyceraldehyde-3-phosphate dehydrogenase from Ehrlich ascites carcinoma cells its possible role in the high glycolysis of malignant cells.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00384.x"
+        },
+        {
+          "summary": "(R,S)-4-phosphonophenylglycine, a potent and selective group III metabotropic glutamate receptor agonist, is anticonvulsive and neuroprotective in vivo.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_7"
+        },
+        {
+          "summary": "Effects of specific modifications of several hydroxyls of tetrodotoxin on its affinity to rat brain membrane.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_9"
+        },
+        {
+          "summary": "Properties and molecular cloning of Ca2+/H+ antiporter in the vacuolar membrane of mung bean.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00377.x"
+        },
+        {
+          "summary": "Does formal approval of educational courses guarantee quality?",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00297.x"
+        },
+        {
+          "summary": "The WISDOM project: training primary care professionals in informatics in a collaborative 'virtual classroom'.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00309.x"
+        },
+        {
+          "summary": "Use of learning contracts in an office-based primary care clerkship.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00346.x"
+        },
+        {
+          "summary": "The development and evaluation of a personal learning log for senior house officers.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00258.x"
+        },
+        {
+          "summary": "A prospective analysis of stress and academic performance in the first two years of medical school.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00294.x"
+        },
+        {
+          "summary": "Motivation for medical school: the relationship to gender and specialty preferences in a nationwide sample.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00293.x"
+        }
+      ],
+      "subscription_offer": {
+        "disease_keyword": "临床试验适合什么样",
+        "prompt_text": "要不要让小光帮你持续关注「临床试验适合什么样」的最新研究？如果以后有新的高质量指南、临床试验或重要研究，我可以通过邮件提醒你，并用能看懂的话解释研究阶段和不确定性。"
+      },
+      "clarification_questions": []
+    },
+    "cached_at": "2026-07-02T15:31:54.542039",
+    "expires_at": "2026-07-03T15:31:54.542045"
+  },
+  "dfacd59826de031426b635acbf4e0378": {
+    "query": "visitprep::临床试验适合什么样的人参加？\n\n用户补充信息：\n- 你想了解的是哪一种疾病或诊断名称？：肺癌\n- 目前处于哪个分期/阶段，已经接受过哪些治疗？：晚期\n- 你更想了解已获批治疗、临床试验机会，还是日常照护和就医沟通？：临床试验",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "我目前的健康状况和既往病史是否符合肺癌临床试验的入组条件？",
+          "有哪些正在进行的晚期肺癌临床试验适合我参加？",
+          "临床试验中使用的新型治疗方案与我目前的治疗相比，有哪些潜在的好处和风险？",
+          "参加临床试验是否需要满足特定的年龄或身体状况要求？",
+          "如果我参加临床试验，治疗过程中会如何监测我的病情和副作用？"
+        ],
+        "info_to_tell_doctor": [
+          "我之前接受过哪些治疗，包括化疗、靶向治疗或免疫治疗的详细情况。",
+          "我目前有哪些合并症，比如心脏病、糖尿病或其他慢性病。",
+          "我目前的体力状况和日常生活能力，比如能否独立完成日常活动。",
+          "我之前在治疗中出现过的副作用，以及我对某些药物的过敏史。",
+          "我对于治疗的期望，比如更看重延长生存时间还是提高生活质量。"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要做更详细的基因检测，看看我是否符合某些靶向治疗的临床试验入组条件。",
+          "可以问医生是否需要评估我的肺功能或心脏功能，以确定我是否适合参加某些临床试验。",
+          "可以问医生是否需要进行血液检查，评估我的整体健康状况和器官功能，以判断我是否符合试验要求。",
+          "可以问医生是否需要做影像学检查，比如CT或PET-CT，来进一步评估我的肿瘤情况和试验入组资格。",
+          "可以问医生是否需要进行生活质量评估，以确定我是否适合参加某些关注生活质量的临床试验。"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认我是否符合免疫治疗或靶向治疗相关临床试验的入组标准。",
+          "需要和医生确认临床试验中使用的治疗方案是否与我当前的治疗有冲突或重复。",
+          "需要和医生确认参加临床试验是否会影响我参加其他治疗的机会。",
+          "需要和医生确认如果我在临床试验中没有效果，是否有后备的治疗方案。",
+          "需要和医生确认临床试验的持续时间以及我需要配合的随访安排。"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-07-02T15:32:07.710417",
+    "expires_at": "2026-07-03T15:32:07.710423"
+  },
+  "3158adda87cfbbc635a678a0baf17300": {
+    "query": "影像报告说结节增大怎么办\n\n用户补充信息：\n- 你想了解的是哪一种疾病或诊断名称？：有结节的地方",
+    "data": {
+      "layer1_conclusion": {
+        "text": "结节增大可能提示病情变化，需结合影像、症状和病理检查判断。建议尽快找医生进一步检查，明确结节性质和原因。",
+        "citations": [
+          "10.3760/cma.j.cn131368-20220507-00359",
+          "10.13267/j.cnki.syzlzz.2022.081"
+        ]
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "中文文献",
+          "sample_size": "100",
+          "intervention": null,
+          "comparator": null,
+          "outcome": "目的:总结分析结节病的临床特征、诊治及预后，提高对结节病的认识，减少误诊。方法:本研究为横断面研究。收集2011年1月至2017年12月在四川大学华西院诊断为结节病(包括肺内与肺外)的100例患者临床资料，并对临床特征、实验室及胸部CT检查、获取病理组织的部位及结果、治疗、预后等方面进行统计分析。结果:共收集100例，以女性多见，男女比为1∶2.22；年龄(47.12±11.95)岁，年龄范围为1",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.3760/cma.j.cn131368-20220507-00359",
+          "source_url": null
+        },
+        {
+          "study_type": "中文文献",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "结节病(sarcoidosis)是一种原因不明的多系统非干酪坏死性肉芽肿性病变,可累及肺、淋巴结、肝、眼和皮肤等多个器官,女性多于男性.其诊断主要依据临床表现、影像学、血生化和病理等综合判断,尤其依赖于病理学检查.欧洲、美国和日本等国的大型流行病学研究显示,结节病患者肿瘤发病率高,尤其是乳腺癌和淋巴瘤",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.13267/j.cnki.syzlzz.2022.081",
+          "source_url": null
+        },
+        {
+          "study_type": "中文文献",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": "篇首：患者，男，26岁，咳嗽2个月余，经外院积极抗炎治疗无效转入我院。体查：体温：37.8℃，脉搏77次/分，血压14/8kpa，消瘦体型，精神萎靡，脾肋下3.0cm，浅表淋巴结未及。　　实验室结果：WBC 1.8×109/L；LymPh 46.4%；Gran 28.7%；Mid",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.3969/j.issn.1000-0313.2001.02.032",
+          "source_url": null
+        },
+        {
+          "study_type": "中文文献",
+          "sample_size": "5",
+          "intervention": null,
+          "comparator": null,
+          "outcome": "篇首：结节病是一种原因未明的多脏器受累的非于酪样类上皮细胞肉芽肿性疾病，好发于胸淋巴结，分型等方面均有论述，但在县级医院诊治有一定困难，鉴别诊断十分重要，应同结核病、淋巴瘤或其他肉芽肿性疾病相鉴别，病理检查是确诊的主要手段，本文将临床有病理诊断5例结节病资料作一分析，初步探讨其诊断与治疗。   临床资料   一、一般资料  ",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "paper_cn_8",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "结节就像身体里的小团块，可能在肺、淋巴结等地方出现。结节病是一种原因不明的疾病，常表现为多个器官出现非干酪坏死性肉芽肿，女性更常见。",
+        "what_evidence_says": "研究显示，结节病的结节可能自行好转，但也可能需要治疗。如果结节增大，可能提示疾病活动或有其他问题，比如合并其他疾病（如肺癌）。影像报告提示结节增大时，需要结合临床症状、实验室检查和病理结果来判断，不能单凭影像就下结论。",
+        "what_it_means_for_you": "1. 和医生讨论结节增大的具体原因；2. 是否需要进一步检查，比如穿刺活检或增强CT；3. 是否有其他症状，如咳嗽、呼吸困难等，帮助医生判断。",
+        "when_to_see_doctor": "如果出现持续咳嗽、呼吸困难、胸痛或体重明显下降等症状，需尽快就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "看到你的影像报告说结节增大，我明白你一定很担心。结节增大确实让人焦虑，但具体原因还需要进一步明确，我们一起看看接下来该怎么和医生沟通，别太着急。",
+      "emotion_state": "anxiety",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "100例结节病患者的临床特征分析",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.cn131368-20220507-00359"
+        },
+        {
+          "summary": "结节病一例",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1000-0313.2001.02.032"
+        },
+        {
+          "summary": "结节病合并肺癌二例报道并文献复习",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.13267/j.cnki.syzlzz.2022.081"
+        },
+        {
+          "summary": "肺结节病的诊治并5例报告",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_8"
+        },
+        {
+          "summary": "肺结节诊治中国专家共识（2024年版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "肺癌筛查与早诊早治方案（2024年版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "NCCN临床实践指南：肺癌筛查（2026.V1）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "肺结节规范化诊治专家共识",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "NCCN临床实践指南：肺癌筛查（2026.V1）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "Hepatocellular carcinoma with a \"nodule-in-nodule\" appearance reflecting an unusual dilated pseudoglandular structure.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.2169/internalmedicine.47.0640"
+        },
+        {
+          "summary": "Case Report and Literature Review of Nodular Hiradenoma, a Rare Adnexal Tumor That Mimics Breast Carcinoma, in a 20-Year-Old Woman.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1093/labmed/lmy084"
+        },
+        {
+          "summary": "Cancer Risk in Subsolid Nodules in the National Lung Screening Trial.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1148/radiol.2019190905"
+        },
+        {
+          "summary": "What do you mean, a spot?: A qualitative analysis of patients' reactions to discussions with their physicians about pulmonary nodules.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1378/chest.12-1095"
+        },
+        {
+          "summary": "Antisense-mediated depletion of potato leaf omega3 fatty acid desaturase lowers linolenic acid content and reduces gene activation in response to wounding.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00382.x"
+        },
+        {
+          "summary": "Glyceraldehyde-3-phosphate dehydrogenase from Ehrlich ascites carcinoma cells its possible role in the high glycolysis of malignant cells.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00384.x"
+        },
+        {
+          "summary": "(R,S)-4-phosphonophenylglycine, a potent and selective group III metabotropic glutamate receptor agonist, is anticonvulsive and neuroprotective in vivo.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_6"
+        },
+        {
+          "summary": "Does formal approval of educational courses guarantee quality?",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00297.x"
+        },
+        {
+          "summary": "Evolution and duration of nodules in severe nodular acne on the back: results from a four-week non-interventional, prospective study.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/jdv.15407"
+        },
+        {
+          "summary": "Effects of specific modifications of several hydroxyls of tetrodotoxin on its affinity to rat brain membrane.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_9"
+        },
+        {
+          "summary": "The development and evaluation of a personal learning log for senior house officers.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00258.x"
+        },
+        {
+          "summary": "New Fissure-Attached Nodules in Lung Cancer Screening: A Brief Report From The NELSON Study.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.jtho.2019.09.193"
+        },
+        {
+          "summary": "Determination of MIC Distribution and Mechanisms of Decreased Susceptibility to Bedaquiline among Clinical Isolates of Mycobacterium abscessus.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1128/AAC.00175-18"
+        },
+        {
+          "summary": "Clinical and histopathological profile of basal cell carcinoma in a population from Criciúma, Santa Catarina, Brazil.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1590/s0365-05962012000400030"
+        },
+        {
+          "summary": "Properties and molecular cloning of Ca2+/H+ antiporter in the vacuolar membrane of mung bean.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00377.x"
+        },
+        {
+          "summary": "Nodular Maturation of the Testis: A Non-neoplastic Lesion of Boys That May Present as a Mass on Clinical and Ultrasound Examination.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/PAS.0000000000001775"
+        },
+        {
+          "summary": "Induction of endometriotic nodules in an experimental baboon model mimicking human deep nodular lesions.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.fertnstert.2012.10.032"
+        },
+        {
+          "summary": "A prospective analysis of stress and academic performance in the first two years of medical school.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00294.x"
+        },
+        {
+          "summary": "Motivation for medical school: the relationship to gender and specialty preferences in a nationwide sample.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00293.x"
+        },
+        {
+          "summary": "The WISDOM project: training primary care professionals in informatics in a collaborative 'virtual classroom'.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00309.x"
+        },
+        {
+          "summary": "Invasion process of induced deep nodular endometriosis in an experimental baboon model: similarities with collective cell migration?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.fertnstert.2015.05.011"
+        },
+        {
+          "summary": "A newborn with nodular ulcerated lesion on a giant congenital nevus.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1525-1470.2000.01782.x"
+        },
+        {
+          "summary": "Use of learning contracts in an office-based primary care clerkship.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00346.x"
+        },
+        {
+          "summary": "Benign Thyroid Nodules / Benign Goiter. What Subjective Problems Are Improved With an Operation and Can This be Predicted Preoperatively?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Genomic Predictors of Papillary Microcarcinoma Disease Progression",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "Intervention in Single Thyroid Nodule.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "SERS-Based Serum Molecular Spectral Screening for Benign and Malignant Pulmonary Proliferative Nodules",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Constructing a Predictive Model for Differentiating Between Benign and Malignant Solid Pulmonary Nodules Based on Clinical and Imaging Features.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        },
+        {
+          "summary": "结节病的诊治进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1009-6663.2015.04.049"
+        },
+        {
+          "summary": "结节病32例临床分析",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1006-2785.2008.08.028"
+        },
+        {
+          "summary": "结节病1例",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1674-1293.2008.01.016"
+        },
+        {
+          "summary": "结节病1例",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1009-1157.2010.10.021"
+        },
+        {
+          "summary": "基层医院诊断结节病的体会",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1009-6663.2003.03.023"
+        },
+        {
+          "summary": "结节病1例",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1000-4963.2002.11.034"
+        }
+      ],
+      "subscription_offer": {
+        "disease_keyword": "影像报告说结节增大",
+        "prompt_text": "要不要让小光帮你持续关注「影像报告说结节增大」的最新研究？如果以后有新的高质量指南、临床试验或重要研究，我可以通过邮件提醒你，并用能看懂的话解释研究阶段和不确定性。"
+      },
+      "clarification_questions": []
+    },
+    "cached_at": "2026-07-02T15:46:14.456875",
+    "expires_at": "2026-07-03T15:46:14.456881"
+  },
+  "6403278884d73ba6c2d122ff3f37ea5d": {
+    "query": "visitprep::影像报告说结节增大怎么办\n\n用户补充信息：\n- 你想了解的是哪一种疾病或诊断名称？：有结节的地方",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "根据影像报告，结节增大的速度是否在正常范围内？",
+          "结节增大的位置和大小变化，是否提示有恶性风险？",
+          "除了结节增大，还有哪些影像学特征需要进一步关注？",
+          "结节增大是否需要立即进行活检或其他明确诊断的检查？",
+          "结节增大的情况下，目前的随访计划或治疗方案是否需要调整？"
+        ],
+        "info_to_tell_doctor": [
+          "我之前有定期监测结节的大小和变化，之前的影像报告可以作为参考。",
+          "我最近没有明显症状，但有些焦虑，因为看到报告说结节增大了。",
+          "我有吸烟史/家族中有肺癌病史（如果有，请主动告知）。",
+          "我之前做过低剂量CT筛查，结节是这次才发现增大的。",
+          "我目前没有服用特殊药物，但有慢性疾病（如甲状腺疾病）的病史。"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要做结节的穿刺活检，以确定结节的性质？",
+          "可以问医生是否需要进一步做PET-CT，评估结节的代谢活性？",
+          "可以问医生是否需要监测甲状腺功能，排除甲状腺结节的激素影响？",
+          "可以问医生是否需要做增强CT或MRI，更清晰地观察结节的内部结构？",
+          "可以问医生是否需要定期复查，比如缩短随访间隔，密切观察结节变化？"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认，如果结节是良性增大的，是否只需要继续观察？",
+          "需要和医生确认，如果怀疑恶性，是否需要手术或其他干预措施？",
+          "需要和医生确认，是否有药物可以控制结节增长，或者延缓其发展？",
+          "需要和医生确认，是否需要多学科会诊，比如肺科、甲状腺科或肿瘤科？",
+          "需要和医生确认，结节增大是否与我目前的其他健康问题（如吸烟）有关，是否需要改变生活方式？"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-07-02T15:46:26.942015",
+    "expires_at": "2026-07-03T15:46:26.942033"
+  },
+  "4916e83a0e62287f85738b6f6265f19c": {
+    "query": "PD-L1阳性到底代表什么？",
+    "data": {
+      "layer1_conclusion": {
+        "text": "PD-L1阳性表示肿瘤细胞表面有PD-L1蛋白表达，这通常与免疫治疗效果相关。具体意义需结合您的肿瘤类型和医生判断。",
+        "citations": []
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": "三阴性乳腺癌免疫检查点抑制剂临床应用专家共识（202",
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": "妇科肿瘤免疫检查点抑制剂临床应用指南(2023版",
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_2",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": "白表达水平的胃癌免疫治疗专家共识(2023年版)",
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "PD-L1阳性就像肿瘤细胞戴上了一副‘隐身眼镜’，能躲避免疫系统的攻击。免疫治疗药物可以‘摘掉’这副眼镜，让免疫系统识别并攻击肿瘤。",
+        "what_evidence_says": "医学指南显示，PD-L1阳性在多种癌症（如宫颈癌、乳腺癌、胃癌）中，可能提示免疫治疗效果更好。但不同癌症的判断标准不同，需看具体肿瘤类型。",
+        "what_it_means_for_you": "1. 请告诉医生您的PD-L1检测结果；2. 询问PD-L1阳性是否影响您的治疗方案；3. 讨论免疫治疗的适用性和可能效果。",
+        "when_to_see_doctor": "如果您有持续的疲劳、体重下降、疼痛或其他新症状，需尽快就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "PD-L1阳性的意义确实让人困惑，之前您也问过这个问题，看来您很在意它代表什么。我们一起来看看它在不同癌症中到底意味着什么，但具体情况还是需要结合您的病情和医生的建议来判断。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "PD-L1 instead of PD-1 status is associated with the clinical features in human primary prostate tumors.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_0"
+        },
+        {
+          "summary": "Differential Expression of PD-L1 in High Grade T1 vs Muscle Invasive Bladder Carcinoma and its Prognostic Implications.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.juro.2017.04.102"
+        },
+        {
+          "summary": "What does PD-L1 positive or negative mean?",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1084/jem.20161462"
+        },
+        {
+          "summary": "PD-L1 expression and CD8 positive lymphocytes in human neoplasms: A tissue microarray study on 11,838 tumor samples.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3233/CBM-220030"
+        },
+        {
+          "summary": "Antisense-mediated depletion of potato leaf omega3 fatty acid desaturase lowers linolenic acid content and reduces gene activation in response to wounding.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00382.x"
+        },
+        {
+          "summary": "Intra-Tumoral CD8+ T-Cell Infiltration and PD-L1 Positivity in Homologous Recombination Deficient Pancreatic Ductal Adenocarcinoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3389/fonc.2022.860767"
+        },
+        {
+          "summary": "Glyceraldehyde-3-phosphate dehydrogenase from Ehrlich ascites carcinoma cells its possible role in the high glycolysis of malignant cells.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00384.x"
+        },
+        {
+          "summary": "A pan-cancer analysis of PD-L1 immunohistochemistry and gene amplification, tumor mutation burden and microsatellite instability in 48,782 cases.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1038/s41379-020-00664-y"
+        },
+        {
+          "summary": "(R,S)-4-phosphonophenylglycine, a potent and selective group III metabotropic glutamate receptor agonist, is anticonvulsive and neuroprotective in vivo.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_8"
+        },
+        {
+          "summary": "Does formal approval of educational courses guarantee quality?",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00297.x"
+        },
+        {
+          "summary": "Looking past PD-L1: expression of immune checkpoint TIM-3 and its ligand galectin-9 in cervical and vulvar squamous neoplasia.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1038/s41379-019-0433-3"
+        },
+        {
+          "summary": "Safety and Antitumor Activity of Pembrolizumab in Advanced Programmed Death Ligand 1-Positive Endometrial Cancer: Results From the KEYNOTE-028 Study.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1200/JCO.2017.72.5952"
+        },
+        {
+          "summary": "Stromal PD-L1-Positive Regulatory T cells and PD-1-Positive CD8-Positive T cells Define the Response of Different Subsets of Non-Small Cell Lung Cancer to PD-1/PD-L1 Blockade Immunotherapy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.jtho.2017.11.132"
+        },
+        {
+          "summary": "Effects of specific modifications of several hydroxyls of tetrodotoxin on its affinity to rat brain membrane.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_13"
+        },
+        {
+          "summary": "Differential Efficacy of Pembrolizumab According to Metastatic Sites in Patients With PD-L1 Strongly Positive (TPS ≥ 50%) NSCLC.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1016/j.cllc.2020.10.002"
+        },
+        {
+          "summary": "The development and evaluation of a personal learning log for senior house officers.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00258.x"
+        },
+        {
+          "summary": "Considerable interlaboratory variation in PD-L1 positivity for head and neck squamous cell carcinoma in the Netherlands- A nationwide evaluation study.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/his.15184"
+        },
+        {
+          "summary": "PD-L1 protein expression by Combined Positive Score (CPS) in patients with muscle invasive or advanced urothelial carcinoma: a single institution experience.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1186/s12885-023-11299-y"
+        },
+        {
+          "summary": "PD-L1 Expression and CD8+ Tumor-infiltrating Lymphocytes in Different Types of Tubo-ovarian Carcinoma and Their Prognostic Value in High-grade Serous Carcinoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/PAS.0000000000001503"
+        },
+        {
+          "summary": "Properties and molecular cloning of Ca2+/H+ antiporter in the vacuolar membrane of mung bean.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00377.x"
+        },
+        {
+          "summary": "The effects and safety of PD-1/PD-L1 inhibitors on head and neck cancer: A systematic review and meta-analysis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/cam4.2510"
+        },
+        {
+          "summary": "The prevalence of programmed death ligand-1 (PD-L1) expression in non-small cell lung cancer in an unselected, consecutive population.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1038/s41379-019-0339-0"
+        },
+        {
+          "summary": "A prospective analysis of stress and academic performance in the first two years of medical school.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00294.x"
+        },
+        {
+          "summary": "Temporal evolution of programmed death-ligand 1 expression in patients with non-small cell lung cancer.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3904/kjim.2020.178"
+        },
+        {
+          "summary": "Motivation for medical school: the relationship to gender and specialty preferences in a nationwide sample.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00293.x"
+        },
+        {
+          "summary": "PD-L1 expression in rare and aggressive thyroid cancers: A preliminary investigation for a role of immunotherapy.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.4103/jcrt.jcrt_1471_22"
+        },
+        {
+          "summary": "The WISDOM project: training primary care professionals in informatics in a collaborative 'virtual classroom'.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00309.x"
+        },
+        {
+          "summary": "Solid histological component of adenocarcinoma might play an important role in PD-L1 expression of lung adenocarcinoma.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1111/1759-7714.14209"
+        },
+        {
+          "summary": "Tumor-infiltrating lymphocytes status, programmed death-ligand 1 expression, and clinicopathological features of 41 cases of pure apocrine carcinoma of the breast: a retrospective study based on clinical pathological analysis and different immune statuses.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.21037/gs-22-248"
+        },
+        {
+          "summary": "Clinicopathologic and genomic characterization of PD-L1-positive uterine cervical carcinoma.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1038/s41379-021-00780-3"
+        },
+        {
+          "summary": "Prevalence of Programmed Death-Ligand 1 Positivity Using SP142 in Patients With Advanced Stage Triple-Negative Breast Cancer in Malaysia: A Cross-Sectional Study.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.4048/jbc.2024.0040"
+        },
+        {
+          "summary": "Use of learning contracts in an office-based primary care clerkship.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00346.x"
+        },
+        {
+          "summary": "食管鳞癌组织PD-L1表达临床意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_0"
+        },
+        {
+          "summary": "程序性细胞死亡受体1配体在弥漫大B细胞淋巴瘤中的表达及临床意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1009-6469.2018.09.017"
+        },
+        {
+          "summary": "PD-L1阳性局部晚期或转移性非小细胞肺癌患者的临床特征及其影响因素和预测指标诊断价值分析",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.20235/j.issn.2095-1752.2025.22.007"
+        },
+        {
+          "summary": "结直肠癌程序性死亡分子配体-1表达的临床病理意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1001-9448.2018.24.015"
+        },
+        {
+          "summary": "PD-1/PD-L1在原发性肝癌中的表达及临床意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1006-4761.2019.01.019"
+        },
+        {
+          "summary": "PD-1、PD-L1在铂耐药卵巢上皮性癌组织中的表达及其临床意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.16766/j.cnki.issn.1674-4152.003545"
+        },
+        {
+          "summary": "程序性死亡受体配体1在肝癌中的表达及其临床意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.1006-9801.2019.09.001"
+        },
+        {
+          "summary": "PD-1和PD-L1在肺类癌中的表达情况和其临床意义",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3779/j.issn.1009-3419.2016.12.07"
+        },
+        {
+          "summary": "程序性死亡配体1与肺癌患者临床病理特征及预后关系的Meta分析",
+          "research_stage": "breakthrough_rct",
+          "evidence_level": "very_low",
+          "uncertainty_note": null,
+          "source_id": "10.3969/j.issn.1008-5971.2020.03.006"
+        },
+        {
+          "summary": "PD-L1在EBV相关淋巴瘤中的表达及其与EBER的相关性研究",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_9"
+        },
+        {
+          "summary": "子宫颈神经内分泌癌诊治专家共识（2025版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "晚期乳腺癌二代测序临床应用专家共识（2024版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "妇科肿瘤免疫检查点抑制剂临床应用指南(2023版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "三阴性乳腺癌免疫检查点抑制剂临床应用专家共识（2025版）",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "基于PD-L1蛋白表达水平的胃癌免疫治疗专家共识(2023年版)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        }
+      ],
+      "subscription_offer": {
+        "disease_keyword": "PD-L1阳性到底代表什么",
+        "prompt_text": "要不要让小光帮你持续关注「PD-L1阳性到底代表什么」的最新研究？如果以后有新的高质量指南、临床试验或重要研究，我可以通过邮件提醒你，并用能看懂的话解释研究阶段和不确定性。"
+      },
+      "clarification_questions": [
+        "你想了解的是哪一种疾病或诊断名称？"
+      ]
+    },
+    "cached_at": "2026-07-02T16:03:02.635254",
+    "expires_at": "2026-07-03T16:03:02.635262"
+  },
+  "52507d8666c7355c30869296433e3283": {
+    "query": "visitprep::PD-L1阳性到底代表什么？",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "PD-L1阳性具体代表我的肿瘤细胞或免疫细胞上有PD-L1蛋白表达，这是否意味着我对免疫治疗更敏感？",
+          "我的PD-L1阳性是肿瘤细胞表达还是免疫细胞表达？这在不同癌症中意义是否不同？",
+          "PD-L1阳性在像我这样的癌症类型中，是否是使用PD-1/PD-L1抑制剂的必要条件？",
+          "如果PD-L1阳性，使用免疫检查点抑制剂的疗效通常如何？有没有其他因素也会影响治疗效果？",
+          "PD-L1表达水平或状态是否会影响我的整体生存期或疾病进展？"
+        ],
+        "info_to_tell_doctor": [
+          "我了解到PD-L1表达可能与遗传事件或肿瘤微环境有关，我需要提供哪些信息来帮助判断我的PD-L1阳性原因？",
+          "我之前做过免疫治疗，但效果不明显，这是否与PD-L1表达的状态有关？",
+          "我的肿瘤是局部的还是已经转移，这是否会影响PD-L1阳性的临床意义？",
+          "我有其他合并症或正在服用其他药物，这些是否会影响PD-L1检测结果或免疫治疗的效果？",
+          "我的病理报告中除了PD-L1，还有其他生物标志物的检测结果，这些是否需要一并考虑？"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要进一步检测PD-L1的表达位置，是肿瘤细胞还是免疫细胞？",
+          "可以问医生是否需要检测其他免疫相关标志物，来更全面地评估我的免疫状态？",
+          "可以问医生是否需要做基因检测，看看是否有导致PD-L1表达的特定遗传事件？",
+          "可以问医生是否需要定期监测PD-L1表达水平，以评估治疗反应或疾病进展？",
+          "可以问医生是否需要做肿瘤浸润淋巴细胞的检测，这是否与PD-L1阳性共同影响预后？"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认，PD-L1阳性是否支持我使用PD-1或PD-L1抑制剂，比如帕博利珠单抗或阿替利珠单抗？",
+          "需要和医生确认，如果PD-L1阳性，是否可以考虑免疫治疗联合化疗或其他治疗方案？",
+          "需要和医生确认，PD-L1阳性在我的癌症类型中，是否与更好的预后相关？",
+          "需要和医生确认，如果PD-L1阳性但免疫治疗效果不佳，是否有其他替代治疗方案？",
+          "需要和医生确认，PD-L1状态是否会影响临床试验的入组资格，我是否适合参加相关研究？"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-07-02T16:03:17.746191",
+    "expires_at": "2026-07-03T16:03:17.746197"
+  },
+  "9c1c580d937261f390cfbac8a3df6abf": {
+    "query": "渐冻症目前最新的研究成果",
+    "data": {
+      "layer1_conclusion": {
+        "text": "渐冻症目前没有根治方法，最新研究强调早期舒缓治疗很重要，能提升生活质量。新药和临床试验也在探索中，具体治疗需和医生讨论。",
+        "citations": [
+          "10.1177/02692163251335482"
+        ]
+      },
+      "layer2_evidence_cards": [
+        {
+          "study_type": "会议摘要",
+          "sample_size": null,
+          "intervention": "姑息治疗",
+          "comparator": null,
+          "outcome": "Background: Amyotrophic lateral sclerosis (ALS) is a progressive neurodegenerative disease of adult age, leading to severe disability, cognitive impairment and irreversible respiratory muscle",
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "10.1177/02692163251335482",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": "肌萎缩侧索硬化诊断和治疗中国专家共识2026",
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_3",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": "肌萎缩侧索硬化诊断和治疗中国专家共识2026",
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_4",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_0",
+          "source_url": null
+        },
+        {
+          "study_type": "临床指南",
+          "sample_size": null,
+          "intervention": null,
+          "comparator": null,
+          "outcome": null,
+          "limitations": null,
+          "evidence_level": "unknown",
+          "source_id": "guide_1",
+          "source_url": null
+        }
+      ],
+      "layer3_patient_explanation": {
+        "what_is_it": "渐冻症就像身体的‘电’慢慢断了，肌肉逐渐没力气，最后影响说话、吞咽甚至呼吸。它是一种进行性疾病，目前无法治愈。",
+        "what_evidence_says": "最新研究发现，从确诊渐冻症开始，早点进行舒缓治疗（让病人舒服、有质量地生活）非常重要。这样能帮助病人活得更有质量，缓解痛苦。虽然不同地方的舒缓治疗参与程度不一样，但国际上很多专家建议一确诊就加入舒缓治疗。另外，各国专家共识和指南也在不断更新，探索新的治疗方法和药物，但这些方法还在研究中，没有普遍应用。",
+        "what_it_means_for_you": "1. 问问医生是否可以尽早开始舒缓治疗，改善生活质量；2. 了解是否有新药或临床试验适合你；3. 和医生讨论当前治疗方案是否需要调整。",
+        "when_to_see_doctor": "如果出现呼吸困难、吞咽困难加重或身体突然虚弱很多，需要尽快就医。",
+        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"
+      },
+      "risk_level": "low",
+      "risk_message": null,
+      "companion_message": "了解渐冻症的最新研究，对咱们来说很重要。虽然目前它还是个难题，但各国的专家都在努力，指南也在不断更新。咱们可以一起看看有哪些新进展，也别忘了多和医生沟通，看看哪些适合您的情况。",
+      "emotion_state": "calm",
+      "trial_cards": [],
+      "research_progress": [
+        {
+          "summary": "肌萎缩侧索硬化 (ALS) 的早期姑息治疗：是必要之举还是可选方案？最新国际指南与建议综述",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1177/02692163251335482"
+        },
+        {
+          "summary": "肌萎缩侧索硬化的管理日本临床实践指南(增补)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_0"
+        },
+        {
+          "summary": "肌萎缩侧索硬化诊断和治疗中国专家共识2026",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_3"
+        },
+        {
+          "summary": "肌萎缩侧索硬化诊断和治疗中国专家共识2026",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_4"
+        },
+        {
+          "summary": "肌萎缩侧索硬化的管理日本临床实践指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_1"
+        },
+        {
+          "summary": "伊朗肌萎缩侧索硬化临床实践指南",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "guide_2"
+        },
+        {
+          "summary": "与 C9orf72 突变相关的 RNA 机制",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/2211-5463.70069"
+        },
+        {
+          "summary": "TDP-43 的新型生物体液测量指标",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1002/alz.083410"
+        },
+        {
+          "summary": "基于日本肌萎缩侧索硬化症登记研究 (JaCALS) 的克服 ALS 策略",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.5692/clinicalneurol.65_supplement_S1"
+        },
+        {
+          "summary": "肌萎缩脊髓侧索硬化症患者焦虑抑郁症状治疗进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1671-8348.2015.20.043"
+        },
+        {
+          "summary": "帕金森病冻结步态评估研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.12290/xhyxzz.2023-0498"
+        },
+        {
+          "summary": "帕金森病冻结步态的研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_1"
+        },
+        {
+          "summary": "最新低温治疗技术的研究进展及其评价",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1671-7104.2004.05.011"
+        },
+        {
+          "summary": "冻结步态的研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3969/j.issn.1006-2963.2018.05.017"
+        },
+        {
+          "summary": "帕金森冻结步态的研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.1008-1372.2019.07.042"
+        },
+        {
+          "summary": "冻结肩现代医学研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_cn_6"
+        },
+        {
+          "summary": "ASSESS ALL ALS Study",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_0"
+        },
+        {
+          "summary": "Clinical Trial - Analyzing Participation Experiences Of Amyotrophic Lateral Sclerosis Patients",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_1"
+        },
+        {
+          "summary": "Reinnervation and Neuromuscular Transmission in ALS",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_2"
+        },
+        {
+          "summary": "EIM Via the Myolex mScan as an ALS Biomarker",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_3"
+        },
+        {
+          "summary": "Investigation of Cannabinoid 2-receptor Expression in the Brain and Spine of ALS-patients Compared to Healthy Controls With PET (18F-RoSMALS)",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "trial_4"
+        },
+        {
+          "summary": "Revisiting distinct nerve excitability patterns in patients with amyotrophic lateral sclerosis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1093/brain/awae131"
+        },
+        {
+          "summary": "帕金森病冻结步态的相关因素研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.16138/j.1673-6087.2022.04.014"
+        },
+        {
+          "summary": "Barrett食管冷冻治疗的研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3760/cma.j.issn.1007-5232.2017.05.023"
+        },
+        {
+          "summary": "帕金森病冻结步态的研究进展",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3877/cma.j.issn.2095-123X.2019.04.012"
+        },
+        {
+          "summary": "Antisense-mediated depletion of potato leaf omega3 fatty acid desaturase lowers linolenic acid content and reduces gene activation in response to wounding.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00382.x"
+        },
+        {
+          "summary": "Glyceraldehyde-3-phosphate dehydrogenase from Ehrlich ascites carcinoma cells its possible role in the high glycolysis of malignant cells.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00384.x"
+        },
+        {
+          "summary": "(R,S)-4-phosphonophenylglycine, a potent and selective group III metabotropic glutamate receptor agonist, is anticonvulsive and neuroprotective in vivo.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_2"
+        },
+        {
+          "summary": "Does formal approval of educational courses guarantee quality?",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00297.x"
+        },
+        {
+          "summary": "Effects of specific modifications of several hydroxyls of tetrodotoxin on its affinity to rat brain membrane.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "paper_en_4"
+        },
+        {
+          "summary": "The development and evaluation of a personal learning log for senior house officers.",
+          "research_stage": "early_trial",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00258.x"
+        },
+        {
+          "summary": "Advances in cellular models to explore the pathophysiology of amyotrophic lateral sclerosis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1007/s12035-013-8573-9"
+        },
+        {
+          "summary": "In vivo evidence for reduced ion channel expression in motor axons of patients with amyotrophic lateral sclerosis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1113/JP276624"
+        },
+        {
+          "summary": "Properties and molecular cloning of Ca2+/H+ antiporter in the vacuolar membrane of mung bean.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00377.x"
+        },
+        {
+          "summary": "A prospective analysis of stress and academic performance in the first two years of medical school.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00294.x"
+        },
+        {
+          "summary": "Correlation of Peripheral Immunity With Rapid Amyotrophic Lateral Sclerosis Progression.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1001/jamaneurol.2017.2255"
+        },
+        {
+          "summary": "Motivation for medical school: the relationship to gender and specialty preferences in a nationwide sample.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00293.x"
+        },
+        {
+          "summary": "The WISDOM project: training primary care professionals in informatics in a collaborative 'virtual classroom'.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00309.x"
+        },
+        {
+          "summary": "Use of learning contracts in an office-based primary care clerkship.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1365-2923.1999.00346.x"
+        },
+        {
+          "summary": "Purification and characterization of the 16-kDa heat-shock-responsive protein from the thermophilic cyanobacterium Synechococcus vulcanus, which is an alpha-crystallin-related, small heat shock protein.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00380.x"
+        },
+        {
+          "summary": "Recent advances in motor neuron disease.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/WCO.0b013e32832ffbe3"
+        },
+        {
+          "summary": "Trends in global amyotrophic lateral sclerosis research from 2000 to 2022: A bibliometric analysis.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.3389/fnins.2022.965230"
+        },
+        {
+          "summary": "Identification of subunit g of yeast mitochondrial F1F0-ATP synthase, a protein required for maximal activity of cytochrome c oxidase.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1046/j.1432-1327.1999.00345.x"
+        },
+        {
+          "summary": "Biomarkers in amyotrophic lateral sclerosis: a review of new developments.",
+          "research_stage": "preclinical",
+          "evidence_level": "very_low",
+          "uncertainty_note": "该结果尚未在患者身上证实有效，仍处于研究阶段，不代表对患者个体的确切获益。",
+          "source_id": "10.1097/WCO.0000000000000854"
+        }
+      ],
+      "subscription_offer": {
+        "disease_keyword": "渐冻症",
+        "prompt_text": "要不要让小光帮你持续关注「渐冻症」的最新研究？如果以后有新的高质量指南、临床试验或重要研究，我可以通过邮件提醒你，并用能看懂的话解释研究阶段和不确定性。"
+      },
+      "clarification_questions": [
+        "目前处于哪个分期/阶段，已经接受过哪些治疗？",
+        "你更想了解已获批治疗、临床试验机会，还是日常照护和就医沟通？"
+      ]
+    },
+    "cached_at": "2026-07-02T16:23:11.333028",
+    "expires_at": "2026-07-03T16:23:11.333035"
+  },
+  "53f4a76b08891954ba7e9bfadcd78cda": {
+    "query": "visitprep::渐冻症目前最新的研究成果",
+    "data": {
+      "visit_prep_pack": {
+        "questions_for_doctor": [
+          "针对渐冻症，目前有没有新的药物或治疗方法，比如与代谢型谷氨酸受体相关的治疗？",
+          "有没有关于神经保护或抗兴奋性毒性方面的最新研究进展，可以用于我的情况？",
+          "最新的研究中，有没有提到通过调节脂肪酸代谢来影响神经功能的治疗方法？",
+          "有没有关于高糖酵解在渐冻症中的作用的新研究，以及是否有相关治疗策略？",
+          "目前有没有关于钠通道阻滞剂，比如类似河豚毒素的化合物，在渐冻症中的应用研究？"
+        ],
+        "info_to_tell_doctor": [
+          "我了解到一些关于代谢型谷氨酸受体（mGluRs）的激动剂有神经保护作用，想了解这是否适用于我。",
+          "我关注到脂肪酸代谢可能与神经功能有关，想讨论这是否与我的病情相关。",
+          "我看到一些研究提到高糖酵解与恶性细胞的关系，想了解这是否与渐冻症的肌肉退化有关。",
+          "我了解到钠通道阻滞剂在神经疾病中有应用，想问这是否对渐冻症有潜在帮助。",
+          "我最近看到一些关于植物脂肪酸去饱和酶的研究，想讨论它是否与渐冻症的神经炎症有关。"
+        ],
+        "tests_to_request": [
+          "可以问医生是否需要做关于代谢型谷氨酸受体功能的检查，以评估神经保护的潜在治疗方向。",
+          "可以问医生是否需要检测体内脂肪酸代谢相关指标，比如α-亚麻酸水平，以探索新的治疗途径。",
+          "可以问医生是否需要评估我的肌肉组织中高糖酵解的相关指标，以了解病情进展。",
+          "可以问医生是否需要进行钠通道功能的检测，以判断类似河豚毒素的化合物是否适用。",
+          "可以问医生是否需要做关于植物脂肪酸去饱和酶的基因表达检测，以探索其与病情的关联。"
+        ],
+        "treatment_options_to_confirm": [
+          "需要和医生确认，是否可以尝试代谢型谷氨酸受体激动剂，比如(R,S)-4-磷苯甘氨酸，来缓解症状。",
+          "需要和医生确认，是否可以通过调节脂肪酸代谢，比如减少α-亚麻酸含量，来减缓病情进展。",
+          "需要和医生确认，是否可以探索高糖酵解抑制剂，来减缓肌肉退化。",
+          "需要和医生确认，是否可以考虑使用钠通道阻滞剂，比如河豚毒素类似物，来保护神经功能。",
+          "需要和医生确认，是否可以尝试通过抑制脂肪酸去饱和酶来降低神经炎症，从而改善症状。"
+        ],
+        "positioning_note": "本清单用于辅助你和医生沟通，最终诊疗以医生判断为准。"
+      },
+      "evidence_based": true,
+      "note": null
+    },
+    "cached_at": "2026-07-02T16:23:33.835658",
+    "expires_at": "2026-07-03T16:23:33.835664"
   }
 }

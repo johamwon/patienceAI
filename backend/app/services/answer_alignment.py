@@ -1,11 +1,15 @@
 """
-回答对齐工具：把用户自然语言问题拆成“疾病主题 + 任务意图 + 缺失上下文”。
+回答对齐工具：把用户自然语言问题拆成"疾病主题 + 任务意图"。
 
-这里刻意保持为规则层纯函数，不依赖 LLM 或外部检索。它的作用不是替代模型，
-而是在检索排序和最终回答 prompt 中提供硬约束，避免回答只复述证据标题、
-没有真正回应用户问的“最新治疗方案/副作用/检查含义”等具体诉求。
+焦点抽取（disease / intent / audience / treatment_angle）保持为规则层纯函数，
+为检索排序和回答 prompt 提供硬约束，避免回答只复述证据标题。
+
+追问生成（clarification_questions）改为 LLM 驱动：根据查询语义动态判断
+"是否需要追问"并生成针对性问题，不再使用硬编码模板。
 """
 
+import asyncio
+import json
 from dataclasses import dataclass, field
 from datetime import date
 import re
@@ -96,20 +100,15 @@ def analyze_query_focus(query: str) -> QueryFocus:
     keywords.extend(_keywords_for_intent(intent, treatment_angle))
     keywords = list(dict.fromkeys([kw for kw in keywords if kw]))
 
-    questions = _build_clarification_questions(
-        disease=disease,
-        intent=intent,
-        audience=audience,
-        query=q,
-    )
-
+    # clarification_questions 由 LLM 异步生成（见 generate_clarification_questions），
+    # 这里保持为空，由调用方在需要时异步补全。
     return QueryFocus(
         disease=disease,
         intent=intent,
         audience=audience,
         treatment_angle=treatment_angle,
         keywords_cn=keywords,
-        clarification_questions=questions,
+        clarification_questions=[],
     )
 
 
@@ -238,32 +237,79 @@ def _keywords_for_intent(intent: str, treatment_angle: str) -> list[str]:
     return []
 
 
-def _build_clarification_questions(
-    *,
-    disease: str,
-    intent: str,
-    audience: str,
+# ─── LLM 驱动追问生成 ────────────────────────────────────────────────────────
+
+_CLARIFY_SYSTEM_PROMPT = """你是一位医学信息咨询助手。患者向你提出了一个医学问题，你需要判断：这个问题是否缺少关键信息，导致直接检索会得到过于宽泛或不精准的结果？
+
+判断标准：
+- 如果问题已经足够具体（如"PD-L1阳性代表什么"、"EGFR突变阳性的非小细胞肺癌一线靶向药有哪些"），不需要追问。
+- 如果问题缺少关键医疗上下文（如分期、既往治疗、具体药物名、检测指标数值），需要追问。
+
+追问原则：
+- 最多生成 3 个追问，按重要性排序
+- 问题要简短、具体，让患者容易回答
+- 不要问患者的个人信息（姓名、电话等）
+- 不要给出诊断建议
+- 如果不需要追问，needs_clarification 为 false
+
+返回严格的 JSON 格式（不要包含任何其他文字）：
+{"needs_clarification": true/false, "questions": ["问题1", "问题2", "问题3"]}"""
+
+
+async def generate_clarification_questions(
     query: str,
+    focus: "QueryFocus",
+    llm_client,
 ) -> list[str]:
-    """模型拿不准时的追问，但不阻塞当前回答。"""
-    questions: list[str] = []
+    """使用 LLM 判断是否需要追问，并动态生成针对性追问问题。
 
-    if not disease:
-        questions.append("你想了解的是哪一种疾病或诊断名称？")
+    Args:
+        query: 用户原始查询
+        focus: 规则层已提取的焦点信息（disease / intent / audience）
+        llm_client: LLMClient 实例
 
-    if intent in {"latest_treatment", "clinical_trial", "drug_info"}:
-        if disease == "阿尔茨海默病":
-            questions.append("目前诊断处于轻度、中度还是重度？是否还属于轻度认知障碍阶段？")
-            questions.append("现在是否正在使用多奈哌齐、美金刚、仑卡奈单抗等药物？")
-        else:
-            questions.append("目前处于哪个分期/阶段，已经接受过哪些治疗？")
-        questions.append("你更想了解已获批治疗、临床试验机会，还是日常照护和就医沟通？")
+    Returns:
+        追问问题列表（最多 3 条），不需要追问时返回空列表
+    """
+    # 构建 LLM 输入上下文
+    context_parts = [f"患者查询：{query}"]
+    if focus.disease:
+        context_parts.append(f"识别到的疾病/主题：{focus.disease}")
+    if focus.intent and focus.intent != "general":
+        intent_cn = {
+            "latest_treatment": "想了解最新治疗方案",
+            "clinical_trial": "想了解临床试验",
+            "drug_info": "想了解药物信息",
+            "test_explanation": "想了解检查/化验结果",
+            "disease_understanding": "想了解疾病基本知识",
+            "rumor_check": "在求证某个说法",
+        }.get(focus.intent, focus.intent)
+        context_parts.append(f"用户意图：{intent_cn}")
+    if focus.audience == "family_or_friend":
+        context_parts.append("用户是代家人或朋友询问")
 
-    if audience == "family_or_friend" and intent in {"latest_treatment", "general"}:
-        questions.append("患者年龄、主要症状和最近一次医生诊断是什么？")
+    user_prompt = "\n".join(context_parts)
 
-    # 去重并限制长度，避免前端占太多空间。
-    return list(dict.fromkeys(questions))[:3]
+    try:
+        raw = await asyncio.to_thread(
+            llm_client.chat,
+            [
+                {"role": "system", "content": _CLARIFY_SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.2,
+            max_tokens=300,
+        )
+        data = json.loads(raw)
+        if data.get("needs_clarification") and isinstance(data.get("questions"), list):
+            questions = [q.strip() for q in data["questions"] if q and q.strip()]
+            return questions[:3]
+    except (json.JSONDecodeError, TypeError, KeyError, Exception):
+        # LLM 返回异常或解析失败时，不回退到规则模板——直接返回空列表，
+        # 让用户直接进入检索，不在链路中阻塞。
+        pass
+
+    return []
 
 
 def score_evidence_relevance(evidence: dict, focus: QueryFocus) -> int:

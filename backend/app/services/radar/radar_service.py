@@ -10,6 +10,7 @@ from typing import Any
 from ...models.schemas import PushDigest, Subscription
 from ..knows_client import knows_client
 from ..llm_client import llm_client
+from ..entity_extractor import build_search_queries
 from .contact_store import ContactStore, contact_store
 from .digest_generator import generate_push_digest
 from .delivery.base import DeliveryChannel
@@ -82,8 +83,8 @@ class RadarService:
             "wechat": WeChatChannel(),
         }
 
-    def subscribe(self, anon_user_id: str, disease_keyword: str) -> Subscription:
-        return self.subscriptions.create(anon_user_id.strip(), disease_keyword.strip())
+    def subscribe(self, anon_user_id: str, disease_keyword: str, entities_json: str | None = None) -> Subscription:
+        return self.subscriptions.create(anon_user_id.strip(), disease_keyword.strip(), entities_json)
 
     def list_subscriptions(self, anon_user_id: str) -> list[Subscription]:
         return self.subscriptions.list_active(anon_user_id)
@@ -175,10 +176,20 @@ class RadarService:
         if not new_items:
             return result
 
+        import json as _json
+
+        sub_entities = None
+        if sub.entities_json:
+            try:
+                sub_entities = _json.loads(sub.entities_json)
+            except (_json.JSONDecodeError, TypeError):
+                pass
+
         digest = await generate_push_digest(
             sub.disease_keyword,
             new_items,
             self.digest_llm,
+            entities=sub_entities,
             is_demo=is_demo,
         )
         result.digest = digest
@@ -230,7 +241,26 @@ class RadarService:
         return results
 
     def _search_for_subscription(self, sub: Subscription) -> list[Any]:
-        pairs = [(source, sub.disease_keyword) for source in RADAR_SEARCH_SOURCES]
+        """Build search queries from stored entities (or fallback to keyword).
+
+        优先使用 LLM 提取的结构化实体（entities_json）生成多维度检索查询；
+        如果没有实体数据（旧订阅兼容），退回用 disease_keyword 原词检索。
+        """
+        import json as _json
+
+        entities = None
+        if sub.entities_json:
+            try:
+                entities = _json.loads(sub.entities_json)
+            except (_json.JSONDecodeError, TypeError):
+                pass
+
+        if entities and entities.get("search_queries"):
+            pairs = build_search_queries(entities, fallback_keyword=sub.disease_keyword)
+        else:
+            # 旧订阅没有 entities → 退回原行为
+            pairs = [(source, sub.disease_keyword) for source in RADAR_SEARCH_SOURCES]
+
         return self.search_client.search_multi_queries(pairs, max_results_per_source=10)
 
     def _validate_channel(self, channel: str) -> None:
