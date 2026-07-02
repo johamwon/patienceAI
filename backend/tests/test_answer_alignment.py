@@ -1,6 +1,9 @@
 from agents.core.simplification_loop import SimplificationLoop
 from backend.app.services.answer_alignment import (
     analyze_query_focus,
+    build_query_with_clarifications,
+    is_latest_focused_query,
+    rank_latest_evidences,
     rerank_evidences_for_query,
     score_evidence_relevance,
 )
@@ -53,6 +56,49 @@ def test_rerank_prioritizes_treatment_relevant_evidence():
     assert score_evidence_relevance(treatment, focus) > score_evidence_relevance(generic, focus)
     ranked = rerank_evidences_for_query([generic, treatment], focus)
     assert ranked[0]["id"] == "treatment"
+
+
+def test_clarification_answers_are_merged_into_query_context():
+    query = "朋友父亲得了阿尔兹海默症，有没有最新的治疗方案"
+    combined = build_query_with_clarifications(
+        query,
+        [
+            {
+                "question": "目前诊断处于轻度、中度还是重度？",
+                "answer": "医生说是轻度阿尔茨海默病",
+            },
+            {
+                "question": "现在是否正在使用相关药物？",
+                "answer": "正在用多奈哌齐",
+            },
+        ],
+    )
+
+    assert query in combined
+    assert "用户补充信息" in combined
+    assert "轻度阿尔茨海默病" in combined
+    assert "多奈哌齐" in combined
+
+
+def test_latest_query_ranking_prefers_recent_relevant_sources():
+    focus = analyze_query_focus("阿尔兹海默症有没有最新的治疗方案")
+    older_generic = {
+        "id": "older",
+        "source_type": "paper_cn",
+        "title": "阿尔茨海默病诊断流程综述",
+        "publish_date": "2018-01-01",
+    }
+    recent_trial = {
+        "id": "recent_trial",
+        "source_type": "trial",
+        "title": "阿尔茨海默病新疗法临床试验2026",
+        "abstract": "治疗、药物和新进展。",
+        "publish_date": "2026-03-01",
+    }
+
+    assert is_latest_focused_query(focus)
+    ranked = rank_latest_evidences([older_generic, recent_trial], focus)
+    assert ranked[0]["id"] == "recent_trial"
 
 
 def test_simplification_fallback_conclusion_answers_latest_treatment():

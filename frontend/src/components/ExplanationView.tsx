@@ -62,7 +62,6 @@ export default function ExplanationView({
     data.layer2_evidence_cards.length +
     data.research_progress.length +
     data.trial_cards.length;
-  const clarificationQuestions = data.clarification_questions?.filter((q) => q.trim()) ?? [];
 
   return (
     <div className="explanation-view">
@@ -93,17 +92,6 @@ export default function ExplanationView({
               参考：{data.layer1_conclusion.citations.map((c) => `PMID:${c}`).join("、")}
             </p>
           )}
-        </section>
-      )}
-
-      {clarificationQuestions.length > 0 && (
-        <section className="clarification-panel" aria-label="补充问题">
-          <h2>补充这些信息会更精准</h2>
-          <ul>
-            {clarificationQuestions.map((question) => (
-              <li key={question}>{question}</li>
-            ))}
-          </ul>
         </section>
       )}
 

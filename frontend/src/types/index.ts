@@ -21,6 +21,18 @@ export type SearchResponse = {
   total: number;
 };
 
+export type ClarificationAnswer = {
+  question: string;
+  answer: string;
+};
+
+export type ClarifyResponse = {
+  needs_clarification: boolean;
+  questions: string[];
+  intent?: string;
+  disease?: string;
+};
+
 export type EmotionState = "panic" | "anxiety" | "despair" | "urgent" | "calm";
 
 export type TrialCard = {

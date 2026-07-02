@@ -22,8 +22,10 @@ from backend.app.api.search import (
     _publish_date_sort_key,
     DEFAULT_SOURCES,
     INTENT_TO_SOURCES,
+    LATEST_RESEARCH_SOURCES,
     RARE_SEVERE_SOURCES,
 )
+from backend.app.services.answer_alignment import analyze_query_focus
 from backend.app.models.schemas import Evidence
 
 
@@ -84,6 +86,12 @@ def test_select_sources_rare_severe_returns_copy_not_shared_ref():
     sources = select_sources(make_parsed(rare=True))
     sources.append("__mutated__")
     assert "__mutated__" not in RARE_SEVERE_SOURCES
+
+
+def test_select_sources_latest_treatment_uses_latest_research_sources():
+    parsed = make_parsed(intent="treatment_progress")
+    focus = analyze_query_focus("朋友父亲得了阿尔兹海默症，有没有最新的治疗方案")
+    assert select_sources(parsed, focus) == list(LATEST_RESEARCH_SOURCES)
 
 
 # ═════════════════════════════════════════════════════════════════════════════

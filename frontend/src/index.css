@@ -400,6 +400,92 @@ a {
 }
 
 /* =====================================================================
+   Clarification Flow 逐题追问
+   ===================================================================== */
+.clarification-flow {
+  max-width: var(--content-width);
+  margin: var(--space-5) auto;
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--teal-200);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.clarification-flow-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--primary-dark);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+.clarification-flow-header strong {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  background: var(--primary-tint);
+  border: 1px solid var(--teal-100);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+}
+
+.clarification-flow-question {
+  margin-bottom: var(--space-4);
+  color: var(--ink-900);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.clarification-flow-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.clarification-flow-input input {
+  min-width: 0;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  background: #fff;
+  font-size: var(--fs-base);
+}
+
+.clarification-flow-input input::placeholder {
+  color: var(--text-muted);
+}
+
+.clarification-flow-input button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--primary-dark);
+  color: #fff;
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.clarification-flow-input button:hover:not(:disabled) {
+  background: var(--primary);
+}
+
+.clarification-flow-input button:disabled {
+  background: #cdd8d5;
+  cursor: not-allowed;
+}
+
+/* =====================================================================
    Research Radar 研究雷达订阅
    ===================================================================== */
 .radar-dashboard {
@@ -1693,6 +1779,23 @@ a {
   .demo-btn {
     font-size: var(--fs-xs);
     padding: 6px 12px;
+  }
+
+  .clarification-flow {
+    margin: var(--space-4) var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .clarification-flow-question {
+    font-size: var(--fs-md);
+  }
+
+  .clarification-flow-input {
+    grid-template-columns: 1fr;
+  }
+
+  .clarification-flow-input button {
+    width: 100%;
   }
 
   .evidence-list,

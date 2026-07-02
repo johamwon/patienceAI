@@ -10,6 +10,12 @@ import re
 
 from fastapi import APIRouter, HTTPException
 from ..models.schemas import SearchRequest, SearchResponse, Evidence
+from ..services.answer_alignment import (
+    analyze_query_focus,
+    build_query_with_clarifications,
+    is_latest_focused_query,
+    rerank_evidences_for_query,
+)
 from ..services.knows_client import knows_client
 from ..services.intent_classifier import parse_query
 from ..services.query_rewriter import rewrite_query
@@ -21,6 +27,9 @@ DEFAULT_SOURCES = ["paper_en", "paper_cn", "guide"]
 
 # 罕见病/重症专门检索源：优先前沿源 + 至少一类 guide 交叉佐证（R10.1 / R10.3）
 RARE_SEVERE_SOURCES = ["trial", "meeting", "paper_en", "guide"]
+
+# “最新研究/最新治疗”需要优先看近期会议、临床试验、指南更新和近年论文。
+LATEST_RESEARCH_SOURCES = ["meeting", "trial", "guide", "paper_en", "paper_cn"]
 
 # 意图 → 检索源映射（作为 LLM 重写建议的后备）
 INTENT_TO_SOURCES = {
@@ -44,7 +53,7 @@ SOURCE_DISPLAY_NAMES = {
 }
 
 
-def select_sources(parsed: dict) -> list[str]:
+def select_sources(parsed: dict, focus=None) -> list[str]:
     """
     根据查询解析结果选择检索源（纯函数，便于单测）。
 
@@ -52,6 +61,8 @@ def select_sources(parsed: dict) -> list[str]:
       优先返回前沿源 trial + meeting + paper_en，并保留 guide 用于交叉佐证。
     - 否则按 intent 从 INTENT_TO_SOURCES 选源，未知意图回退 DEFAULT_SOURCES。
     """
+    if focus is not None and is_latest_focused_query(focus):
+        return list(LATEST_RESEARCH_SOURCES)
     if parsed.get("rare_disease") or parsed.get("severe_condition"):
         return list(RARE_SEVERE_SOURCES)
     return INTENT_TO_SOURCES.get(parsed.get("intent"), DEFAULT_SOURCES)
@@ -95,7 +106,7 @@ def _publish_date_sort_key(evidence: Any) -> tuple[int, int, int, int]:
     return (0, 0, 0, 0)
 
 
-def sort_evidences(evidences: list, parsed: dict) -> list:
+def sort_evidences(evidences: list, parsed: dict, focus=None) -> list:
     """
     根据查询解析结果排序证据（纯函数，便于单测）。
 
@@ -108,6 +119,9 @@ def sort_evidences(evidences: list, parsed: dict) -> list:
     """
     if not evidences:
         return evidences
+    if focus is not None and is_latest_focused_query(focus):
+        normalized = [ev if isinstance(ev, dict) else ev.model_dump() for ev in evidences]
+        return rerank_evidences_for_query(normalized, focus)
     if parsed.get("rare_disease") or parsed.get("severe_condition"):
         # 稳定排序：has_date=0（缺失）的排序键最小，reverse 后落到末尾
         return sorted(evidences, key=_publish_date_sort_key, reverse=True)
@@ -141,19 +155,23 @@ async def search_evidence(req: SearchRequest):
     - 返回结构化证据列表
     """
     # 1. 意图识别（含 rare_disease / severe_condition 标记）
-    parsed = parse_query(req.query)
+    effective_query = build_query_with_clarifications(req.query, req.clarification_answers)
+    focus = analyze_query_focus(effective_query)
+    parsed = parse_query(effective_query)
     is_rare_severe = bool(parsed.get("rare_disease") or parsed.get("severe_condition"))
 
     # 2. 查询重写：提取医学术语 + 英文翻译
-    rewrite_result = rewrite_query(req.query)
+    rewrite_result = rewrite_query(effective_query)
     print(f"[QueryRewrite] CN: '{rewrite_result.medical_terms_cn}' | EN: '{rewrite_result.medical_terms_en}'")
 
     # 3. 智能源选择
     #    用户显式指定 > 罕见病/重症专门源（R9.5/R10.1/R10.3）> 意图映射 + 重写建议融合
     if req.sources:
         sources = req.sources
+    elif is_latest_focused_query(focus):
+        sources = select_sources(parsed, focus)
     elif is_rare_severe:
-        sources = select_sources(parsed)
+        sources = select_sources(parsed, focus)
     else:
         intent_sources = INTENT_TO_SOURCES.get(parsed["intent"], list(DEFAULT_SOURCES))
         rewrite_sources = rewrite_result.suggested_sources
@@ -174,7 +192,7 @@ async def search_evidence(req: SearchRequest):
             raise HTTPException(status_code=502, detail=f"KnowS AI 检索失败: {str(e)}")
 
     # 4c. 排序：罕见病/重症时按发表时间降序（R10.2），否则保留现有顺序
-    evidences = sort_evidences(evidences, parsed)
+    evidences = sort_evidences(evidences, parsed, focus)
 
     # 5. 构造响应
     return SearchResponse(

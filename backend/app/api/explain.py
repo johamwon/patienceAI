@@ -18,10 +18,23 @@ import asyncio
 import json
 
 from fastapi import APIRouter, HTTPException
-from ..models.schemas import ExplainRequest, ExplainResponse, EmotionState, TrialCard, SubscriptionOffer
+from ..models.schemas import (
+    ClarifyRequest,
+    ClarifyResponse,
+    ExplainRequest,
+    ExplainResponse,
+    EmotionState,
+    TrialCard,
+    SubscriptionOffer,
+)
 from ..services.llm_client import llm_client
 from ..services.cache_service import cache_service, start_background_refresh
 from ..services.query_rewriter import rewrite_query
+from ..services.answer_alignment import (
+    analyze_query_focus,
+    build_query_with_clarifications,
+    has_clarification_answers,
+)
 import traceback
 
 router = APIRouter()
@@ -156,6 +169,19 @@ def _contains_prompt_leak(data) -> bool:
     return any(marker in text for marker in _PROMPT_LEAK_MARKERS)
 
 
+@router.post("/clarify", response_model=ClarifyResponse)
+async def clarify_query(req: ClarifyRequest):
+    """正式检索前判断是否需要逐题追问。"""
+    focus = analyze_query_focus(req.query)
+    questions = focus.clarification_questions
+    return ClarifyResponse(
+        needs_clarification=bool(questions),
+        questions=questions,
+        intent=focus.intent,
+        disease=focus.disease or None,
+    )
+
+
 @router.post("/explain", response_model=ExplainResponse)
 async def explain_evidence(req: ExplainRequest):
     """
@@ -174,21 +200,25 @@ async def explain_evidence(req: ExplainRequest):
     from ..services.session_memory import session_store, SessionTurn
     from ..services.companion_engine import generate_companion_message
     from ..services.research_stage import to_research_progress, validate_nct
-    from ..services.answer_alignment import analyze_query_focus, rerank_evidences_for_query
+    from ..services.answer_alignment import rerank_evidences_for_query
     from .search import select_sources, sort_evidences
     from agents.core.simplification_loop import SimplificationLoop
     from agents.demo_scenarios import get_demo_scenario
 
     try:
+        effective_query = build_query_with_clarifications(req.query, req.clarification_answers)
+        has_answers = has_clarification_answers(req.clarification_answers)
+        query_focus = analyze_query_focus(effective_query)
+        pending_questions = [] if has_answers else query_focus.clarification_questions
+
         # 1. 情绪识别（R2.5）与 查询重写（检索前置）——两者互不依赖，并发执行。
         #    detect_emotion / rewrite_query 都是含 LLM 的同步函数，用 to_thread 包裹后
         #    asyncio.gather 并发，省去一次串行 LLM 往返。两者都需在检索前完成
         #    （emotion 用于急症联动/陪伴，rewrite 用于选源），故在此处一起算好。
         emotion, rewrite_result = await asyncio.gather(
-            asyncio.to_thread(detect_emotion, req.query, llm_client),
-            asyncio.to_thread(rewrite_query, req.query),
+            asyncio.to_thread(detect_emotion, effective_query, llm_client),
+            asyncio.to_thread(rewrite_query, effective_query),
         )
-        query_focus = analyze_query_focus(req.query)
 
         # 2. 会话记忆（R4）：有 session_id 才读写；append 本轮，再取最近 N 轮做 history
         history = []
@@ -196,7 +226,7 @@ async def explain_evidence(req: ExplainRequest):
             session_store.append(
                 req.session_id,
                 SessionTurn(
-                    query=req.query,
+                    query=effective_query,
                     emotion=emotion.value,
                     timestamp=datetime.now().isoformat(),
                 ),
@@ -204,20 +234,20 @@ async def explain_evidence(req: ExplainRequest):
             history = session_store.recent(req.session_id, _HISTORY_TURNS)
 
         # 3. 尝试从缓存获取（跳过空证据缓存；命中时补齐情绪/陪伴等会话相关字段）
-        cached_result = cache_service.get(req.query, max_results=5)
+        cached_result = cache_service.get(effective_query, max_results=5)
         if (
             cached_result is not None
             and query_focus.intent in {"latest_treatment", "clinical_trial", "drug_info"}
             and "clarification_questions" not in cached_result
         ):
             print(f"[Cache] 跳过旧版缓存，重新生成问题对齐答案: {req.query[:30]}...")
-            cache_service.delete(req.query, max_results=5)
+            cache_service.delete(effective_query, max_results=5)
             cached_result = None
         if cached_result is not None and (
             _is_empty_evidence_cache(cached_result) or _contains_prompt_leak(cached_result)
         ):
             print(f"[Cache] 跳过不可用缓存，重新检索: {req.query[:30]}...")
-            cache_service.delete(req.query, max_results=5)
+            cache_service.delete(effective_query, max_results=5)
             cached_result = None
         if cached_result is not None:
             print(f"[Cache] 缓存命中: {req.query[:30]}...")
@@ -232,21 +262,21 @@ async def explain_evidence(req: ExplainRequest):
             )
             result.risk_level = risk_level
             result.risk_message = risk_message
-            result.clarification_questions = query_focus.clarification_questions
+            result.clarification_questions = pending_questions
             evidence_dicts = [
                 c.model_dump() if hasattr(c, "model_dump") else c
                 for c in (result.layer2_evidence_cards or [])
             ]
             result.companion_message = await generate_companion_message(
-                req.query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
+                effective_query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
             )
-            result.subscription_offer = _build_subscription_offer(req.query)
+            result.subscription_offer = _build_subscription_offer(effective_query)
             return _apply_compliance_gate(result)
 
         print(f"[Cache] 缓存未命中，开始生成: {req.query[:30]}...")
 
         # 4. 意图识别（含 rare_disease / severe_condition 标记）
-        parsed = parse_query(req.query)
+        parsed = parse_query(effective_query)
         risk_level = parsed["risk_level"]
         risk_message = parsed.get("risk_message")
 
@@ -255,9 +285,9 @@ async def explain_evidence(req: ExplainRequest):
 
         # 6. 检索路由（R9.5）：罕见病/重症优先前沿源；否则意图映射 + 重写建议融合
         if parsed.get("rare_disease") or parsed.get("severe_condition"):
-            sources = select_sources(parsed)
+            sources = select_sources(parsed, query_focus)
         else:
-            intent_sources = select_sources(parsed)
+            intent_sources = select_sources(parsed, query_focus)
             rewrite_sources = rewrite_result.suggested_sources
             sources = list(dict.fromkeys(intent_sources + rewrite_sources))
 
@@ -276,7 +306,7 @@ async def explain_evidence(req: ExplainRequest):
 
         # 8. 如果 KnowS 无结果，尝试匹配演示场景
         if not evidences:
-            demo = get_demo_scenario(req.query)
+            demo = get_demo_scenario(effective_query)
             if demo:
                 evidences = demo["evidences"]
                 if demo.get("risk_level"):
@@ -284,7 +314,7 @@ async def explain_evidence(req: ExplainRequest):
                 print(f"[INFO] Using demo scenario: {demo['id']}")
 
         # 9. 排序（罕见病/重症按发表时间降序，否则保持原序）
-        evidences = sort_evidences(evidences, parsed)
+        evidences = sort_evidences(evidences, parsed, query_focus)
 
         # 10. 急症联动（R2.4）：URGENT 时强制提升 risk_level 并注入就医提示
         risk_level, risk_message = _apply_urgent_escalation(
@@ -299,7 +329,7 @@ async def explain_evidence(req: ExplainRequest):
         # 11. 仍然无证据：返回空结果路径（仍带情绪/陪伴/风险字段；不缓存空结果）
         if not evidences:
             companion_message = await generate_companion_message(
-                req.query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
+                effective_query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
             )
             result = ExplainResponse(
                 layer1_conclusion={
@@ -320,8 +350,8 @@ async def explain_evidence(req: ExplainRequest):
                 emotion_state=emotion.value,
                 trial_cards=[],
                 research_progress=[],
-                clarification_questions=query_focus.clarification_questions,
-                subscription_offer=_build_subscription_offer(req.query),
+                clarification_questions=pending_questions,
+                subscription_offer=_build_subscription_offer(effective_query),
             )
             # 不缓存空结果——下次重试时可能检索成功
             return _apply_compliance_gate(result)
@@ -332,9 +362,9 @@ async def explain_evidence(req: ExplainRequest):
         #     急症联动已在第 10 步完成，companion 拿到的是提升后的 risk_level/risk_message。
         loop = SimplificationLoop(llm_client=llm_client, max_iterations=2)
         loop_result, companion_message = await asyncio.gather(
-            loop.run(evidence_dicts, req.query),
+            loop.run(evidence_dicts, effective_query),
             generate_companion_message(
-                req.query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
+                effective_query, emotion, evidence_dicts, risk_level, risk_message, history, llm_client
             ),
         )
 
@@ -358,12 +388,12 @@ async def explain_evidence(req: ExplainRequest):
             emotion_state=emotion.value,
             trial_cards=trial_cards,
             research_progress=research_progress,
-            clarification_questions=query_focus.clarification_questions,
-            subscription_offer=_build_subscription_offer(req.query),
+            clarification_questions=pending_questions,
+            subscription_offer=_build_subscription_offer(effective_query),
         )
 
         # 16. 写入缓存（仅缓存有证据的结果）
-        cache_service.set(req.query, result.model_dump(), max_results=5)
+        cache_service.set(effective_query, result.model_dump(), max_results=5)
         print(f"[Cache] 已缓存: {req.query[:30]}...")
         return _apply_compliance_gate(result)
 

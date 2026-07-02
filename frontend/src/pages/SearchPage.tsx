@@ -1,6 +1,11 @@
 import { useState, useRef, FormEvent } from "react";
-import { searchEvidence, explainEvidence, getVisitPrep } from "../api";
-import type { SearchResponse, ExplainResponse, VisitPrepResponse } from "../types";
+import { clarifyQuery, searchEvidence, explainEvidence, getVisitPrep } from "../api";
+import type {
+  ClarificationAnswer,
+  SearchResponse,
+  ExplainResponse,
+  VisitPrepResponse,
+} from "../types";
 import EvidenceList from "../components/EvidenceList";
 import ExplanationView from "../components/ExplanationView";
 import Mascot from "../components/Mascot";
@@ -70,6 +75,12 @@ export default function SearchPage() {
   const [error, setError] = useState<string | null>(null);
   const [isDemo, setIsDemo] = useState(false);
   const [showDiseaseSelector, setShowDiseaseSelector] = useState(false);
+  const [clarifying, setClarifying] = useState(false);
+  const [clarificationQuestions, setClarificationQuestions] = useState<string[]>([]);
+  const [clarificationIndex, setClarificationIndex] = useState(0);
+  const [clarificationInput, setClarificationInput] = useState("");
+  const [clarificationAnswers, setClarificationAnswers] = useState<ClarificationAnswer[]>([]);
+  const [pendingQuery, setPendingQuery] = useState("");
 
   // 会话 id：组件首次挂载时生成一次，在整个页面会话内保持稳定，
   // 让后端会话记忆（Session_Memory）能够跨多次查询累积（R4）。
@@ -86,38 +97,115 @@ export default function SearchPage() {
   const [visitPrepLoading, setVisitPrepLoading] = useState(false);
   const [visitPrepError, setVisitPrepError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-
-    setLoading(true);
+  const resetResults = () => {
     setError(null);
     setSearchResult(null);
     setExplanation(null);
-    // 新一次搜索时重置就医准备包状态
     setVisitPrep(null);
     setVisitPrepError(null);
     setVisitPrepLoading(false);
+  };
+
+  const resetClarification = () => {
+    setClarifying(false);
+    setClarificationQuestions([]);
+    setClarificationIndex(0);
+    setClarificationInput("");
+    setClarificationAnswers([]);
+    setPendingQuery("");
+  };
+
+  const buildQueryForPrep = (baseQuery: string, answers: ClarificationAnswer[]) => {
+    const details = answers
+      .filter((item) => item.answer.trim())
+      .map((item) => `- ${item.question}：${item.answer.trim()}`)
+      .join("\n");
+    return details ? `${baseQuery}\n\n用户补充信息：\n${details}` : baseQuery;
+  };
+
+  const runSearchAndExplain = async (
+    baseQuery: string,
+    answers: ClarificationAnswer[] = []
+  ) => {
+    setLoading(true);
+    setError(null);
 
     try {
-      const searchRes = await searchEvidence(query);
+      const searchRes = await searchEvidence(baseQuery, 20, answers);
       setSearchResult(searchRes);
       setIsDemo(searchRes.evidences.length === 0);
 
       const explainRes = await explainEvidence(
-        query,
+        baseQuery,
         searchRes.evidences.slice(0, 5).map((e: { id: string }) => e.id),
-        sessionIdRef.current
+        sessionIdRef.current,
+        answers
       );
       setExplanation(explainRes);
 
       // 方案A：核心答案返回后，自动异步补上就医准备包，不阻塞主答案展示。
-      void fetchVisitPrep(query);
+      void fetchVisitPrep(buildQueryForPrep(baseQuery, answers));
     } catch (err: any) {
       setError(err.message || "发生错误，请重试");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const submittedQuery = query.trim();
+    if (!submittedQuery) return;
+
+    resetResults();
+    resetClarification();
+    setLoading(true);
+
+    try {
+      const clarification = await clarifyQuery(submittedQuery);
+      const questions = clarification.questions.filter((item) => item.trim());
+      if (clarification.needs_clarification && questions.length > 0) {
+        setPendingQuery(submittedQuery);
+        setClarificationQuestions(questions);
+        setClarificationIndex(0);
+        setClarificationAnswers([]);
+        setClarificationInput("");
+        setClarifying(true);
+        setLoading(false);
+        return;
+      }
+    } catch (err: any) {
+      setError(err.message || "追问生成失败，请重试");
+      setLoading(false);
+      return;
+    }
+
+    await runSearchAndExplain(submittedQuery, []);
+  };
+
+  const handleClarificationSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const answer = clarificationInput.trim();
+    const question = clarificationQuestions[clarificationIndex];
+    if (!answer || !question) {
+      setError("请先回答当前问题，再继续生成答案。");
+      return;
+    }
+
+    setError(null);
+    const nextAnswers = [...clarificationAnswers, { question, answer }];
+    setClarificationAnswers(nextAnswers);
+
+    const nextIndex = clarificationIndex + 1;
+    if (nextIndex < clarificationQuestions.length) {
+      setClarificationIndex(nextIndex);
+      setClarificationInput("");
+      return;
+    }
+
+    setClarifying(false);
+    setClarificationInput("");
+    await runSearchAndExplain(pendingQuery || query.trim(), nextAnswers);
   };
 
   // 自动获取就医准备包：失败时只设错误态、不抛出，避免影响主答案（方案A）。
@@ -171,10 +259,10 @@ export default function SearchPage() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="输入你看不懂的报告、检查指标、药名或治疗问题"
             className="search-input"
-            disabled={loading}
+            disabled={loading || clarifying}
           />
-          <button type="submit" disabled={loading || !query.trim()}>
-            {loading ? "检索中..." : "搜索"}
+          <button type="submit" disabled={loading || clarifying || !query.trim()}>
+            {loading ? "处理中..." : "搜索"}
           </button>
         </div>
       </form>
@@ -201,7 +289,7 @@ export default function SearchPage() {
                     key={q}
                     className="disease-btn"
                     onClick={() => handleDiseaseClick(q)}
-                    disabled={loading}
+                    disabled={loading || clarifying}
                   >
                     {q}
                   </button>
@@ -220,7 +308,7 @@ export default function SearchPage() {
             key={q}
             className="demo-btn"
             onClick={() => handleDemoClick(q)}
-            disabled={loading}
+            disabled={loading || clarifying}
           >
             {q}
           </button>
@@ -234,6 +322,33 @@ export default function SearchPage() {
       )}
 
       {error && <div className="error-message">{error}</div>}
+
+      {clarifying && clarificationQuestions.length > 0 && (
+        <form className="clarification-flow" onSubmit={handleClarificationSubmit}>
+          <div className="clarification-flow-header">
+            <span>补充信息</span>
+            <strong>
+              {clarificationIndex + 1}/{clarificationQuestions.length}
+            </strong>
+          </div>
+          <p className="clarification-flow-question">
+            {clarificationQuestions[clarificationIndex]}
+          </p>
+          <div className="clarification-flow-input">
+            <input
+              type="text"
+              value={clarificationInput}
+              onChange={(e) => setClarificationInput(e.target.value)}
+              placeholder="请输入你的补充信息"
+              autoFocus
+              disabled={loading}
+            />
+            <button type="submit" disabled={loading || !clarificationInput.trim()}>
+              {clarificationIndex + 1 === clarificationQuestions.length ? "生成答案" : "下一题"}
+            </button>
+          </div>
+        </form>
+      )}
 
       {searchResult && !explanation && (
         <div className="loading-explanation">

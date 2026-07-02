@@ -31,6 +31,10 @@ class SearchRequest(BaseModel):
         default=None,
         description="指定检索源: paper_en, paper_cn, guide, trial, meeting, package_insert",
     )
+    clarification_answers: list["ClarificationAnswer"] = Field(
+        default_factory=list,
+        description="用户在正式生成答案前回答的追问信息",
+    )
 
 
 class SearchResponse(BaseModel):
@@ -45,6 +49,23 @@ class ExplainRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=2000)
     evidence_ids: Optional[list[str]] = Field(default=None, description="指定要解释的证据ID列表")
     session_id: Optional[str] = None
+    clarification_answers: list["ClarificationAnswer"] = Field(default_factory=list)
+
+
+class ClarificationAnswer(BaseModel):
+    question: str
+    answer: str
+
+
+class ClarifyRequest(BaseModel):
+    query: str = Field(..., min_length=1, max_length=2000)
+
+
+class ClarifyResponse(BaseModel):
+    needs_clarification: bool
+    questions: list[str] = Field(default_factory=list)
+    intent: Optional[str] = None
+    disease: Optional[str] = None
 
 
 class LayerOneConclusion(BaseModel):

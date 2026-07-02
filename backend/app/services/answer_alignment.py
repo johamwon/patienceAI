@@ -7,7 +7,9 @@
 """
 
 from dataclasses import dataclass, field
+from datetime import date
 import re
+from typing import Any
 
 
 @dataclass(frozen=True)
@@ -68,6 +70,14 @@ _TRIAL_TERMS = ["临床试验", "招募", "入组", "NCT", "试验"]
 _DRUG_TERMS = ["药物", "新药", "用药", "副作用", "不良反应", "剂量"]
 _TEST_TERMS = ["检查", "化验", "指标", "报告", "CT", "MRI", "PET"]
 _THIRD_PARTY_TERMS = ["朋友", "父亲", "母亲", "爸爸", "妈妈", "家人", "亲人", "老人", "孩子"]
+_LATEST_SOURCE_PRIORITY = {
+    "meeting": 6,
+    "trial": 5,
+    "guide": 4,
+    "paper_en": 3,
+    "paper_cn": 2,
+    "package_insert": 1,
+}
 
 
 def analyze_query_focus(query: str) -> QueryFocus:
@@ -101,6 +111,80 @@ def analyze_query_focus(query: str) -> QueryFocus:
         keywords_cn=keywords,
         clarification_questions=questions,
     )
+
+
+def has_clarification_answers(answers: Any) -> bool:
+    """用户是否已经回答过至少一个有效追问。"""
+    if not answers:
+        return False
+    for item in answers:
+        answer = _answer_value(item, "answer")
+        if answer.strip():
+            return True
+    return False
+
+
+def format_clarification_context(answers: Any) -> str:
+    """把前端逐题追问得到的回答整理成可放入检索/回答上下文的文本。"""
+    if not answers:
+        return ""
+
+    lines: list[str] = []
+    for item in answers:
+        question = _answer_value(item, "question")
+        answer = _answer_value(item, "answer")
+        if not answer.strip():
+            continue
+        if question.strip():
+            lines.append(f"- {question.strip()}：{answer.strip()}")
+        else:
+            lines.append(f"- {answer.strip()}")
+    return "\n".join(lines)
+
+
+def build_query_with_clarifications(query: str, answers: Any) -> str:
+    """将原始问题和用户已回答的追问信息合并，供检索重写、排序和生成使用。"""
+    base = (query or "").strip()
+    context = format_clarification_context(answers)
+    if not context:
+        return base
+    return f"{base}\n\n用户补充信息：\n{context}"
+
+
+def is_latest_focused_query(focus: QueryFocus) -> bool:
+    """是否应把检索重点放在近期研究、指南、会议和临床试验上。"""
+    return focus.intent == "latest_treatment" or focus.treatment_angle in {
+        "最新治疗方案",
+        "最新研究进展",
+    }
+
+
+def latest_source_priority(source_type: str) -> int:
+    return _LATEST_SOURCE_PRIORITY.get((source_type or "").lower(), 0)
+
+
+def rank_latest_evidences(evidences: list[dict], focus: QueryFocus) -> list[dict]:
+    """最新研究类问题：相关性优先，近期证据和前沿源靠前。"""
+    if not evidences:
+        return evidences
+    indexed = list(enumerate(evidences))
+    ranked = sorted(
+        indexed,
+        key=lambda item: (
+            score_evidence_relevance(item[1], focus),
+            _recentness_score(item[1]),
+            latest_source_priority(str(item[1].get("source_type") or "")),
+            -item[0],
+        ),
+        reverse=True,
+    )
+    return [item for _idx, item in ranked]
+
+
+def _answer_value(item: Any, key: str) -> str:
+    if isinstance(item, dict):
+        return str(item.get(key) or "")
+    return str(getattr(item, key, "") or "")
 
 
 def _detect_disease(query: str) -> str:
@@ -204,6 +288,7 @@ def score_evidence_relevance(evidence: dict, focus: QueryFocus) -> int:
             score += 4
         if any(term in text for term in ["2024", "2025", "2026", "最新", "新进展"]):
             score += 3
+        score += _recentness_score(evidence)
     elif focus.intent == "clinical_trial":
         if source_type == "trial":
             score += 8
@@ -214,10 +299,39 @@ def score_evidence_relevance(evidence: dict, focus: QueryFocus) -> int:
     return score
 
 
+def _recentness_score(evidence: dict) -> int:
+    pub = evidence.get("publish_date") if isinstance(evidence, dict) else None
+    if pub is None:
+        return 0
+
+    year = getattr(pub, "year", None)
+    if year is None:
+        match = re.search(r"(20\d{2})", str(pub))
+        if not match:
+            return 0
+        try:
+            year = int(match.group(1))
+        except ValueError:
+            return 0
+
+    current_year = date.today().year
+    if year >= current_year:
+        return 6
+    if year == current_year - 1:
+        return 5
+    if year == current_year - 2:
+        return 4
+    if year == current_year - 3:
+        return 2
+    return 0
+
+
 def rerank_evidences_for_query(evidences: list[dict], focus: QueryFocus) -> list[dict]:
     """按问题相关性稳定重排证据；同分时保持原顺序。"""
     if not evidences:
         return evidences
+    if is_latest_focused_query(focus):
+        return rank_latest_evidences(evidences, focus)
     indexed = list(enumerate(evidences))
     ranked = sorted(
         indexed,
