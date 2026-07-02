@@ -1,9 +1,7 @@
-from pathlib import Path
-
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 import os
@@ -24,14 +22,6 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 settings = Settings()
-FRONTEND_DIST_DIR = Path(os.getenv("FRONTEND_DIST_DIR", "")).resolve() if os.getenv("FRONTEND_DIST_DIR") else None
-
-
-def _frontend_index_path() -> Path | None:
-    if not FRONTEND_DIST_DIR:
-        return None
-    index = FRONTEND_DIST_DIR / "index.html"
-    return index if index.exists() else None
 
 # ─── App ────────────────────────────────────────────────────────────────────
 
@@ -51,36 +41,23 @@ app.add_middleware(
 
 # ─── Health ─────────────────────────────────────────────────────────────────
 
-@app.get("/")
-async def root():
-    index = _frontend_index_path()
-    if index:
-        return FileResponse(index)
-    return {
-        "name": "医语桥 API",
-        "version": "0.1.0",
-        "docs": "/docs",
-        "health": "/health",
-    }
-
 @app.get("/health")
 async def health():
     return {"status": "ok", "env": settings.app_env}
 
 # ─── API Routes ─────────────────────────────────────────────────────────────
 
-from .api import search, explain, evaluate, visit_prep
+from .api import search, explain, evaluate, visit_prep, radar
 from .services.cache_service import cache_service
+from .services.radar.patrol import start_daily_patrol
 
 app.include_router(search.router, prefix="/api/v1", tags=["search"])
 app.include_router(explain.router, prefix="/api/v1", tags=["explain"])
 app.include_router(evaluate.router, prefix="/api/v1", tags=["evaluate"])
 app.include_router(visit_prep.router, prefix="/api/v1", tags=["visit-prep"])
+app.include_router(radar.router, prefix="/api/v1", tags=["radar"])
 
-if FRONTEND_DIST_DIR and FRONTEND_DIST_DIR.exists():
-    assets_dir = FRONTEND_DIST_DIR / "assets"
-    if assets_dir.exists():
-        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="frontend-assets")
+start_daily_patrol()
 
 # ─── Cache Management ────────────────────────────────────────────────────────
 
@@ -104,18 +81,31 @@ async def cache_delete(query: str):
     return {"message": f"已删除缓存: {query}"}
 
 
-@app.get("/{full_path:path}", include_in_schema=False)
-async def frontend_spa(full_path: str):
-    """ModelScope Docker 部署时托管前端单页应用。"""
-    index = _frontend_index_path()
-    if not index:
-        raise HTTPException(status_code=404, detail="Not Found")
-    candidate = (FRONTEND_DIST_DIR / full_path).resolve()
-    if (
-        FRONTEND_DIST_DIR
-        and str(candidate).startswith(str(FRONTEND_DIST_DIR))
-        and candidate.exists()
-        and candidate.is_file()
-    ):
-        return FileResponse(candidate)
-    return FileResponse(index)
+# ─── 前端静态托管（单容器部署：FastAPI 同时托管前端 dist）─────────────────────
+# 使用 pathlib 可靠地解析路径，支持多种部署场景
+from pathlib import Path
+
+_POSSIBLE_FRONTEND_DIST = [
+    # 容器部署：WORKDIR=/app, 文件结构 /app/backend/app/main.py, /app/frontend/dist
+    Path(__file__).resolve().parent.parent.parent / "frontend" / "dist",
+    # 本地开发：从 backend/app/main.py 向上 3 级到项目根
+    Path(__file__).resolve().parent.parent.parent.parent / "frontend" / "dist",
+]
+
+_FRONTEND_DIST = None
+for _candidate in _POSSIBLE_FRONTEND_DIST:
+    if _candidate.is_dir() and (_candidate / "index.html").exists():
+        _FRONTEND_DIST = _candidate
+        break
+
+if _FRONTEND_DIST:
+    # 托管 /assets 等静态资源
+    app.mount("/assets", StaticFiles(directory=str(_FRONTEND_DIST / "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def spa_fallback(full_path: str):
+        """SPA 兜底：非 API 路由一律返回 index.html，交给前端路由处理"""
+        candidate = _FRONTEND_DIST / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(str(candidate))
+        return FileResponse(str(_FRONTEND_DIST / "index.html"))

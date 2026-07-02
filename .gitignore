@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 venv/
 .env
+.modelscope_token
 node_modules/
 dist/
 build/
@@ -27,3 +28,11 @@ backend/app/services/radar/data/
 
 # 本地任务过程记录，可能包含临时命令或密钥片段
 .kiro/specs/todo.md
+.kiro/settings/
+
+# TRAE 工作目录
+.trae/
+
+# 临时调试脚本
+test_knows_debug*.py
+test_loop.bat

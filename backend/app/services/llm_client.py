@@ -6,6 +6,7 @@ LLM 调用封装
 
 import os
 import re
+import json
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential
 from typing import Optional
@@ -131,11 +132,38 @@ class LLMClient:
         """Demo 模式：无 API Key 时返回模拟响应"""
         # 合并所有消息内容进行判断
         all_content = " ".join(m.get("content", "") for m in messages).lower()
-        
+
+        if "暖场白" in all_content or "小光" in all_content and "只输出" in all_content:
+            return (
+                "我知道你是想把这件事弄清楚，这种担心很正常。"
+                "我会先把目前能找到的公开研究信息整理成容易理解的话，也会把不确定的地方说清楚，"
+                "方便你之后和医生进一步核对。"
+            )
+        elif "three layer" in all_content or "三层" in all_content or "compose" in all_content:
+            return json.dumps(
+                {
+                    "layer1_conclusion": {
+                        "text": "这次检索到的资料提示，这个问题需要先分清疾病类型、检测指标和治疗阶段。公开研究能帮助你了解大方向，但不能直接判断某个人该用哪种方案；更稳妥的做法是把病理、基因检测和既往治疗资料带给主治医生一起确认。",
+                        "citations": ["32743622", "35123456"],
+                    },
+                    "layer3_patient_explanation": {
+                        "what_is_it": "可以把这些医学信息理解成医生做判断前会看的线索：疾病名称、检测结果、治疗阶段和既往用药，都会影响下一步讨论。",
+                        "what_evidence_says": "目前公开研究通常是在特定人群中观察治疗或检测的价值，结论更适合用来了解方向，而不是直接套用到个人身上。",
+                        "what_it_means_for_you": "你可以把关心的问题整理成清单，并带上病理报告、基因检测、影像检查和用药记录，与主治医生核对这些证据是否适用于你的情况。",
+                        "when_to_see_doctor": "如果出现呼吸困难、咳血、持续高热、胸痛加重，或治疗期间出现严重皮疹、腹泻、气喘等情况，应及时就医。",
+                        "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。",
+                    },
+                },
+                ensure_ascii=False,
+            )
+        if "rewrite the following text to a high school reading level" in all_content:
+            return (
+                "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。"
+                "目前研究显示，它在部分肺癌患者中可能带来获益，但具体是否适合个人情况，"
+                "需要结合病理、基因检测和医生评估。"
+            )
         if "simplif" in all_content or "改写" in all_content or "simplifier" in all_content:
             return "免疫治疗是一种帮助身体免疫系统识别并攻击癌细胞的治疗方法。最新研究显示，将免疫治疗与化疗联合使用，比单独使用化疗效果更好。接受联合治疗的患者平均多存活约11个月。大约每10个患者中，有4-5个能从中获益。"
-        elif "three layer" in all_content or "三层" in all_content or "compose" in all_content:
-            return '{"layer1_conclusion": {"text": "免疫治疗联合化疗已成为晚期肺腺癌的标准一线方案之一，约45%患者获益", "citations": ["32743622", "35123456"]}, "layer2_evidence_cards": [{"study_type": "RCT", "sample_size": "923名晚期NSCLC患者", "intervention": "帕博利珠单抗+化疗", "comparator": "单纯化疗", "outcome": "中位OS 22.0 vs 10.7个月", "limitations": "亚洲人群占比有限", "evidence_level": "high", "source_id": "PMID: 32743622", "source_url": "https://pubmed.ncbi.nlm.nih.gov/32743622"}, {"study_type": "系统综述", "sample_size": "纳入12项RCT，共5,847名患者", "intervention": "免疫联合化疗", "comparator": "单纯化疗", "outcome": "降低死亡风险约21%", "limitations": "异质性中等", "evidence_level": "high", "source_id": "PMID: 35123456", "source_url": "https://pubmed.ncbi.nlm.nih.gov/35123456"}], "layer3_patient_explanation": {"what_is_it": "免疫治疗就像给身体的"保安队"（免疫系统）装上了"望远镜"，让它们能重新发现并攻击癌细胞。癌细胞会穿上一件叫PD-L1的"隐形衣"躲避免疫系统，免疫治疗就是帮保安队脱掉这件隐形衣。", "what_evidence_says": "最新大型研究显示，把免疫治疗和化疗一起用，比单独化疗效果好得多——患者平均多活了约11个月。大约每10个患者中，有4-5个能从中获益。", "what_it_means_for_you": "1. 不是所有人都适合免疫治疗，需要先做PD-L1表达检测；2. 如果检测结果较高，免疫治疗可能对你更有效；3. 具体是否适合，一定要和主治医生详细讨论。", "when_to_see_doctor": "如出现呼吸困难、咳血、持续高热，或接受免疫治疗期间出现严重皮疹、腹泻、气喘，请立即就医。", "disclaimer": "本内容为医学文献通俗化解释，仅供参考，不构成诊疗建议，不替代医生判断。"}}'
         elif "查询优化" in all_content or "medical_terms_cn" in all_content or "检索查询优化" in all_content:
             # Query rewrite mock response
             import re as _re

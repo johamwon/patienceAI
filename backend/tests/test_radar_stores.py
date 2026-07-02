@@ -204,9 +204,8 @@ class TestPhysicalIsolationNoCrossIndex:
         # 用 AST 解析真实的 import 语句，避免误伤 docstring/注释中出现的模块名。
         import ast
 
-        src = Path(
-            "e:/patienceAI-1/backend/app/services/radar/contact_store.py"
-        ).read_text(encoding="utf-8")
+        src = Path(__file__).resolve().parents[1] / "app" / "services" / "radar" / "contact_store.py"
+        src = src.read_text(encoding="utf-8")
         tree = ast.parse(src)
         imported_names: list[str] = []
         for node in ast.walk(tree):

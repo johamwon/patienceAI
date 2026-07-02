@@ -111,6 +111,10 @@ def rewrite_query(query: str) -> QueryRewriteResult:
 
         parsed = _parse_rewrite_response(response)
         if parsed:
+            cn_terms = parsed.get("medical_terms_cn", "").strip()
+            en_terms = parsed.get("medical_terms_en", "").strip()
+            if not cn_terms and not en_terms:
+                return _fallback_rewrite(query)
             # 用规则补充 suggested_sources
             enhanced_sources = _enhance_sources_with_rules(query, parsed.get("suggested_sources", []))
             cn, en = _enhance_terms_with_aliases(

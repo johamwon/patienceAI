@@ -200,6 +200,25 @@ def _fallback_message(emotion: EmotionState, risk_level: str) -> str:
     return base
 
 
+def _looks_like_prompt_leak(text: str) -> bool:
+    """Detect model reasoning/prompt leakage instead of final companion copy."""
+    if not isinstance(text, str):
+        return False
+    lowered = text.lower()
+    markers = [
+        "用户现在需要",
+        "写作要求",
+        "只输出",
+        "prompt",
+        "患者的提问：",
+        "检索到的证据摘要：",
+        "是否符合",
+        "llm_api_key",
+        "[模拟响应]",
+    ]
+    return any(marker in lowered for marker in markers)
+
+
 async def generate_companion_message(
     query: str,
     emotion: Union[EmotionState, str, None],
@@ -254,6 +273,8 @@ async def generate_companion_message(
         return _fallback_message(normalized_emotion, safe_risk_level)
 
     message = raw.strip()
+    if _looks_like_prompt_leak(message):
+        return _fallback_message(normalized_emotion, safe_risk_level)
 
     # 生成后统一经合规闸清洗（R3.5/R13.1）。
     cleaned, _violations = compliance_guard(message)

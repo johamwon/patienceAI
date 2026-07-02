@@ -3,6 +3,7 @@ import type { ExplainResponse, ResearchProgress, VisitPrepResponse } from "../ty
 import VisitPrepView from "./VisitPrepView";
 import TrialCard from "./TrialCard";
 import CompanionBanner from "./CompanionBanner";
+import SubscribePrompt from "./SubscribePrompt";
 
 const RISK_LEVEL_COLORS: Record<string, string> = {
   low: "#52c41a",
@@ -34,6 +35,8 @@ type ExplanationViewProps = {
   visitPrep?: VisitPrepResponse | null;
   visitPrepLoading?: boolean;
   visitPrepError?: string | null;
+  anonUserId: string;
+  onRadarChanged?: () => void;
 };
 
 export default function ExplanationView({
@@ -42,6 +45,8 @@ export default function ExplanationView({
   visitPrep,
   visitPrepLoading = false,
   visitPrepError = null,
+  anonUserId,
+  onRadarChanged,
 }: ExplanationViewProps) {
   // 折叠证据区：默认折叠，想深究的人才展开（任务1第6位）
   const [evidenceOpen, setEvidenceOpen] = useState(false);
@@ -132,6 +137,12 @@ export default function ExplanationView({
       </section>
 
       {/* 5. 就医准备包：方案A 自动前置，展示态嵌入（不再需要点击按钮触发） */}
+      <SubscribePrompt
+        anonUserId={anonUserId}
+        offer={data.subscription_offer}
+        onSubscribed={onRadarChanged}
+      />
+
       <section className="visit-prep-entry">
         {visitPrepLoading && !visitPrep && (
           <div className="visit-prep-loading">

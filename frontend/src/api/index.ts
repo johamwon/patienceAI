@@ -1,7 +1,16 @@
-import type { SearchResponse, ExplainResponse, VisitPrepResponse } from "../types";
+import type {
+  SearchResponse,
+  ExplainResponse,
+  VisitPrepResponse,
+  Subscription,
+  InAppMessage,
+  RadarChannels,
+} from "../types";
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.DEV ? "http://localhost:8000" : "");
+// 生产环境（同源部署）走相对路径，开发环境用 Vite 代理或显式地址
+const API_BASE = import.meta.env.DEV
+  ? (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000")
+  : "";
 
 export async function searchEvidence(query: string, maxResults = 20): Promise<SearchResponse> {
   const res = await fetch(`${API_BASE}/api/v1/search`, {
@@ -40,5 +49,80 @@ export async function evaluateResponse(predictions: any[], references: any[]) {
     body: JSON.stringify({ predictions, references }),
   });
   if (!res.ok) throw new Error(`评测失败: ${res.status}`);
+  return res.json();
+}
+
+export async function subscribeRadar(anonUserId: string, diseaseKeyword: string): Promise<Subscription> {
+  const res = await fetch(`${API_BASE}/api/v1/radar/subscribe`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ anon_user_id: anonUserId, disease_keyword: diseaseKeyword }),
+  });
+  if (!res.ok) throw new Error(`订阅失败: ${res.status}`);
+  return res.json();
+}
+
+export async function listRadarSubscriptions(anonUserId: string): Promise<Subscription[]> {
+  const res = await fetch(`${API_BASE}/api/v1/radar/subscriptions?anon_user_id=${encodeURIComponent(anonUserId)}`);
+  if (!res.ok) throw new Error(`订阅列表读取失败: ${res.status}`);
+  return res.json();
+}
+
+export async function revokeRadarSubscription(subscriptionId: string) {
+  const res = await fetch(`${API_BASE}/api/v1/radar/subscriptions/${subscriptionId}/revoke`, { method: "POST" });
+  if (!res.ok) throw new Error(`撤销订阅失败: ${res.status}`);
+  return res.json();
+}
+
+export async function deleteRadarSubscription(subscriptionId: string) {
+  const res = await fetch(`${API_BASE}/api/v1/radar/subscriptions/${subscriptionId}`, { method: "DELETE" });
+  if (!res.ok) throw new Error(`删除订阅失败: ${res.status}`);
+  return res.json();
+}
+
+export async function getRadarChannels(anonUserId: string): Promise<RadarChannels> {
+  const res = await fetch(`${API_BASE}/api/v1/radar/channels?anon_user_id=${encodeURIComponent(anonUserId)}`);
+  if (!res.ok) throw new Error(`渠道状态读取失败: ${res.status}`);
+  return res.json();
+}
+
+export async function setRadarChannel(anonUserId: string, channel: keyof RadarChannels, contact?: string) {
+  const res = await fetch(`${API_BASE}/api/v1/radar/channels`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ anon_user_id: anonUserId, channel, contact }),
+  });
+  if (!res.ok) throw new Error(`开启渠道失败: ${res.status}`);
+  return res.json();
+}
+
+export async function unsetRadarChannel(anonUserId: string, channel: keyof RadarChannels) {
+  const res = await fetch(
+    `${API_BASE}/api/v1/radar/channels/${channel}?anon_user_id=${encodeURIComponent(anonUserId)}`,
+    { method: "DELETE" }
+  );
+  if (!res.ok) throw new Error(`关闭渠道失败: ${res.status}`);
+  return res.json();
+}
+
+export async function deleteRadarUserData(anonUserId: string) {
+  const res = await fetch(`${API_BASE}/api/v1/radar/user/${encodeURIComponent(anonUserId)}`, { method: "DELETE" });
+  if (!res.ok) throw new Error(`删除全部数据失败: ${res.status}`);
+  return res.json();
+}
+
+export async function listRadarMessages(anonUserId: string): Promise<InAppMessage[]> {
+  const res = await fetch(`${API_BASE}/api/v1/radar/messages?anon_user_id=${encodeURIComponent(anonUserId)}`);
+  if (!res.ok) throw new Error(`站内消息读取失败: ${res.status}`);
+  return res.json();
+}
+
+export async function triggerRadarDemo(subscriptionId: string) {
+  const res = await fetch(`${API_BASE}/api/v1/radar/demo/trigger`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subscription_id: subscriptionId }),
+  });
+  if (!res.ok) throw new Error(`演示触发失败: ${res.status}`);
   return res.json();
 }

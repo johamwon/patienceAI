@@ -1,16 +1,32 @@
+# 不要拷进镜像的内容（加速构建 + 防止密钥/大文件泄露）
 .git
+.gitignore
 .env
-.venv
-venv
+.env.example
+.modelscope_token
+node_modules
+**/node_modules
+dist
+**/dist
+# 注意：frontend/dist 虽然在 dockerignore 里，但 Dockerfile 用多阶段构建自己生成 dist，
+# 不依赖宿主机 dist，所以忽略它是正确的。
 __pycache__
+**/__pycache__
 *.pyc
 .pytest_cache
+**/.pytest_cache
 .hypothesis
-
-frontend/node_modules
-frontend/dist
-backend/app/services/radar/data
-backend/app/cache/cache_db.json
-
-.kiro/specs/todo.md
+coverage
+htmlcov
 *.log
+.DS_Store
+.vscode
+.idea
+*.egg-info
+# 本地文档/计划不进镜像
+*.md
+!frontend/README.md
+.kiro
+# 测试文件
+test_*.py
+test_loop.bat

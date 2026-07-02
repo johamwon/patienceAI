@@ -3,7 +3,7 @@ import os, sys, httpx, json
 sys.path.insert(0, '.')
 
 KNOWS_BASE_URL = os.getenv("KNOWS_BASE_URL", "https://api.nullht.com/v1")
-KNOWS_API_KEY = os.getenv("KNOWS_API_KEY", "sk-knows-GppvgRwEX7q6X58v87wbm1-Vx7E1l6-w")
+KNOWS_API_KEY = os.getenv("KNOWS_API_KEY", "")
 
 url = f"{KNOWS_BASE_URL}/evidences/ai_search_paper_en"
 headers = {"Content-Type": "application/json", "Authorization": f"Bearer {KNOWS_API_KEY}"}

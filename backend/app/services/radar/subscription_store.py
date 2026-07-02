@@ -32,7 +32,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
-from app.models.schemas import Subscription
+from ...models.schemas import Subscription
 
 # 默认库文件：backend/app/services/radar/data/subscriptions.db（目录自动创建）
 DEFAULT_DB_PATH = Path(__file__).parent / "data" / "subscriptions.db"
